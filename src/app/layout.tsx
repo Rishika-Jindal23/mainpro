@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import Providers from "./store/providers";
+import Header from "@/components/layout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Providers>
+                    <Header />
                     <main className="max-w-4xl  mx-auto">{children}</main>
                 </Providers>
                 {/* <main className="w-full h-screen ">{children}</main> */}

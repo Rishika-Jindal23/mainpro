@@ -10,7 +10,7 @@ import { persistor, store } from "./store";
 const Home: React.FC = () => {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <Hero />
         </>
     );

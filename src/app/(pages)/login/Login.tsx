@@ -8,7 +8,10 @@ import axios from "axios";
 import newRequest from "@/app/utils/newRequest";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { login } from "../../actions/authActions";
+import { login } from "@/app/store/slice/authSlice";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { login } from "../../actions/authActions";
 
 interface LoginProps {}
 
@@ -17,7 +20,7 @@ const LoginMain: React.FC<LoginProps> = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    const router = useRouter;
+    //   const router = useRouter();
 
     // const router = useRouter();
     // const [username, setUsername] = useState<string>("");
@@ -44,18 +47,35 @@ const LoginMain: React.FC<LoginProps> = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(login());
+
         console.log(username, password);
         try {
             const res = await newRequest.post("/auth/login", {
                 username,
                 password,
             });
-            // localStorage.setItem("currentUser", JSON.stringify(res.data));
-            console.log(res.data);
-            window.location.href = "/";
+            await toast.success("🦄 Wow so easy!");
+            localStorage.setItem("currentUser", JSON.stringify(res.data));
+            // console.log(res.data.username);
+            // const user = JSON.stringify(res.data);
+            // console.log("user : ", user);
+            //     dispatch(login(user));
+            //   window.location.href = "/";
+            const user = {
+                // Define your user properties here
+                _id: res.data._id,
+                username: res.data.username,
+                email: res.data.email,
+                isSeller: res.data.isSeller,
+                phone: res.data.phone,
+            };
+            // console.log("user : ", user);
 
+            dispatch(login(user));
+            dispatch(login(user));
             //  router.push("/add");
+            //  router.push("/add");
+            window.location.href = "/";
         } catch (err) {
             //setError("err")
             console.log(err);
@@ -87,6 +107,7 @@ const LoginMain: React.FC<LoginProps> = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Login</button>
+                <ToastContainer />
                 {/* {error() && <p className={styles.error}>{error}</p>} */}
             </form>
         </div>
