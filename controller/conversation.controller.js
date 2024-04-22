@@ -1,5 +1,7 @@
-const deleteUser = (req, res) => {
-    res.send("from usercontroller")
-}
+exports.createOrder = async (req, res, next) => {
+    try {
 
-module.exports = deleteUser;
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}

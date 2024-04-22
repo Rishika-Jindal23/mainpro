@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose;
+const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
 
 
@@ -40,8 +40,13 @@ const OrderSchema = new Schema({
     },
     payment_intent: {
         type: String,
-        required: true,
+        required: false,
 
+    },
+    status: {
+        type: String,
+        enum: ["pending", "completed", "cancelled", "shipped", "delivered"],//wait
+        default: "pending"
     },
 
 

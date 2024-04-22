@@ -1,32 +1,86 @@
 const User = require("../models/user.model")
 const bcrypt = require("bcrypt");
-const register = async (req, res) => {
+const jwt = require("jsonwebtoken");
+
+exports.register = async (req, res) => {
     try {
-        const hash = bcrypt.hashSync(req.body.password, 10);
-        const newUser = new User({ ...req.body, password: hash });
+        // Check if the user already exists
+        let user = req.body.user;
+        console.log(user);
+        const existingUser = await User.findOne({ username: req.body.username });
+        if (existingUser) {
+            return res.status(400).send("User already exists");
+        }
+        // const salt = bcrypt.genSaltSync(10);
+        // Hash the password
+        const hash = await bcrypt.hash(req.body.user.password, 5);
+        // console.log("hash : ", hash);
+        // Create a new user
+        const newUser = new User(
+            {
+                username: user.username,
+                email: user.email,
+                password: hash,
+                country: user.country,
+                phone: user.phone,
+                desc: user.desc,
+                isSeller: user.isSeller
+            });
+        //    console.log("data : --------------", req.body);
+        // console.log("user : ", newUser);
+        // Save the new user to the database
+        console.log("new user : ", newUser);
+        console.log("new user : ", newUser);
         await newUser.save();
-        res.status(201).send("User has been created")
+        if (!newUser) { res.status(404).send("please enter correct details") }
 
-
-    } catch (error) { res.status(500).send(error) }
-}
-
-
-const login = async (req, res) => {
-    try {
-        const user = await User.findOne({ username: req.body.username })
-        if (!user) return res.status(404).send("user not found")
-        const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-        if (!isCorrect) return res.status(404).send("wrong password or password");
-        const { password, ...info } = user;
-        res.status(200).send(info)
+        res.status(201).send("User has been created");
     } catch (error) {
+        console.log(error);
+        res.status(404).send("enter correct registration details");
 
     }
-
-}
-const logout = async (req, res) => {
-
 }
 
-module.exports = register, login, logout;
+
+
+
+
+
+exports.login = async (req, res) => {
+    try {
+        console.log(req.body.username);
+        // console.log("db ka user : ", User.username);
+        const user = await User.findOne({ username: req.body.username })
+        console.log("user mil raha hai : ?", user);
+        if (!user) return res.status(404).send("user not found")
+        const isCorrect = bcrypt.compareSync(req.body.password, user.password);
+        console.log("is corerct : ", isCorrect);
+        if (!isCorrect) return res.status(404).send("wrong username or password");
+
+        const token = jwt.sign({
+            id: user._id,
+            isSeller: user.isSeller,
+        },
+            process.env.JWT_KEY
+        );
+        const { password, ...info } = user._doc;
+        res.cookie("accessToken", token, {
+            httpOnly: true
+        }).status(200).send(info);
+    } catch (error) {
+        res.status(404).send("login unsuccessful")
+    }
+}
+exports.logout = async (req, res) => {
+
+    try {
+        res.clearCookie("accessToken", {
+            sameSite: "none",
+            secure: true,
+        }).status(200).send("user has been logged out")
+    } catch (error) { res.status(404).send("unable to logout successfully") }
+}
+
+
+

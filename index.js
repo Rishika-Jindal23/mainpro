@@ -9,7 +9,8 @@ const conversationRoute = require("./routes/conversation.route")
 const messageRoute = require('./routes/message.route')
 const reviewRoute = require("./routes/review.route")
 const authRoute = require("./routes/auth.route")
-
+const cookieParser = require("cookie-parser")
+const cors = require("cors");
 
 
 const app = express();
@@ -17,6 +18,10 @@ const app = express();
 dotenv.config();
 dbConnect();
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+
+app.use(cookieParser());
+//app.use(cors({ origin: "http://localhost:3000", credentials: true }))
 
 
 
@@ -28,15 +33,33 @@ app.use("/conversations", conversationRoute);
 app.use("/messages", messageRoute);
 app.use("/reviews", reviewRoute);
 
+// error handler for unmatched routes
+app.use((req, res, next) => {
+    res.status(404).send("not  found");
+});
+
+//global error handler
+
+// app.use((err, req, res, next) => {
+//     res.status(err.status || 500);
+//     res.json({
+//         error: {
+//             message: err.message
+//         }
+//     });
+// });
 
 
-app.use("/", (req, res) => {
-    res.send("hello from server")
-})
+// app.use("/", (req, res) => {
+//     res.send("hello from server")
+// })
 
-
-
-
+// app.use((err, req, res, next) => {
+//     //  const errorStatus = err.Status || 500
+//     //const errorMessage = err.Message;
+//     console.log(err);
+//     return res.status(errorStatus).send(errorMessage);
+// })
 
 app.listen(PORT, (req, res) => {
     console.log(`listening to the PORT ${PORT}`)
