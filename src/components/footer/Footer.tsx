@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Footer.module.scss";
 
-const Footer: React.FC = () => {
+interface FooterProps {}
+
+const Footer: React.FC<FooterProps> = () => {
     return (
         <div className={styles.footer}>
             <div className={styles.container}>
@@ -34,8 +36,8 @@ const Footer: React.FC = () => {
                         <h2>Support</h2>
                         <span>Help & Support</span>
                         <span>Trust & Safety</span>
-                        <span>Selling on SkillSphere</span>
-                        <span>Buying on SkillSphere</span>
+                        <span>Selling </span>
+                        <span>Buying</span>
                     </div>
                     <div className={styles.item}>
                         <h2>Community</h2>
@@ -52,10 +54,10 @@ const Footer: React.FC = () => {
                         <span>Community Standards</span>
                     </div>
                     <div className={styles.item}>
-                        <h2>More From Fiverr</h2>
-                        <span>SkillSphere Business</span>
+                        <h2>More From SkillSphere</h2>
+                        <span> Business</span>
                         <span>SkillSphere Pro</span>
-                        <span>SkillSphere Logo Maker</span>
+                        <span> Logo Maker</span>
                         <span>SkillSphere Guides</span>
                         <span>Get Inspired</span>
                         <span>SkillSphere Select</span>
@@ -69,25 +71,25 @@ const Footer: React.FC = () => {
                 <div className={styles.bottom}>
                     <div className={styles.left}>
                         <h2>SkillSphere</h2>
-                        <span>© SkillSphereInternational Ltd. 2023</span>
+                        <span>© SkillSphere International Ltd. 2023</span>
                     </div>
                     <div className={styles.right}>
                         <div className={styles.social}>
-                            <img src="" alt="" />
-                            <img src="" alt="" />
-                            <img src="" alt="" />
-                            <img src="" alt="" />
-                            <img src="" alt="" />
+                            <img src="/img/twitter.png" alt="" />
+                            <img src="/img/facebook.png" alt="" />
+                            <img src="/img/linkedin.png" alt="" />
+                            <img src="/img/pinterest.png" alt="" />
+                            <img src="/img/instagram.png" alt="" />
                         </div>
                         <div className={styles.link}>
-                            <img src="" alt="" />
+                            <img src="/img/language.png" alt="" />
                             <span>English</span>
                         </div>
                         <div className={styles.link}>
-                            <img src="" alt="" />
+                            <img src="/img/coin.png" alt="" />
                             <span>USD</span>
                         </div>
-                        <img src="" alt="" />
+                        <img src="/img/accessibility.png" alt="" />
                     </div>
                 </div>
             </div>

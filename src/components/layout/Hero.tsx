@@ -1,7 +1,7 @@
 import Image from "next/image";
 import img1 from "../../../public/img/img1.jpg";
 import Right from "../icons/Right";
-export default function Hero() {
+function Hero() {
     return (
         <>
             <section className="grid grid-cols-2">
@@ -75,3 +75,5 @@ export default function Hero() {
         </>
     );
 }
+
+export default Hero;
