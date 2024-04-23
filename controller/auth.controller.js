@@ -66,8 +66,10 @@ exports.login = async (req, res) => {
         );
         const { password, ...info } = user._doc;
         res.cookie("accessToken", token, {
-            httpOnly: true
-        }).status(200).send(info);
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        }).status(200).send({ token, info });
     } catch (error) {
         res.status(404).send("login unsuccessful")
     }

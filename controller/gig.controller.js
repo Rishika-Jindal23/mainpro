@@ -4,21 +4,31 @@ const verifyToken = require("../middleware/jwt");
 const { findByIdAndDelete } = require("../models/user.model");
 
 exports.createGig = async (req, res, next) => {
-    if (!req.isSeller) return res.status(403).send("only sellers can create  gig")
-    const newGig = new Gig({
-        userId: req.userId,
-        ...req.body,
-    })
-
+    console.log(req.body)
     try {
-        const savedGig = await newGig.save();
-        if (!savedGig) { res.status(404).send("gig not created successfully") }
-        res.status(201).json(savedGig);
+        if (!req.isSeller) return res.status(403).send("Only sellers can create a gig");
 
+        const newGig = new Gig({
+            userId: req.userId,
+            ...req.body,
+        });
+
+        // console.log("newGig >>>", newGig);
+
+        const savedGig = await newGig.save();
+
+        if (!savedGig) {
+            return res.status(404).send("Gig not created successfully");
+        }
+
+        console.log("Gig created successfully: ", savedGig);
+        res.status(201).json(savedGig);
     } catch (err) {
-        res.status(404).send("unsuccesful");
+        console.error("Error creating gig:", err);
+        res.status(500).send("Internal Server Error");
     }
 };
+
 
 exports.deleteGig = async (req, res, next) => {
     try {

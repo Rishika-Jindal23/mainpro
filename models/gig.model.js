@@ -4,7 +4,6 @@ const GigSchema = new Schema({
     userId: {
         type: String,
         required: true
-
     },
     title: {
         type: String,
@@ -13,7 +12,7 @@ const GigSchema = new Schema({
     },
     desc: {
         type: String,
-        required: true
+        // required: true
 
     },
     totalstars: {
@@ -28,7 +27,7 @@ const GigSchema = new Schema({
     },
     cat: {
         type: String,
-        required: true
+        // required: true
 
     },
     price: {
@@ -48,7 +47,7 @@ const GigSchema = new Schema({
     },
     shortDesc: {
         type: String,
-        required: true
+        // required: true
 
     },
     deliveryTime: {
