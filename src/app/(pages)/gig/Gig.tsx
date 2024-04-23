@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import { NextPage } from "next";
-import { Slider } from "infinite-react-carousel/lib";
+import Carousel from "@itseasy21/react-elastic-carousel";
 import styles from "./Gig.module.scss"; // Assuming you're using CSS modules for styling
 
 const Gig: NextPage = () => {
@@ -9,7 +10,7 @@ const Gig: NextPage = () => {
             <div className={styles.container}>
                 <div className={styles.left}>
                     <span className={styles.breadcrumbs}>
-                        Liverr > Graphics & Design >
+                        SkillSphere Graphics & Design
                     </span>
                     <h1>I will create ai generated art for you</h1>
                     <div className={styles.user}>
@@ -26,11 +27,7 @@ const Gig: NextPage = () => {
                             <span>5</span>
                         </div>
                     </div>
-                    <Slider
-                        slidesToShow={1}
-                        arrowsScroll={1}
-                        className={styles.slider}
-                    >
+                    <Carousel itemsToShow={2} isRTL={false}>
                         <img
                             src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
                             alt=""
@@ -43,7 +40,7 @@ const Gig: NextPage = () => {
                             src="https://images.pexels.com/photos/1054777/pexels-photo-1054777.jpeg?auto=compress&cs=tinysrgb&w=1600"
                             alt=""
                         />
-                    </Slider>
+                    </Carousel>
                     <h2>About This Gig</h2>
                     <p>
                         I use an AI program to create images based on text
@@ -52,15 +49,6 @@ const Gig: NextPage = () => {
                         without requiring any reference images. Some things I've
                         found it often excels at are: Character portraits (E.g.
                         a picture to go with your DnD character) Landscapes
-                        (E.g. wallpapers, illustrations to compliment a story)
-                        Logos (E.g. Esports team, business, profile picture) You
-                        can be as vague or as descriptive as you want. Being
-                        more vague will allow the AI to be more creative which
-                        can sometimes result in some amazing images. You can
-                        also be incredibly precise if you have a clear image of
-                        what you want in mind. All of the images I create are
-                        original and will be found nowhere else. If you have any
-                        questions you're more than welcome to send me a message.
                     </p>
                     <div className={styles.seller}>
                         <h2>About The Seller</h2>

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, ChangeEvent, FormEvent } from "react";
 //import Toast, { showToast } from "../../components/Toast";
 //import "react-toastify/dist/ReactToastify.css";
@@ -7,8 +8,13 @@ import styles from "./Register.module.scss";
 import axios from "axios";
 import upload from "@/app/utils/upload";
 import newRequest from "@/app/utils/newRequest";
+import { UploadButton } from "@/utils1/uploadthing";
 // import newRequest from "../../utils/newRequest";
 // import { useNavigate } from "react-router-dom";
+
+// const secret = process.env.UPLOADTHING_SECRET;
+
+// Now you can use process.env to access environment variables
 
 interface User {
     username: string;
@@ -34,6 +40,13 @@ const Register1: React.FC = () => {
 
     // const navigate = useNavigate();
 
+    const handleFileChange = (imageUrl: string) => {
+        setUser((prev) => ({
+            ...prev,
+            img: imageUrl,
+        }));
+    };
+
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -52,41 +65,19 @@ const Register1: React.FC = () => {
         e: FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
-        // console.log("file : ", file);
-        // if (!file) {
-        //     console.error("Please select a file.");
-        //     return;
-        // }
-        // const url = await upload(file);
+
         console.log("userdetails", user);
         try {
             const res = await newRequest.post("/auth/register", {
                 user,
             });
-            // showToast("Hello, this is a toast notification!");
-            // console.log("userdetails", user);
+
             console.log("res : ", res);
             window.location.href = "/login";
         } catch (err) {
             console.log(err);
         }
         console.log("submit call");
-
-        // if (!file) {
-        //     console.error("Please select a file.");
-        //     return;
-        // }
-
-        // const url = await upload(file);
-        // try {
-        //   await newRequest.post("/auth/register", {
-        //     ...user,
-        //     img: url,
-        //   });
-        //   navigate("/");
-        // } catch (err) {
-        //   console.error(err);
-        // }
     };
     console.log("user  : ", user);
     return (
@@ -115,10 +106,25 @@ const Register1: React.FC = () => {
                         onChange={handleChange}
                     />
                     <label htmlFor="">Profile Picture</label>
-                    <input
+
+                    <UploadButton
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res: { url: string }[]) => {
+                            if (res && res.length > 0) {
+                                handleFileChange(res[0].url);
+                            }
+                            alert("Upload Completed");
+                        }}
+                        onUploadError={(error: Error) => {
+                            // Do something with the error.
+                            alert(`ERROR! ${error.message}`);
+                        }}
+                    />
+
+                    {/* <input
                         type="file"
                         onChange={(e) => setFile(e.target.files?.[0] || null)}
-                    />
+                    /> */}
                     <label htmlFor="">Country</label>
                     <input
                         name="country"
@@ -160,74 +166,6 @@ const Register1: React.FC = () => {
 };
 
 export default Register1;
-
-// "use client";
-
-// import React, { useState, ChangeEvent, FormEvent } from "react";
-// import styles from "./Register.module.scss";
-// import axios from "axios";
-// import upload from "@/app/utils/upload";
-// import newRequest from "@/app/utils/newRequest";
-
-// interface User {
-//     username: string;
-//     email: string;
-//     password: string;
-//     img: string | null;
-//     country: string;
-//     isSeller: boolean;
-//     desc: string;
-// }
-
-// const Register1: React.FC = () => {
-//     const [file, setFile] = useState<File | null>(null);
-//     const [user, setUser] = useState<User>({
-//         username: "",
-//         email: "",
-//         password: "",
-//     img: null,
-//         country: "",
-//         isSeller: false,
-//         desc: "",
-//     });
-//     const [errors, setErrors] = useState<Partial<User>>({});
-
-//     const handleChange = (
-//         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-//     ) => {
-//         setUser((prev) => {
-//             return { ...prev, [e.target.name]: e.target.value };
-//         });
-//     };
-
-//     const handleSeller = (e: ChangeEvent<HTMLInputElement>) => {
-//         setUser((prev) => {
-//             return { ...prev, isSeller: e.target.checked };
-//         });
-//     };
-
-//     const handleSubmit = async (
-//         e: FormEvent<HTMLFormElement>
-//     ): Promise<void> => {
-//         e.preventDefault();
-//         if (!file) {
-//             setErrors({ img: "Please select a file." });
-//             return;
-//         }
-
-//         const url = await upload(file);
-//         try {
-//             const res = await newRequest.post("/auth/signup", {
-//                 ...user,
-//                 img: url,
-//             });
-//             console.log("userdetails", user);
-//             console.log("res : ", res);
-//             window.location.href = "/login";
-//         } catch (err) {
-//             console.log(err);
-//         }
-//     };
 
 //     const validateEmail = (email: string): boolean => {
 //         // Basic email validation regex

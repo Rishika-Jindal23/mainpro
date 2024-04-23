@@ -1,14 +1,15 @@
 "use client";
 import React, { useRef, useState } from "react";
-import styles from "./Sphere.module.scss";
-import { Gig } from "../../../data";
-import GigCard from "../../../components/gigCard/GigCard";
+import styles from "./Gigs.module.scss";
 
+import GigCard from "../../../components/gigCard/GigCard";
+import { Gig, gigs } from "@/data";
 interface GigsProps {
     gigs: Gig[];
 }
 
-const Spheres: React.FC<GigsProps> = ({ gigs }) => {
+// const Spheres: React.FC<GigsProps> = ({ gigs }) => {
+const Gigs: React.FC = () => {
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);
     const minRef = useRef<HTMLInputElement>(null);
@@ -82,4 +83,4 @@ const Spheres: React.FC<GigsProps> = ({ gigs }) => {
     );
 };
 
-export default Spheres;
+export default Gigs;

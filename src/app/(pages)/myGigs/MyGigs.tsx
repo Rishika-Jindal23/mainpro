@@ -1,25 +1,28 @@
 import React from "react";
+import styles from "./MyGigs.module.scss";
+import Link from "next/link";
 
-import styles from "./Orders.module.scss";
-
-const Orders = () => {
-    interface User {
+function MyGigs() {
+    const currentUser: {
         id: number;
         username: string;
         isSeller: boolean;
-    }
-
-    const currentUser: User = {
+    } = {
         id: 1,
         username: "Anna",
         isSeller: true,
     };
 
     return (
-        <div className={styles.orders}>
+        <div className={styles.myGigs}>
             <div className={styles.container}>
                 <div className={styles.title}>
-                    <h1>Orders</h1>
+                    <h1>{currentUser.isSeller ? "Gigs" : "Orders"}</h1>
+                    {currentUser.isSeller && (
+                        <Link href="/add">
+                            <button>Add New Gig</button>
+                        </Link>
+                    )}
                 </div>
                 <table>
                     <thead>
@@ -27,8 +30,8 @@ const Orders = () => {
                             <th>Image</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
-                            <th>Contact</th>
+                            <th>Sales</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,11 +47,11 @@ const Orders = () => {
                             <td>
                                 59.<sup>99</sup>
                             </td>
-                            <td>Maria Anders</td>
+                            <td>13</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -63,13 +66,13 @@ const Orders = () => {
                             </td>
                             <td>Ai generated concept art</td>
                             <td>
-                                79.<sup>99</sup>
+                                120.<sup>99</sup>
                             </td>
-                            <td>Francisco Chang</td>
+                            <td>41</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -84,13 +87,13 @@ const Orders = () => {
                             </td>
                             <td>High quality digital character</td>
                             <td>
-                                110.<sup>99</sup>
+                                79.<sup>99</sup>
                             </td>
-                            <td>Roland Mendel</td>
+                            <td>55</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -105,13 +108,13 @@ const Orders = () => {
                             </td>
                             <td>Illustration hyper realistic painting</td>
                             <td>
-                                39.<sup>99</sup>
+                                119.<sup>99</sup>
                             </td>
-                            <td>Helen Bennett</td>
+                            <td>29</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -126,13 +129,13 @@ const Orders = () => {
                             </td>
                             <td>Original ai generated digital art</td>
                             <td>
-                                119.<sup>99</sup>
+                                59.<sup>99</sup>
                             </td>
-                            <td>Yoshi Tannamuri</td>
+                            <td>34</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -147,13 +150,13 @@ const Orders = () => {
                             </td>
                             <td>Text based ai generated art</td>
                             <td>
-                                49.<sup>99</sup>
+                                110.<sup>99</sup>
                             </td>
-                            <td>Giovanni Rovelli</td>
+                            <td>16</td>
                             <td>
                                 <img
-                                    className={styles.message}
-                                    src="./img/message.png"
+                                    className={styles.delete}
+                                    src="./img/delete.png"
                                     alt=""
                                 />
                             </td>
@@ -163,6 +166,6 @@ const Orders = () => {
             </div>
         </div>
     );
-};
+}
 
-export default Orders;
+export default MyGigs;

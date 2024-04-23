@@ -55,7 +55,10 @@ const LoginMain: React.FC<LoginProps> = () => {
                 password,
             });
             await toast.success("🦄 Login Successful");
-            localStorage.setItem("currentUser", JSON.stringify(res.data));
+            console.log("login res : ", res.data.token);
+            localStorage.setItem("currentUser", JSON.stringify(res.data.info));
+            localStorage.setItem("token", res.data.token);
+
             // console.log(res.data.username);
             // const user = JSON.stringify(res.data);
             // console.log("user : ", user);
@@ -75,7 +78,7 @@ const LoginMain: React.FC<LoginProps> = () => {
             dispatch(login(user));
             //  router.push("/add");
             //  router.push("/add");
-            window.location.href = "/landingpage";
+            //    window.location.href = "/landingpage";
         } catch (err) {
             //setError("err")
             console.log(err);
