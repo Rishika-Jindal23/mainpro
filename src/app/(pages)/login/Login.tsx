@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 interface LoginProps {}
 
 const LoginMain: React.FC<LoginProps> = () => {
-    const dispatch = useDispatch();
+    //   const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -74,8 +74,8 @@ const LoginMain: React.FC<LoginProps> = () => {
             };
             // console.log("user : ", user);
 
-            dispatch(login(user));
-            dispatch(login(user));
+            //   dispatch(login(user));
+            // dispatch(login(user));
             //  router.push("/add");
             //  router.push("/add");
             //    window.location.href = "/landingpage";

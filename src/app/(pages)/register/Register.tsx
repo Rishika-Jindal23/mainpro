@@ -10,6 +10,7 @@ import styles from "./Register.module.scss";
 import axios from "axios";
 import upload from "@/app/utils/upload";
 import newRequest from "@/app/utils/newRequest";
+import ImageUpload from "@/components/inputs/ImageUpload";
 
 // import newRequest from "../../utils/newRequest";
 // import { useNavigate } from "react-router-dom";
@@ -108,7 +109,8 @@ const Register1: React.FC = () => {
                         onChange={handleChange}
                     />
                     <label htmlFor="">Profile Picture</label>
-                    <UploadButton
+                    <ImageUpload />
+                    {/* <UploadButton
                         endpoint="imageUploader"
                         onClientUploadComplete={(res: { url: string }[]) => {
                             if (res && res.length > 0) {
@@ -122,7 +124,7 @@ const Register1: React.FC = () => {
                             // Do something with the error.
                             alert(`ERROR! ${error.message}`);
                         }}
-                    />
+                    /> */}
 
                     {/* <input
                         type="file"
