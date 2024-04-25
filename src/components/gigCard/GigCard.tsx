@@ -3,7 +3,7 @@ import styles from "./GigCard.module.scss";
 import Link from "next/link";
 
 interface GigItem {
-    img: string;
+    images: string;
     pp: string;
     username: string;
     desc: string;
@@ -19,7 +19,7 @@ const GigCard: React.FC<GigCardProps> = ({ item }) => {
     return (
         <Link href="/gig/123" className={styles.link}>
             <div className={styles.gigCard}>
-                <img src={item.img} alt="" />
+                <img src={item.images} alt="" />
                 <div className={styles.info}>
                     <div className={styles.user}>
                         <img src={item.pp} alt="" />

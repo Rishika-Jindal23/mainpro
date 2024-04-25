@@ -10,7 +10,7 @@ import styles from "./Register.module.scss";
 import axios from "axios";
 import upload from "@/app/utils/upload";
 import newRequest from "@/app/utils/newRequest";
-import ImageUpload from "@/components/inputs/ImageUpload";
+//import ImageUpload from "@/components/inputs/ImageUpload";
 
 // import newRequest from "../../utils/newRequest";
 // import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ interface User {
 }
 
 const Register1: React.FC = () => {
-    const [file, setFile] = useState<File | null>(null);
+    // const [file, setFile] = useState<File | null>(null);
     const [user, setUser] = useState<User>({
         username: "",
         email: "",
@@ -109,8 +109,8 @@ const Register1: React.FC = () => {
                         onChange={handleChange}
                     />
                     <label htmlFor="">Profile Picture</label>
-                    <ImageUpload />
-                    {/* <UploadButton
+                    {/* <ImageUpload /> */}
+                    <UploadButton
                         endpoint="imageUploader"
                         onClientUploadComplete={(res: { url: string }[]) => {
                             if (res && res.length > 0) {
@@ -124,7 +124,7 @@ const Register1: React.FC = () => {
                             // Do something with the error.
                             alert(`ERROR! ${error.message}`);
                         }}
-                    /> */}
+                    />
 
                     {/* <input
                         type="file"
@@ -171,112 +171,3 @@ const Register1: React.FC = () => {
 };
 
 export default Register1;
-
-//     const validateEmail = (email: string): boolean => {
-//         // Basic email validation regex
-//         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//         return regex.test(email);
-//     };
-
-//     const validateForm = (): boolean => {
-//         const errors: Partial<User> = {};
-
-//         if (!user.username.trim()) {
-//             errors.username = "Username is required";
-//         }
-
-//         if (!user.email.trim()) {
-//             errors.email = "Email is required";
-//         } else if (!validateEmail(user.email)) {
-//             errors.email = "Invalid email address";
-//         }
-
-//         if (!user.password.trim()) {
-//             errors.password = "Password is required";
-//         }
-
-//         if (!user.country.trim()) {
-//             errors.country = "Country is required";
-//         }
-
-//         setErrors(errors);
-//         return Object.keys(errors).length === 0;
-//     };
-
-//     return (
-//         <div className={styles.register}>
-//             <form onSubmit={handleSubmit}>
-//                 <div className={styles.left}>
-//                     <h1>Create a new account</h1>
-//                     <label htmlFor="">Username</label>
-//                     <input
-//                         name="username"
-//                         type="text"
-//                         placeholder="johndoe"
-//                         onChange={handleChange}
-//                     />
-//                     {errors.username && <span>{errors.username}</span>}
-//                     <label htmlFor="">Email</label>
-//                     <input
-//                         name="email"
-//                         type="email"
-//                         placeholder="email"
-//                         onChange={handleChange}
-//                     />
-//                     {errors.email && <span>{errors.email}</span>}
-//                     <label htmlFor="">Password</label>
-//                     <input
-//                         name="password"
-//                         type="password"
-//                         onChange={handleChange}
-//                     />
-//                     {errors.password && <span>{errors.password}</span>}
-//                     <label htmlFor="">Profile Picture</label>
-//                     <input
-//                         type="file"
-//                         onChange={(e) => setFile(e.target.files?.[0] || null)}
-//                     />
-//                     {errors.img && <span>{errors.img}</span>}
-//                     <label htmlFor="">Country</label>
-//                     <input
-//                         name="country"
-//                         type="text"
-//                         placeholder="India"
-//                         onChange={handleChange}
-//                     />
-//                     {errors.country && <span>{errors.country}</span>}
-//                     <button type="submit" onClick={validateForm}>
-//                         Register
-//                     </button>
-//                 </div>
-//                 <div className={styles.right}>
-//                     <h1>I want to become a seller</h1>
-//                     <div className={styles.toggle}>
-//                         <label htmlFor="">Activate the seller account</label>
-//                         <label className={styles.switch}>
-//                             <input type="checkbox" onChange={handleSeller} />
-//                             <span className={styles.slider}></span>
-//                         </label>
-//                     </div>
-//                     <label htmlFor="">Phone Number</label>
-//                     <input
-//                         name="phone"
-//                         type="text"
-//                         placeholder="+1 234 567 89"
-//                         onChange={handleChange}
-//                     />
-//                     <label htmlFor="">Description</label>
-//                     <textarea
-//                         placeholder="A short description of yourself"
-//                         name="desc"
-//                         id=""
-//                         onChange={handleChange}
-//                     ></textarea>
-//                 </div>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Register1;
-// //

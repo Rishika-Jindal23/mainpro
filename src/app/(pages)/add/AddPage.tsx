@@ -1,101 +1,26 @@
 "use client ";
-// // import "./add.scss";
-// // export default function AddPage() {
-// //     return (
-// //         <div className="add">
-// //             <h1>hello from Add component page</h1>
-// //         </div>
-// //     );
-// // }
-// import React from "react";
-// import styles from "./Add.module.scss"; // Assuming
-// // Assuming you're using CSS modules
-// // If you're using regular CSS, you can use import "./Add.scss";
 
-// const Add: React.FC = () => {
-//     return (
-//         <div className={styles.add}>
-//             <div className={styles.container}>
-//                 <h1>Add New Sphere</h1>
-//                 <div className={styles.sections}>
-//                     <div className={styles.info}>
-//                         <label htmlFor="">Title</label>
-//                         <input
-//                             type="text"
-//                             placeholder="e.g. I will do something I'm really good at"
-//                         />
-//                         <label htmlFor="">Category</label>
-//                         <select name="cats" id="cats">
-//                             <option value="design">Design</option>
-//                             <option value="web">Web Development</option>
-//                             <option value="animation">Animation</option>
-//                             <option value="music">Music</option>
-//                         </select>
-//                         <label htmlFor="">Cover Image</label>
-//                         <input type="file" />
-//                         <label htmlFor="">Upload Images</label>
-//                         <input type="file" multiple />
-//                         <label htmlFor="">Description</label>
-//                         <textarea
-//                             placeholder="Brief descriptions to introduce your service to customers"
-//                             cols={0}
-//                             rows={16}
-//                         ></textarea>
-//                         <button>Create</button>
-//                     </div>
-//                     <div className={styles.details}>
-//                         <label htmlFor="">Service Title</label>
-//                         <input
-//                             type="text"
-//                             placeholder="e.g. One-page web design"
-//                         />
-//                         <label htmlFor="">Short Description</label>
-//                         <textarea
-//                             placeholder="Short description of your service"
-//                             cols={30}
-//                             rows={10}
-//                         ></textarea>
-//                         <label htmlFor="">Delivery Time (e.g. 3 days)</label>
-//                         <input type="number" />
-//                         <label htmlFor="">Revision Number</label>
-//                         <input type="number" />
-//                         <label htmlFor="">Add Features</label>
-//                         <input type="text" placeholder="e.g. page design" />
-//                         <input type="text" placeholder="e.g. file uploading" />
-//                         <input
-//                             type="text"
-//                             placeholder="e.g. setting up a domain"
-//                         />
-//                         <input type="text" placeholder="e.g. hosting" />
-//                         <label htmlFor="">Price</label>
-//                         <input type="number" />
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Add;
-
-import React, { useState } from "react";
-import styles from "./Add.module.scss"; // Assuming
-// import getToken from "@/app/utils/getToken";
+import React, { useEffect, useState } from "react";
+import styles from "./Add.module.scss";
+import { UploadButton } from "@/utils1/uploadthing";
 
 const Add: React.FC = () => {
-    console.log("add page--------------------------");
-
-    // const currentUser = localStorage.getItem("currentUser");
-    // console.log("add pge user : ", currentUser?.username);
-    // const cookieStore = cookies();
     const token = localStorage.getItem("token");
-    // const accessToken = cookieStore.get("accessToken");
-    // console.log("accessToken : ", accessToken);
-    // const accessToken = getToken();
-    // console.log("accessToken : ", accessToken);
+    console.log("token>>>>>>>>>>>>>>>>>>>>>", token);
 
+    const currentUserData = localStorage.getItem("currentUser");
+    const originalUser = JSON.parse(currentUserData);
+    const sellerusername = originalUser.username;
+
+    if (typeof window !== "undefined") {
+        console.log("we are running on the client");
+    } else {
+        console.log("we are running on the server");
+    }
+    const [file, setFile] = useState<File | null>(null);
     const [formData, setFormData] = useState({
         title: "",
+        username: sellerusername,
         cat: "",
         cover: "",
         Images: [],
@@ -122,27 +47,41 @@ const Add: React.FC = () => {
         });
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, files } = e.target;
-        if (files) {
-            setFormData({
-                ...formData,
-                [name]: files[0],
-            });
-        }
+    const handleFileChange = (imageUrl: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            cover: imageUrl,
+        }));
     };
 
-    const handleUploadImagesChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const { name, files } = e.target;
-        if (files) {
-            setFormData({
-                ...formData,
-                [name]: files,
-            });
-        }
+    const handleUploadImagesChange = (imageUrl: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            images: imageUrl,
+        }));
     };
+
+    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const { name, files } = e.target;
+    //     if (files) {
+    //         setFormData({
+    //             ...formData,
+    //             [name]: files[0],
+    //         });
+    //     }
+    // };
+
+    // const handleUploadImagesChange = (
+    //     e: React.ChangeEvent<HTMLInputElement>
+    // ) => {
+    //     const { name, files } = e.target;
+    //     if (files) {
+    //         setFormData({
+    //             ...formData,
+    //             [name]: files,
+    //         });
+    //     }
+    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         console.log(formData);
@@ -168,7 +107,7 @@ const Add: React.FC = () => {
     return (
         <div className={styles.add}>
             <div className={styles.container}>
-                <h1>Add New Sphere</h1>
+                <h1>Add New </h1>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.sections}>
                         <div className={styles.info}>
@@ -181,33 +120,67 @@ const Add: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label htmlFor="category">Category</label>
-                            <select
+                            <input
+                                type="text"
                                 name="cat"
                                 id="cat"
                                 value={formData.cat}
                                 onChange={handleChange}
-                            >
-                                <option value="">Select a category</option>
-                                <option value="design">Design</option>
-                                <option value="web">Web Development</option>
-                                <option value="animation">Animation</option>
-                                <option value="music">Music</option>
-                            </select>
+                                placeholder="Enter a category"
+                            />
                             <label htmlFor="coverImage">Cover Image</label>
-                            <input
+                            {/* <input
                                 type="file"
                                 name="coverImage"
                                 value={formData.cover}
                                 onChange={handleImageChange}
+                            /> */}
+
+                            <UploadButton
+                                endpoint="imageUploader"
+                                onClientUploadComplete={(
+                                    res: { url: string }[]
+                                ) => {
+                                    if (res && res.length > 0) {
+                                        handleFileChange(res[0].url);
+                                    }
+                                    // Do something with the response
+                                    console.log("Files: ", res);
+                                    alert("Upload Completed");
+                                }}
+                                onUploadError={(error: Error) => {
+                                    // Do something with the error.
+                                    alert(`ERROR! ${error.message}`);
+                                }}
                             />
-                            <label htmlFor="uploadImages">Upload Images</label>
-                            <input
+
+                            <label htmlFor="uploadImages">Upload Image</label>
+
+                            <UploadButton
+                                endpoint="imageUploader"
+                                onClientUploadComplete={(
+                                    res: { url: string }[]
+                                ) => {
+                                    if (res && res.length > 0) {
+                                        handleUploadImagesChange(res[0].url);
+                                    }
+                                    // Do something with the response
+                                    console.log("Files: ", res);
+                                    alert("Upload Completed");
+                                }}
+                                onUploadError={(error: Error) => {
+                                    // Do something with the error.
+                                    alert(`ERROR! ${error.message}`);
+                                }}
+                            />
+
+                            {/* <input
                                 type="file"
                                 name="uploadImages"
                                 multiple
                                 value={formData.Images}
                                 onChange={handleUploadImagesChange}
-                            />
+                            /> */}
                             <label>Description</label>
                             <textarea
                                 name="desc"
@@ -260,29 +233,29 @@ const Add: React.FC = () => {
                             <label htmlFor="features">Add Features</label>
                             <input
                                 type="text"
-                                value={formData.features}
-                                name="features"
+                                value={formData.features[0]}
+                                name="features1"
                                 placeholder="e.g. page design"
                                 onChange={handleChange}
                             />
                             <input
                                 type="text"
-                                name="features"
-                                value={formData.features}
+                                name="features2"
+                                value={formData.features[1]}
                                 placeholder="e.g. file uploading"
                                 onChange={handleChange}
                             />
                             <input
                                 type="text"
-                                name="features"
-                                value={formData.features}
+                                name="features3"
+                                value={formData.features[2]}
                                 placeholder="e.g. setting up a domain"
                                 onChange={handleChange}
                             />
                             <input
                                 type="text"
-                                name="features"
-                                value={formData.features}
+                                name="features4"
+                                value={formData.features[3]}
                                 placeholder="e.g. hosting"
                                 onChange={handleChange}
                             />
