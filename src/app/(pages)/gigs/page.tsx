@@ -1,7 +1,6 @@
 import Gigs from "./Gigs";
-import Spheres from "./Gigs";
 
-export default function spherepage() {
+export default function gigpage() {
     return (
         <>
             <Gigs />

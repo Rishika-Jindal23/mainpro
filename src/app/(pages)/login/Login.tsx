@@ -63,7 +63,7 @@ const LoginMain: React.FC<LoginProps> = () => {
             // const user = JSON.stringify(res.data);
             // console.log("user : ", user);
             //     dispatch(login(user));
-            //window.location.href = "/";
+            window.location.href = "/landingpage";
             const user = {
                 // Define your user properties here
                 _id: res.data._id,

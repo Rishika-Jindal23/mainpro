@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { UploadButton } from "../../../utils1/uploadthing";
+
 //import Toast, { showToast } from "../../components/Toast";
 //import "react-toastify/dist/ReactToastify.css";
 // import upload from "../../utils/upload";
@@ -8,7 +10,7 @@ import styles from "./Register.module.scss";
 import axios from "axios";
 import upload from "@/app/utils/upload";
 import newRequest from "@/app/utils/newRequest";
-import { UploadButton } from "@/utils1/uploadthing";
+
 // import newRequest from "../../utils/newRequest";
 // import { useNavigate } from "react-router-dom";
 
@@ -106,13 +108,14 @@ const Register1: React.FC = () => {
                         onChange={handleChange}
                     />
                     <label htmlFor="">Profile Picture</label>
-
                     <UploadButton
                         endpoint="imageUploader"
                         onClientUploadComplete={(res: { url: string }[]) => {
                             if (res && res.length > 0) {
                                 handleFileChange(res[0].url);
                             }
+                            // Do something with the response
+                            console.log("Files: ", res);
                             alert("Upload Completed");
                         }}
                         onUploadError={(error: Error) => {
