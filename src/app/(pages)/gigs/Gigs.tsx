@@ -15,7 +15,7 @@ interface Gig {
     sales: number;
     cover: string;
     createdAt: string;
-    images: string;
+    images: [string];
 }
 
 const Gigs: React.FC = () => {
@@ -113,42 +113,15 @@ const Gigs: React.FC = () => {
                         )}
                     </div>
                 </div>
+
                 <div className={styles.cards}>
                     {gigs.map((gig) => (
-                        <GigCard key={gig._id} item={gig} />
+                        <GigCard
+                            key={gig._id}
+                            item={gig}
+                            //   onClick={handleShowSingleGig}
+                        />
                     ))}
-                    <div>
-                        <h1>Data from API</h1>
-                        <ul>
-                            {gigs.map((item) => (
-                                <li key={item.title}>
-                                    <h2>{item.title}</h2>
-                                    <p>User ID: {item.userId}</p>
-                                    {/* <p>Total Stars: {item.totalstars}</p> */}
-                                    <p>Description: {item.desc}</p>
-                                    {/* <p>Star Number: {item.starNumber}</p> */}
-                                    {/* <p>Category: {item.cat}</p> */}
-                                    <img src={item.cover} alt="Cover" />
-                                    {/* <p>Short Description: {item.shortDesc}</p> */}
-                                    {/* <p>Delivery Time: {item.deliveryTime}</p> */}
-                                    {/* <p>Revision: {item.revision}</p> */}
-                                    <p>Features:</p>
-                                    {/* <ul>
-                            {item.features.map((feature, index) => (
-                                <li key={index}>{feature}</li>
-                            ))}
-                        </ul> */}
-                                    <p>Sales: {item.sales}</p>
-                                    <p>Images: {item.images}</p>
-                                    <img src={item.images} alt="Cover" />
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* {gigs.map((gig) => (
-                        <GigCard item={gig} />
-                    ))} */}
                 </div>
             </div>
         </div>
