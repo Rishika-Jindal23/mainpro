@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
-import Providers from "./store/providers";
+
 import Header from "@/components/layout/Header";
 import ClientProvider from "./ClientProvider";
+import { persistor, store } from "@/redux_store/store";
+import { PersistGate } from "redux-persist/integration/react";
+import Providers from "@/redux_store/provider";
+
+// import { PersistGate } from "redux-persist/integration/react";
+// import Provider from "@/redux_store/provider";
+// import { persistor, store } from "@/redux_store/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +27,17 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ClientProvider>
-                    <Header />
-                    <main className="max-w-4xl  mx-auto">{children}</main>
-                </ClientProvider>
+                {/* <ClientProvider> */}
+                {/* <Header /> */}
+
+                <Providers>
+                    <main className="max-w-4xl  mx-auto">
+                        <Header />
+                        {children}
+                    </main>
+                </Providers>
+
+                {/* </ClientProvider> */}
                 {/* <main className="w-full h-screen ">{children}</main> */}
             </body>
         </html>

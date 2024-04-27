@@ -1,19 +1,31 @@
 "use client";
 
+import { logout } from "@/redux_store/slice/authslice";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
     const [user, setUser] = useState<string | null>(null);
+    const dispatch = useDispatch();
     const [isSeller, setIsSeller] = useState<boolean>(false);
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    // console.log("loggedin>>>>>>>>>>>", loggedInUser);
+
+    const token = useSelector((state) => state.auth.token);
+    console.log("state-----", token);
+
+    console.log();
+
     useEffect(() => {
-        const currentUser = localStorage.getItem("currentUser");
-        console.log(currentUser);
-        if (currentUser) {
-            setUser(currentUser);
-            const userRole = JSON.parse(currentUser).isSeller;
+        // const currentUser = localStorage.getItem("currentUser");
+        //  console.log(currentUser);
+        if (loggedInUser) {
+            setUser(loggedInUser);
+            const userRole = JSON.parse(loggedInUser).isSeller;
             if (userRole) {
                 setIsSeller(true);
             }
@@ -21,7 +33,9 @@ export default function Header() {
     }, [user, isSeller]);
 
     const handleSignOut = async () => {
-        localStorage.removeItem("currentUser");
+        dispatch(logout());
+        //  localStorage.removeItem("currentUser");
+
         setUser(null);
 
         // const response = await fetch("http://localhost:8000/auth/logout");

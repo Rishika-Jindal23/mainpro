@@ -8,42 +8,19 @@ import axios from "axios";
 import newRequest from "@/app/utils/newRequest";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { login } from "@/app/store/slice/authSlice";
+// import { login } from   "../../../redux_store/slice/"
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { login } from "@/redux_store/slice/authslice";
 // import { login } from "../../actions/authActions";
 
 interface LoginProps {}
 
 const LoginMain: React.FC<LoginProps> = () => {
-    //   const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    //   const router = useRouter();
-
-    // const router = useRouter();
-    // const [username, setUsername] = useState<string>("");
-    // const [password, setPassword] = useState<string>("");
-    // const [error, setError] = useState<string>("");
-
-    // const handleSubmit = async (e: FormEvent) => {
-    //     e.preventDefault();
-    //     // Your login logic here
-    //     // For example, you can make an API call to authenticate the user
-
-    //     try {
-    //         // Dummy authentication logic (replace with your actual authentication logic)
-    //         if (username === "johndoe" && password === "password") {
-    //             // Redirect to the dashboard or any other route upon successful login
-    //             router.push("/dashboard");
-    //         } else {
-    //             setError("Invalid username or password");
-    //         }
-    //     } catch (error) {
-    //         setError("An error occurred while logging in");
-    //     }
-    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -55,14 +32,14 @@ const LoginMain: React.FC<LoginProps> = () => {
                 password,
             });
             await toast.success("🦄 Login Successful");
-            console.log("login res : ", res.data.token);
-            localStorage.setItem("currentUser", JSON.stringify(res.data.info));
-            localStorage.setItem("token", res.data.token);
+            const token = res.data.token;
+            // localStorage.setItem("currentUser", JSON.stringify(res.data.info));
+            //localStorage.setItem("token", res.data.token);
 
-            // console.log(res.data.username);
-            // const user = JSON.stringify(res.data);
+            const currentUser = JSON.stringify(res.data.info);
+            //   console.log("current user>>>>", currentUser);
             // console.log("user : ", user);
-            //     dispatch(login(user));
+            dispatch(login({ currentUser, token }));
             window.location.href = "/landingpage";
             const user = {
                 // Define your user properties here

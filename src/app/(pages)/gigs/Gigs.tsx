@@ -19,7 +19,7 @@ interface Gig {
 }
 
 const Gigs: React.FC = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);

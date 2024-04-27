@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./GigCard.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 interface GigItem {
     images: string;
@@ -20,7 +21,8 @@ interface GigCardProps {
 
 const GigCard: React.FC<GigCardProps> = ({ item }) => {
     const router = useRouter();
-    const token = localStorage.getItem("token");
+
+    const token = useSelector((state) => state.auth.token);
 
     const showSingleGig = (id: string) => {
         //Pass the id parameter to handleShowMore function

@@ -3,14 +3,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Add.module.scss";
 import { UploadButton } from "@/utils1/uploadthing";
+import { useSelector } from "react-redux";
 
 const Add: React.FC = () => {
-    const token = localStorage.getItem("token");
-    console.log("token>>>>>>>>>>>>>>>>>>>>>", token);
+    //const token = localStorage.getItem("token");
+    //console.log("token>>>>>>>>>>>>>>>>>>>>>", token);
 
-    const currentUserData = localStorage.getItem("currentUser");
-    const originalUser = JSON.parse(currentUserData);
-    const sellerusername = originalUser.username;
+    // const currentUserData = localStorage.getItem("currentUser");
+    // const originalUser = JSON.parse(currentUserData);
+    const originalUser = useSelector((state) => state.auth.user.currentUser);
+    const allData = JSON.parse(originalUser);
+    const sellerName = allData.username;
+    // console.log("uuuuuuu----", allData);
+
+    console.log(
+        "current user ---------",
+        useSelector((state) => state)
+    );
+    const token = useSelector((state) => state.auth.token);
+
+    // console.log("-------------------------------", originalUser.username);
+
+    const sellerusername = "hhh";
+    //console.log("sellerusername : ", sellerusername);
 
     if (typeof window !== "undefined") {
         console.log("we are running on the client");
@@ -20,7 +35,7 @@ const Add: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
     const [formData, setFormData] = useState({
         title: "",
-        username: sellerusername,
+        username: sellerName,
         cat: "",
         cover: "",
         Images: [],
