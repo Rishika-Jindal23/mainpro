@@ -5,7 +5,7 @@ function Hero() {
     return (
         <>
             <section className="grid grid-cols-2">
-                <div className="py-8">
+                <div className="py-8 bgcolor">
                     <h1 className="text-4xl  font-semibold  leading-normal  ">
                         Connecting <span className="italic">Skills</span> to
                         Projects
@@ -56,11 +56,7 @@ function Hero() {
                         </form>
                     </div>
 
-                    <div>
-                        <button className="bg-blue-700 text-white px-4 py-2    flex gap-2    rounded-full mt-5 ml-11">
-                            lets get started <Right />
-                        </button>
-                    </div>
+                  
                 </div>
                 <div className="w-45 h-70  relative mt-5 ">
                     <Image
