@@ -1,71 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
 import Carousel from "@itseasy21/react-elastic-carousel";
-import styles from "./Gig.module.scss"; // Assuming you're using CSS modules for styling
-import { useRouter } from "next/router";
-import { useParams } from "next/navigation";
+import styles from "./Gig.module.scss";
+import { fetchUsers, fetchUserById, user } from "@/redux_store/slice/authslice";
 
-interface Gigitem {
-    _id: string;
-    userId: string;
-    title: string;
-    desc: string;
-    totalstars: number;
-    starNumber: string;
-    cat: string;
-    price: number;
-    cover: string;
-    images: string[];
-    shortDesc: string;
-    deliveryTime: number;
-    revisionNumber: number;
-    features: string[]; // You may need to define a proper type for features if it has a specific structure
-    sales: number;
-    username: string;
-}
+import {
+    fetchGigByIdAsync,
+    selectCurrentGig,
+} from "@/redux_store/slice/gigsSlice";
 
 const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
-    const [gig, setGig] = useState<Gigitem[]>([]);
-
-    // console.log("params>>>>>>>>>>>>>>>> : ", id);
-
-    const token = localStorage.getItem("token");
-
-    // const [gig, setGig] = useState<Giggig[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchGigData();
-    }, []);
+        dispatch(fetchGigByIdAsync(id));
+    }, [dispatch, id]);
+    const currentGig = useSelector(selectCurrentGig);
+    console.log("current>>>>>>>>>>>>>>", currentGig);
 
-    const fetchGigData = async () => {
-        try {
-            console.log("response--------");
-
-            const response = await fetch(
-                `http://localhost:8000/gigs/single/${id}`,
-                {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Content-Type": "application/json",
-                        // Authorization: `Bearer ${token}`,
-                    },
-                    credentials: "include",
-                }
-            );
-
-            // `http://localhost:3001/campaign/${id}`
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch");
-            }
-            const data = await response.json();
-            setGig(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    console.log(gig);
+    if (!currentGig) {
+        // If gig data is not available yet, you can render a loading state or handle it accordingly
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className={styles.gig}>
@@ -78,32 +37,36 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
             <div className={styles.container}>
                 <div className={styles.left}>
                     {/* <ul>
-                        <li key={gig.id}>
-                            <h2>{gig.title}</h2>
-                            <p>User ID: {gig.userId}</p>
-                            <p>Total Stars: {gig.totalstars}</p>
-                            <p>Description: {gig.desc}</p>
-                            <p>Star Number: {gig.starNumber}</p>
-                            <p>Category: {gig.cat}</p>
-                            <img src={gig.cover} alt="Cover" />
-                            <p>Short Description: {gig.shortDesc}</p>
-                            <p>Delivery Time: {gig.deliveryTime}</p>
-                            <p>Revision: {gig.revisionNumber}</p>
+                        <li key={currentGig.id}>
+                            <h2>sellerCountry{currentGig.title}</h2>
+                            <p>Sellername:{currentGig.username}</p>
+                            <p>Seller ID: {currentGig.userId._id}</p>
+                            <p>sellerDesc{currentGig.userId.desc}</p>
+                            <p>Country:{currentGig.userId.country}</p>
+                            <p>Total Stars: {currentGig.totalstars}</p>
+                            <p>Description: {currentGig.desc}</p>
+                            <p>Star Number: {currentGig.starNumber}</p>
+                            <p>Category: {currentGig.cat}</p>
+                            <img src={currentGig.cover} alt="Cover" />
+                            <p>Short Description: {currentGig.shortDesc}</p>
+                            <p>Delivery Time: {currentGig.deliveryTime}</p>
+                            <p>Revision: {currentGig.revisionNumber}</p>
 
-                            <p>Sales: {gig.sales}</p>
+                            <p>Sales: {currentGig.sales}</p>
                         </li>
                     </ul> */}
                     <span className={styles.breadcrumbs}>
                         SkillSphere Graphics & Design
                     </span>
-                    <h1>I will create ai generated art for you</h1>
+                    <h1>{currentGig.title}</h1>
                     <div className={styles.user}>
+                        {/* userprofilepic */}
                         <img
                             className={styles.pp}
                             src="https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
                             alt=""
                         />
-                        <span>Anna Bell</span>
+                        <span>{currentGig.username}</span>
                         <div className={styles.stars}>
                             {[...Array(5)].map((_, index) => (
                                 <img key={index} src="/img/star.png" alt="" />
@@ -112,7 +75,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         </div>
                     </div>
                     <Carousel itemsToShow={2} isRTL={false}>
-                        <img src={gig.images} alt="GigImage" />
+                        <img src={currentGig.images} alt="GigImage" />
                         {/* <img
                             src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
                             alt=""
@@ -127,16 +90,17 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         /> */}
                     </Carousel>
                     <h2>About This Gig</h2>
-                    <p>{gig.desc}</p>
+                    <p>{currentGig.desc}</p>
                     <div className={styles.seller}>
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
+                            {/* userProfilePic */}
                             <img
                                 src="https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
                                 alt=""
                             />
                             <div className={styles.info}>
-                                <span>Anna Bell</span>
+                                <span>{currentGig.username}</span>
                                 <div className={styles.stars}>
                                     {[...Array(5)].map((_, index) => (
                                         <img
@@ -154,7 +118,9 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                             <div className={styles.gigs}>
                                 <div className={styles.gig}>
                                     <span className={styles.title}>From</span>
-                                    <span className={styles.desc}>USA</span>
+                                    <span className={styles.desc}>
+                                        {currentGig.userId.country}
+                                    </span>
                                 </div>
                                 <div className={styles.gig}>
                                     <span className={styles.title}>
@@ -184,13 +150,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                                 </div>
                             </div>
                             <hr />
-                            <p>
-                                My name is Anna, I enjoy creating AI generated
-                                art in my spare time. I have a lot of experience
-                                using the AI program and that means I know what
-                                to prompt the AI with to get a great and
-                                incredibly detailed result.
-                            </p>
+                            <p>{currentGig.userId.desc}</p>
                         </div>
                     </div>
                     <div className={styles.reviews}>
@@ -333,10 +293,10 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.price}>
-                        <h3>{gig.title}</h3>
-                        <h2>{gig.price}</h2>
+                        {/* <h3>{currentGig.title}</h3> */}
+                        <h2>{currentGig.price}</h2>
                     </div>
-                    <p>{gig.shortDesc}</p>
+                    <p>{currentGig.shortDesc}</p>
                     <div className={styles.details}>
                         {/* Details content here */}
                     </div>

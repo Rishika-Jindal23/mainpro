@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slice/authslice";
-import gigsReducer from "./slice/gigs";
+import gigsReducer from "./slice/gigsSlice";
 
 import {
     persistStore,

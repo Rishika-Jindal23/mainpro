@@ -2,58 +2,67 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./Gigs.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGigsAsync, selectGigs } from "@/redux_store/slice/gigsSlice";
 
 import GigCard from "../../../components/gigCard/GigCard";
 
-interface Gig {
-    username: string;
-    _id: string;
-    userId: string;
-    title: string;
-    desc: string;
-    price: number;
-    sales: number;
-    cover: string;
-    createdAt: string;
-    images: [string];
-}
+// interface Gig {
+//     username: string;
+//     _id: string;
+//     userId: string;
+//     title: string;
+//     desc: string;
+//     price: number;
+//     sales: number;
+//     cover: string;
+//     createdAt: string;
+//     images: [string];
+// }
 
 const Gigs: React.FC = () => {
-    // const token = localStorage.getItem("token");
+    const dispatch = useDispatch();
+    const { data: gigs, loading, error } = useSelector(selectGigs);
+
+    //     // const token = localStorage.getItem("token");
 
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);
-    const [gigs, setGigs] = useState<Gig[]>([]);
+    //     const [gigs, setGigs] = useState<Gig[]>([]);
     const minRef = useRef<HTMLInputElement>(null);
     const maxRef = useRef<HTMLInputElement>(null);
 
+    //     useEffect(() => {
+    //         fetchGigs();
+    //     }, []);
+
     useEffect(() => {
-        fetchGigs();
-    }, []);
+        dispatch(fetchGigsAsync());
+    }, [dispatch]);
 
-    const fetchGigs = async () => {
-        try {
-            const response = await fetch("http://localhost:8000/gigs", {
-                // mode: "no-cors",
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                    // Authorization: `Bearer ${token}`,
-                },
-                credentials: "include",
-            });
+    //     const fetchGigs = async () => {
+    //         try {
+    //             const response = await fetch("http://localhost:8000/gigs", {
+    //                 // mode: "no-cors",
+    //                 headers: {
+    //                     "Access-Control-Allow-Origin": "*",
+    //                     "Content-Type": "application/json",
+    //                     // Authorization: `Bearer ${token}`,
+    //                 },
+    //                 credentials: "include",
+    //             });
 
-            console.log(response);
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            setGigs(data);
-        } catch (error) {
-            console.error("Error fetching gigs:", error);
-        }
-    };
-    console.log(gigs);
+    //             console.log(response);
+    //             if (!response.ok) {
+    //                 throw new Error("Network response was not ok");
+    //             }
+    //             const data = await response.json();
+    //             setGigs(data);
+    //         } catch (error) {
+    //             console.error("Error fetching gigs:", error);
+    //         }
+    //     };
+    //     console.log(gigs);
 
     const reSort = (type: string) => {
         setSort(type);

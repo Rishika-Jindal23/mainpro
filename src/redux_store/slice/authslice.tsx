@@ -1,6 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+interface User {
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    country: string;
+    isSeller: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
 interface authState {
     isAuthenticated: boolean;
 
@@ -18,12 +30,42 @@ const initialState: authState = {
     status: "idle",
 };
 
-export const fetchUsers = createAsyncThunk(
-    "notes/users",
-    async (user: string) => {
-        console.log("user id : ", user);
-        const response = await axios.get(" http://localhost:8000/users");
-        //console.log("users : ",response);
+// Thunk to fetch all users
+// export const fetchUsers = createAsyncThunk("auth/fetchUsers", async () => {
+//     const response = await axios.get("http://localhost:8000/users");
+//     return response.data;
+// });*****************
+
+export const fetchUsers = createAsyncThunk("auth/fetchUsers", async () => {
+    try {
+        const response = await axios.get("http://localhost:8000/users", {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${token}`,
+            },
+            // credentials: "include",
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error("Error fetching gigs");
+    }
+});
+
+// Thunk to fetch user by ID
+export const fetchUserById = createAsyncThunk(
+    "auth/fetchUserById",
+    async (userId: string) => {
+        const response = await axios.get(
+            `http://localhost:8000/users/${userId}`,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                    // Authorization: `Bearer ${token}`,
+                },
+            }
+        );
         return response.data;
     }
 );
@@ -43,11 +85,8 @@ const authSlice = createSlice({
             state.user = [];
             state.token = "";
         },
-        //    update : (state, action) =>
-        //    {
-        //       state.user = action.payload;
-        //    }
     },
+
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsers.pending, (state) => {
@@ -56,20 +95,30 @@ const authSlice = createSlice({
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.users = action.payload;
-                console.log("action.payload : ", action.payload);
-                console.log("state.notes : ", state.users);
             })
-            .addCase(fetchUsers.rejected, (state, action) => {
+            .addCase(fetchUsers.rejected, (state) => {
                 state.status = "failed";
-                state.error = action.error.message ?? "An error occurred.";
+            })
+            .addCase(fetchUserById.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(fetchUserById.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.user = action.payload;
+            })
+            .addCase(fetchUserById.rejected, (state) => {
+                state.status = "failed";
             });
     },
+
+    // *************************
 });
 
 export const { login, logout } = authSlice.actions;
 
 export const isAuthenticated = (state: { auth: authState }) =>
     state.auth.isAuthenticated;
+// export const user = (state: { auth: authState }) => state.auth.user;
 export const user = (state: { auth: authState }) => state.auth.user;
 export const token = (state: { auth: authState }) => state.auth.token;
 export const users = (state: { auth: authState }) => state.auth.users;
