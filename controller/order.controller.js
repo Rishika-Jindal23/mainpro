@@ -1,29 +1,72 @@
 const Order = require("../models/order.model")
 const Gig = require("../models/gig.model");
+const Stripe = require("stripe")
 
 
 
-exports.createOrder = async (req, res, next) => {
-    try {
-        const gig = await Gig.findById(req.params.gigId)
-        console.log(gig)
-        const newOrder = new Order({
-            gigId: gig._id,
-            title: gig.title,
-            buyerId: req.userId,
-            sellerId: gig.userId,
-            price: gig.price,
-            payment_intent: "temp"
-        });
-        console.log("new" + newOrder);
-        await newOrder.save();
-        if (!newOrder) { res.status(404).send("no order created") }
-
-        res.status(200).send("successfully  placed the order");
 
 
-    } catch (err) { res.status(404).send("gig not found by this id") }
+exports.intent = async (req, res, next) => {
+    const stripe = new Stripe(process.env.STRIPE);
+    const gig = await Gig.findById(req.params?.id)
+    console.log("req.params.id-", req.params.id);
+    console.log("gig:", gig);
+    //console.log("hhhhhhhhhhhhhhhhhhh");
+    // try {  // } catch (error) { res.status(404).send("an error occurred", error) }
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        shipping: {
+            name: 'Jenny Rosen',
+            address: {
+                line1: '510 Townsend St',
+                postal_code: '98140',
+                city: 'San Francisco',
+                state: 'CA',
+                country: 'US',
+            },
+        },
+        amount: gig.price * 100,
+        currency: "usd",
+        description: 'Software development services',
+        automatic_payment_methods: {
+            enabled: true,
+        }
+    })
+    const newOrder = new Order({
+        gigId: gig._id,
+        title: gig.title,
+        buyerId: req.userId,
+        sellerId: gig.userId,
+        price: gig.price,
+        payment_intent: paymentIntent.id,
+    });
+    await newOrder.save();
+    res.status(200).send({ clientSecret: paymentIntent.client_secret, })
+
+
 }
+
+// exports.createOrder = async (req, res, next) => {
+//     try {
+//         const gig = await Gig.findById(req.params.gigId)
+//         console.log(gig)
+//         const newOrder = new Order({
+//             gigId: gig._id,
+//             title: gig.title,
+//             buyerId: req.userId,
+//             sellerId: gig.userId,
+//             price: gig.price,
+//             payment_intent: "temp"
+//         });
+//         console.log("new" + newOrder);
+//         await newOrder.save();
+//         if (!newOrder) { res.status(404).send("no order created") }
+
+//         res.status(200).send("successfully  placed the order");
+
+
+//     } catch (err) { res.status(404).send("gig not found by this id") }
+// }
 
 
 exports.getOrders = async (req, res, next) => {

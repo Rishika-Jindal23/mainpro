@@ -20,6 +20,7 @@ exports.register = async (req, res) => {
             {
                 username: user.username,
                 email: user.email,
+                img: user.img,
                 password: hash,
                 country: user.country,
                 phone: user.phone,
@@ -29,8 +30,8 @@ exports.register = async (req, res) => {
         //    console.log("data : --------------", req.body);
         // console.log("user : ", newUser);
         // Save the new user to the database
-        console.log("new user : ", newUser);
-        console.log("new user : ", newUser);
+        //console.log("new user : ", newUser);
+        // console.log("new user : ", newUser);
         await newUser.save();
         if (!newUser) { res.status(404).send("please enter correct details") }
 
@@ -50,9 +51,9 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         console.log(req.body.username);
-        // console.log("db ka user : ", User.username);
+
         const user = await User.findOne({ username: req.body.username })
-        console.log("user mil raha hai : ?", user);
+
         if (!user) return res.status(404).send("user not found")
         const isCorrect = bcrypt.compareSync(req.body.password, user.password);
         console.log("is corerct : ", isCorrect);

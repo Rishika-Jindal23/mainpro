@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const GigSchema = new Schema({
     userId: {
-        type: String,
-        required: true
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
     title: {
         type: String,
@@ -37,7 +38,7 @@ const GigSchema = new Schema({
     },
     cover: {
         type: String,
-        default: false
+        required: false
 
     },
     images: {
@@ -71,6 +72,9 @@ const GigSchema = new Schema({
         default: 0
 
     },
+    username: {
+        type: String,
+    }
 
 
 
@@ -79,4 +83,27 @@ const GigSchema = new Schema({
 }, {
     timestamps: true
 });
+
+
 module.exports = mongoose.model("Gig", GigSchema)
+
+// Gig.aggregate([
+//     {
+//         $lookup: {
+//             from: "User", // Assuming the name of the User collection is "users"
+//             localField: "userId",
+//             foreignField: "_id",
+//             as: "userDetails"
+//         }
+//     }
+// ])
+//     .exec((err, gigs) => {
+//         if (err) {
+//             console.error(err);
+//             // Handle error
+//         } else {
+//             console.log(gigs);
+//             // Handle result
+//         }
+//     });
+

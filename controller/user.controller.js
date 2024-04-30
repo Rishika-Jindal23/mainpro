@@ -4,15 +4,32 @@ const jwt = require("jsonwebtoken")
 
 
 
+
+
+exports.getUserById = async (req, res, next) => {
+
+    try {
+        const user = await User.findById(req.params?.id);
+        if (!user) return res.status(404).send("user not found ")
+        res.status(200).send(user)
+    } catch (error) { res.status(404).send("user not found by this id") }
+
+
+}
+
+
+
+
+
 exports.deleteUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params?.id)
         console.log(user);
 
         //console.log("hello");  
         //console.log(user._id);
         if (req.userId !== user._id.toString()) { return res.status(403).send("you can delete only your account") }
-        await User.findByIdAndDelete(req.params.id);
+        await User.findByIdAndDelete(req.params?.id);
         res.status(200).send("deleted");
     }
     catch (err) {
@@ -49,7 +66,7 @@ exports.updateUser = async (req, res) => {
 
 // exports.updateUser = async (req, res) => {
 //     try {
-//         const userId = req.params.id;
+//         const userId = req.params.?.id;
 //         const updates = req.body;
 //         const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
 //         if (!updatedUser) {

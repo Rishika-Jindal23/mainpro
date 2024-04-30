@@ -4,16 +4,17 @@ const verifyToken = require("../middleware/jwt");
 const { findByIdAndDelete } = require("../models/user.model");
 
 exports.createGig = async (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
         if (!req.isSeller) return res.status(403).send("Only sellers can create a gig");
 
         const newGig = new Gig({
             userId: req.userId,
             ...req.body,
+
         });
 
-        // console.log("newGig >>>", newGig);
+        console.log("newGig >>>", newGig);
 
         const savedGig = await newGig.save();
 
@@ -32,9 +33,9 @@ exports.createGig = async (req, res, next) => {
 
 exports.deleteGig = async (req, res, next) => {
     try {
-        const gig = await Gig.findById(req.params.id);
+        const gig = await Gig.findById(req.params?.id);
         if (gig.userId !== req.userId) return res.status(403).send("you can delete only your gig");
-        await Gig.findByIdAndDelete(req.params.id);
+        await Gig.findByIdAndDelete(req.params?.id);
         res.status(200).send("Gig has been deleted")
     } catch (error) {
         res.status(404).send("invalid gig id")
@@ -42,7 +43,7 @@ exports.deleteGig = async (req, res, next) => {
 };
 exports.getGig = async (req, res, next) => {
     try {
-        const gig = await Gig.findById(req.params.id);
+        const gig = await Gig.findById(req.params?.id).populate('userId')
         if (!gig) return res.status(404).send("gig not found");
         res.status(200).send(gig)
     } catch (error) { res.status(404).send("gig not found by this id") }
@@ -89,7 +90,7 @@ exports.getGigs = async (req, res, next) => {
 
 exports.updateGig = async (req, res, next) => {
     try {
-        const gig = await Gig.findById(req.params.id);
+        const gig = await Gig.findById(req.params?.id);
         if (!gig) return res.status(404).send("Gig not found");
 
         if (gig.userId !== req.userId) return res.status(403).send("You can only update your own gig");
