@@ -1,19 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
 import Carousel from "@itseasy21/react-elastic-carousel";
 import styles from "./Gig.module.scss";
+import Pay from "../../pay/pay";
 import { fetchUsers, fetchUserById, user } from "@/redux_store/slice/authslice";
 
 import {
     fetchGigByIdAsync,
     selectCurrentGig,
 } from "@/redux_store/slice/gigsSlice";
+import Link from "next/link";
 
 const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
 
     useEffect(() => {
         dispatch(fetchGigByIdAsync(id));
@@ -25,6 +29,9 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
         // If gig data is not available yet, you can render a loading state or handle it accordingly
         return <div>Loading...</div>;
     }
+    const payment = (id: string, price: Number) => {
+        router.push(`http://localhost:3000/pay?gigid=${id}?price=${price}`);
+    };
 
     return (
         <div className={styles.gig}>
@@ -76,18 +83,6 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     </div>
                     <Carousel itemsToShow={2} isRTL={false}>
                         <img src={currentGig.images} alt="GigImage" />
-                        {/* <img
-                            src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                            alt=""
-                        />
-                        <img
-                            src="https://images.pexels.com/photos/1462935/pexels-photo-1462935.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                            alt=""
-                        />
-                        <img
-                            src="https://images.pexels.com/photos/1054777/pexels-photo-1054777.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                            alt=""
-                        /> */}
                     </Carousel>
                     <h2>About This Gig</h2>
                     <p>{currentGig.desc}</p>
@@ -303,7 +298,21 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     <div className={styles.features}>
                         {/* Features content here */}
                     </div>
-                    <button>Continue</button>
+                    {/* <Link href={`http://localhost:3000/pay/${id}`}>
+                        order Now
+                    </Link>
+                     */}
+                    {/* <button onClick={() => showSingleGig(item._id)}>
+                            View Gig
+                        </button>
+                    </div> */}
+                    <button
+                        onClick={() =>
+                            payment(currentGig._id, currentGig.price)
+                        }
+                    >
+                        Order Now!
+                    </button>
                 </div>
             </div>
         </div>
