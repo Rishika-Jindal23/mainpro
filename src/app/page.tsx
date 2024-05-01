@@ -17,10 +17,7 @@ const Home: React.FC = () => {
         <>
             {/* <Header /> */}
             <Hero />
-            <HeroTwo/>
-            
-           
-
+            <HeroTwo />
         </>
     );
 };

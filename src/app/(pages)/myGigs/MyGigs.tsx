@@ -1,24 +1,49 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import styles from "./MyGigs.module.scss";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    fetchGigsByUserIdAsync,
+    selectCurrentUserGig,
+} from "@/redux_store/slice/gigsSlice";
 
 function MyGigs() {
-    const currentUser: {
-        id: number;
-        username: string;
-        isSeller: boolean;
-    } = {
-        id: 1,
-        username: "Anna",
-        isSeller: true,
-    };
+    // const currentUser: {
+    //     id: number;
+    //     username: string;
+    //     isSeller: boolean;
+    // } = {
+    //     id: 1,
+    //     username: "Anna",
+    //     isSeller: true,
+    // };
+
+    const dispatch = useDispatch();
+    const currentuserGig = useSelector(selectCurrentUserGig);
+
+    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
+    const originaluser = JSON.parse(loggedInUser);
+    const userId = originaluser._id;
+    console.log("id>>>>>>>>>>>>>>>>>>", userId);
+    const loginUserName = originaluser.username;
+    const loginUserIsSeller = originaluser.isSeller;
+
+    useEffect(() => {
+        // Dispatch the fetchGigsByUserIdAsync action when the component mounts
+        if (userId) {
+            dispatch(fetchGigsByUserIdAsync(userId));
+        }
+    }, [dispatch, userId]);
+    console.log("gigss>>>>>>>>>>>>>..", currentuserGig);
 
     return (
         <div className={styles.myGigs}>
             <div className={styles.container}>
                 <div className={styles.title}>
-                    <h1>{currentUser.isSeller ? "Gigs" : "Orders"}</h1>
-                    {currentUser.isSeller && (
+                    <h1>{originaluser.isSeller ? "Gigs" : "Orders"}</h1>
+                    {originaluser.isSeller && (
                         <Link href="/add">
                             <button>Add New Gig</button>
                         </Link>

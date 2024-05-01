@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import newRequest from "@/app/utils/newRequest";
 import { Elements } from "@stripe/react-stripe-js";
-import { styles } from "./pay.module.scss";
+
 import CheckOutForm from "@/components/checkOutForm/CheckOutForm";
 
 const stripePromise = loadStripe(

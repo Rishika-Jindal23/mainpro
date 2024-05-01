@@ -1,19 +1,44 @@
+"use client";
 import React from "react";
 
 import styles from "./Orders.module.scss";
 
-const Orders = () => {
-    interface User {
-        id: number;
-        username: string;
-        isSeller: boolean;
-    }
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrders } from "@/redux_store/slice/ordersSlice";
 
-    const currentUser: User = {
-        id: 1,
-        username: "Anna",
-        isSeller: true,
-    };
+const Orders = () => {
+    const dispatch = useDispatch();
+    const orders = useSelector((state) => state.orders.orders);
+    console.log("order--------", orders);
+
+    const error = useSelector((state) => state.error);
+
+    useEffect(() => {
+        dispatch(fetchOrders());
+    }, [dispatch]);
+
+    // interface User {
+    //     id: number;
+    //     username: string;
+    //     isSeller: boolean;
+    // }
+
+    // const currentUser: User = {
+    //     id: 1,
+    //     username: "Anna",
+    //     isSeller: true,
+    // };
+    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    // console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
+    const originaluser = JSON.parse(loggedInUser);
+    const loginUserId = originaluser._id;
+    const loginUserName = originaluser.username;
+    const loginUserIsSeller = originaluser.isSeller;
+
+    function handleContact(order: any): void {
+        throw new Error("Function not implemented.");
+    }
 
     return (
         <div className={styles.orders}>
@@ -21,143 +46,49 @@ const Orders = () => {
                 <div className={styles.title}>
                     <h1>Orders</h1>
                 </div>
+                {/* <p>orderid{orders.orders.id}</p> */}
+                {/* <div>
+                    <h1>Orders</h1>
+                    {error && <p>{error}</p>}
+                    <ul>
+                        {orders.map((order) => (
+                            <li key={order._id}>{order.title}</li>
+                        ))}
+                    </ul>
+                </div> */}
+
                 <table>
                     <thead>
                         <tr>
                             <th>Image</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+
                             <th>Contact</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Stunning concept art</td>
-                            <td>
-                                59.<sup>99</sup>
-                            </td>
-                            <td>Maria Anders</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Ai generated concept art</td>
-                            <td>
-                                79.<sup>99</sup>
-                            </td>
-                            <td>Francisco Chang</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>High quality digital character</td>
-                            <td>
-                                110.<sup>99</sup>
-                            </td>
-                            <td>Roland Mendel</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Illustration hyper realistic painting</td>
-                            <td>
-                                39.<sup>99</sup>
-                            </td>
-                            <td>Helen Bennett</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Original ai generated digital art</td>
-                            <td>
-                                119.<sup>99</sup>
-                            </td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img
-                                    className={styles.image}
-                                    src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Text based ai generated art</td>
-                            <td>
-                                49.<sup>99</sup>
-                            </td>
-                            <td>Giovanni Rovelli</td>
-                            <td>
-                                <img
-                                    className={styles.message}
-                                    src="./img/message.png"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
+                        {orders.map((order) => (
+                            <tr key={order._id}>
+                                <td>
+                                    <img
+                                        className={styles.image}
+                                        src={order.img}
+                                        alt=""
+                                    />
+                                </td>
+                                <td>{order.title}</td>
+                                <td>{order.price}</td>
+                                <td>
+                                    <img
+                                        className={styles.message}
+                                        src="./img/message.png"
+                                        alt=""
+                                        onClick={() => handleContact(order)}
+                                    />
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

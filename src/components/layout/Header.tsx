@@ -37,14 +37,15 @@ export default function Header() {
         //  localStorage.removeItem("currentUser");
 
         setUser(null);
+        window.location.href = "/";
 
         // const response = await fetch("http://localhost:8000/auth/logout");
         // const data = await response.json();
         // if (response.ok) {
-        //     window.location.href = "/";
-        // } else {
-        //     alert(data.message);
-        // }
+
+        //     } else {
+        //         alert(data.message);
+        //     }
     };
 
     const handleDropdown = () => {
