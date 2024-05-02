@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./Add.module.scss";
 import { UploadButton } from "@/utils1/uploadthing";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const Add: React.FC = () => {
+    const router = useRouter();
     //const token = localStorage.getItem("token");
     //console.log("token>>>>>>>>>>>>>>>>>>>>>", token);
 
@@ -114,6 +116,7 @@ const Add: React.FC = () => {
         if (response.ok) {
             // If submission is successful, you can redirect or show a success message
             console.log("Data sent successfully!");
+            router.push("/myGigs");
         } else {
             console.error("Failed to send data");
         }
@@ -212,7 +215,7 @@ const Add: React.FC = () => {
                             <input
                                 type="text"
                                 value={formData.title}
-                                name="serviceTitle"
+                                name="Title"
                                 placeholder="e.g. One-page web design"
                                 onChange={handleChange}
                             /> */}

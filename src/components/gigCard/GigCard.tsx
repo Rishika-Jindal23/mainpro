@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 interface GigItem {
+    userId: any;
     images: string;
-    pp: string;
+    img: string;
     username: string;
     desc: string;
     star: number;
@@ -40,7 +41,7 @@ const GigCard: React.FC<GigCardProps> = ({ item }) => {
                 <img src={item.images} alt="" />
                 <div className={styles.info}>
                     <div className={styles.user}>
-                        <img src={item.pp} alt="" />
+                        <img src={item.userId.img} alt="" />
                         <span>{item.username}</span>
                     </div>
                     <p>{item.desc}</p>
@@ -61,10 +62,7 @@ const GigCard: React.FC<GigCardProps> = ({ item }) => {
 
                     <div className={styles.price}>
                         <span>STARTING AT</span>
-                        <h2>
-                            $ {item.price}
-                            <sup>99</sup>
-                        </h2>
+                        <h2>$ {item.price}</h2>
                     </div>
                 </div>
             </div>

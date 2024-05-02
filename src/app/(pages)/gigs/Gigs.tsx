@@ -40,30 +40,6 @@ const Gigs: React.FC = () => {
         dispatch(fetchGigsAsync());
     }, [dispatch]);
 
-    //     const fetchGigs = async () => {
-    //         try {
-    //             const response = await fetch("http://localhost:8000/gigs", {
-    //                 // mode: "no-cors",
-    //                 headers: {
-    //                     "Access-Control-Allow-Origin": "*",
-    //                     "Content-Type": "application/json",
-    //                     // Authorization: `Bearer ${token}`,
-    //                 },
-    //                 credentials: "include",
-    //             });
-
-    //             console.log(response);
-    //             if (!response.ok) {
-    //                 throw new Error("Network response was not ok");
-    //             }
-    //             const data = await response.json();
-    //             setGigs(data);
-    //         } catch (error) {
-    //             console.error("Error fetching gigs:", error);
-    //         }
-    //     };
-    //     console.log(gigs);
-
     const reSort = (type: string) => {
         setSort(type);
         setOpen(false);

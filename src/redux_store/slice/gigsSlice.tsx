@@ -24,6 +24,7 @@ interface Gig {
 }
 
 interface GigsState {
+    //currentreviews: any;
     id: Key | null | undefined;
     userId: string;
     username: string;
@@ -31,7 +32,7 @@ interface GigsState {
     loading: boolean;
     error: string | null;
     currentGig: Gig | null; // Add currentGig property
-    currentuserGig: Gig | null;
+    currentuserGig: Gig | [];
 }
 
 const initialState: GigsState = {
@@ -39,7 +40,7 @@ const initialState: GigsState = {
     loading: false,
     error: null,
     currentGig: null,
-    currentuserGig: null,
+    currentuserGig: [],
     id: undefined,
     userId: "",
     username: "",
@@ -51,7 +52,7 @@ export const fetchGigsAsync = createAsyncThunk("gigs/fetchGigs", async () => {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
-                // Authorization: `Bearer ${token}`,
+                //      Authorization: `Bearer ${token}`,
             },
             credentials: "include",
         });
@@ -149,6 +150,7 @@ export const gigsSlice = createSlice({
             })
             // .addCase(fetchGigsByUserIdAsync.pending, (state) => {
             //     state.loading = true;
+
             // })
 
             // .addCase(fetchGigsByUserIdAsync.fulfilled, (state, action) => {

@@ -114,7 +114,7 @@ export default function Header() {
                                                     Add Gigs
                                                 </Link>
                                                 <Link
-                                                    href={"/mygigs"}
+                                                    href={"/myGigs"}
                                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                                     role="menuitem"
                                                 >
