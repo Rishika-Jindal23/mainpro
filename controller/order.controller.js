@@ -11,8 +11,6 @@ exports.intent = async (req, res, next) => {
     const gig = await Gig.findById(req.params?.id)
     console.log("req.params.id-", req.params.id);
     console.log("gig:", gig);
-    //console.log("hhhhhhhhhhhhhhhhhhh");
-    // try {  // } catch (error) { res.status(404).send("an error occurred", error) }
 
     const paymentIntent = await stripe.paymentIntents.create({
         shipping: {
@@ -35,6 +33,7 @@ exports.intent = async (req, res, next) => {
     const newOrder = new Order({
         gigId: gig._id,
         title: gig.title,
+        img: gig.cover,
         buyerId: req.userId,
         sellerId: gig.userId,
         price: gig.price,
@@ -73,13 +72,14 @@ exports.getOrders = async (req, res, next) => {
     try {
         let query = {};
         if (req.isSeller) {
-            query = { sellerId: req.userId };
+            query = { sellerId: req.userId, isCompleted: true };
         } else {
-            query = { buyerId: req.userId };
+            query = { buyerId: req.userId, isCompleted: true };
         }
-        //console.log(query);
+        //console.log("quuuuuuuuuuuuuuuuuuuuuu-------------", query);
 
         const orders = await Order.find(query);
+        console.log("orders>>>>>>>>>>>", orders)
         if (!orders) { res.status(404).send("not able to get orders") }
         //console.log(orders);
         res.status(200).send(orders);
@@ -131,29 +131,49 @@ exports.deleteOrder = async (req, res, next) => {
     }
 };
 
-exports.updateOrderStatus = async (req, res, next) => {
+// exports.updateOrderStatus = async (req, res, next) => {
+//     try {
+//         const { status } = req.body;
+
+//         const order = await Order.findByIdAndUpdate(req.params.orderId, { status }, { new: true, runValidators: true });
+//         if (!order) {
+//             return res.status(404).send("Order not found");
+//         }
+//         else {
+//             res.status(200).send(order);
+//         }
+
+//     } catch (error) {
+//         if (error.name === 'ValidationError') {
+//             res.status(404).send("status is wrong");
+//         }
+//         else {
+//             res.status(500).send("not able to update status");
+//         }
+//     }
+// };
+
+
+
+
+
+
+
+
+exports.confirm = async (req, res, next) => {
     try {
-        const { status } = req.body;
-
-        const order = await Order.findByIdAndUpdate(req.params.orderId, { status }, { new: true, runValidators: true });
-        if (!order) {
-            return res.status(404).send("Order not found");
-        }
-        else {
-            res.status(200).send(order);
-        }
-
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            res.status(404).send("status is wrong");
-        }
-        else {
-            res.status(500).send("not able to update status");
-        }
-    }
-};
+        console.log(" req.body.payment_intent ------", req.body.payment_intent);
+        const orders = await Order.findOneAndUpdate({ payment_intent: req.body.payment_intent },
+            // console.log("orders>>>>>>>>>>>>>>>>>>>>>>>>>>>", orders),
+            {
+                $set: {
+                    isCompleted: true
+                }
 
 
+            })
+        res.status(200).send("order has been confirmed....")
+        console.log(orders)
 
-
-
+    } catch (err) { res.status(404).send(err) }
+}

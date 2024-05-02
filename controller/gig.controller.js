@@ -2,6 +2,8 @@ const Gig = require("../models/gig.model")
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../middleware/jwt");
 const { findByIdAndDelete } = require("../models/user.model");
+const mongoose = require('mongoose'); // Import mongoose library
+
 
 exports.createGig = async (req, res, next) => {
     // console.log(req.body)
@@ -31,16 +33,75 @@ exports.createGig = async (req, res, next) => {
 };
 
 
+
+
+
+
+
+
+
 exports.deleteGig = async (req, res, next) => {
     try {
-        const gig = await Gig.findById(req.params?.id);
-        if (gig.userId !== req.userId) return res.status(403).send("you can delete only your gig");
-        await Gig.findByIdAndDelete(req.params?.id);
-        res.status(200).send("Gig has been deleted")
+        const gig = await Gig.findById(req.params.id);
+
+        // Check if the gig exists
+        if (!gig) {
+            return res.status(404).send("Gig not found");
+        }
+
+        console.log("req.params.id--------", req.params.id);
+        console.log("gig.userId--------", gig.userId);
+        console.log("req.userId--------", req.userId);
+
+        // Create an ObjectId from req.userId
+        let reqUserId;
+        try {
+            reqUserId = new mongoose.Types.ObjectId(req.userId);
+        } catch (error) {
+            // Handle invalid ObjectId string
+            return res.status(400).send("Invalid user ID");
+        }
+
+        // Compare ObjectId values
+        if (gig.userId.equals(reqUserId)) {
+            await Gig.findByIdAndDelete(req.params.id);
+            return res.status(200).send("Gig has been deleted");
+        } else {
+            return res.status(403).send("You can only delete your own gig");
+        }
     } catch (error) {
-        res.status(404).send("invalid gig id")
+        console.log("Error:", error);
+        return res.status(500).send("Internal Server Error");
     }
 };
+
+
+
+
+
+
+
+
+
+// exports.deleteGig = async (req, res, next) => {
+//     try {
+//         const gig = await Gig.findById(req.params.id);
+//         console.log("req.params.id--------", req.params.id)
+//         console.log("gig.user.id--------", gig.userId)
+//         console.log("req.userid--------", req.userId)
+//         const reqUserId = new mongoose.Types.ObjectId(req.userId);
+//         console.log("new id", reqUserId)
+//         if (gig.userId !== reqUserId) return res.status(403).send("you can delete only your gig");
+//         await Gig.findByIdAndDelete(req.params.id);
+//         res.status(200).send("Gig has been deleted")
+//     } catch (error) {
+//         console.log(error)
+//         res.send(error)
+//     }
+// };
+
+
+
 exports.getGig = async (req, res, next) => {
     try {
         const gig = await Gig.findById(req.params?.id).populate('userId')
@@ -105,3 +166,26 @@ exports.updateGig = async (req, res, next) => {
         res.status(404).send("gig id is invalid");
     }
 };
+
+
+// exports.getGigsById = async (req, res, next) => {
+//     try {
+//         let query = {};
+//         if (req.isSeller) {
+//             query = { sellerId: req.userId };
+//         } else {
+//             query = { buyerId: req.userId };
+//         }
+//         //console.log("quuuuuuuuuuuuuuuuuuuuuu-------------", query);
+
+//         const gigs = await Gig.find(query);
+//         console.log("gigs>>>>>>>>>>>", gigs)
+//         if (!gigs) { res.status(404).send("not able to get gigs") }
+//         //console.log(orders);
+//         res.status(200).send(gigs);
+
+//     } catch (error) {
+//         res.status(404).send("not able to fetch gigs ");
+//     }
+// }
+

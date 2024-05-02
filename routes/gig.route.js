@@ -13,6 +13,7 @@ router.delete("/:id", verifyToken, gigController.deleteGig);
 router.get("/single/:id", verifyToken, gigController.getGig);
 router.get("/", verifyToken, gigController.getGigs);
 router.patch("/:id", verifyToken, gigController.updateGig);
+// router.get("/", verifyToken, gigController.getGigsById)
 
 
 module.exports = router;
