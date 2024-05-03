@@ -118,6 +118,7 @@ exports.getGigs = async (req, res, next) => {
         const q = req.query;
         const filters = {
             ...(q.userId && { userId: q.userId }),
+
             ...(q.cat && { cat: q.cat }),
             ...((q.min || q.max) && {
                 price: {
@@ -128,16 +129,17 @@ exports.getGigs = async (req, res, next) => {
             ...(q.search && {
                 $or: [
                     { title: { $regex: q.search, $options: "i" } },
-                    { desc: { $regex: q.search, $options: "i" } },
+                    // { desc: { $regex: q.search, $options: "i" } },
                     { cat: { $regex: q.search, $options: "i" } },
-                    { shortDesc: { $regex: q.search, $options: "i" } },
+                    // { shortDesc: { $regex: q.search, $options: "i" } },
 
 
                 ]
                 //   title: { $regex: q.search, $options: "i" },
             }),
         };
-        const gigs = await Gig.find(filters);
+        // console.log(req.query)
+        const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
         if (!gigs || gigs.length === 0) {
             return res.status(404).send("No gigs found matching the criteria.");
         }

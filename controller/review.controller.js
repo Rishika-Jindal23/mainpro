@@ -44,6 +44,7 @@ exports.createReview = async (req, res, next) => {
 exports.getReview = async (req, res, next) => {
     try {
         const reviews = await Review.find({ gigId: req.params.gigId }).populate('userId');
+        //console.log("gigid>>>>>>>>>>>", req.params.gigId)
         console.log(reviews)
         if (!reviews || reviews.length === 0) {
             res.status(404).send('Review not found ')
