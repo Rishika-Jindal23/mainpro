@@ -25,7 +25,7 @@ const LoginMain: React.FC<LoginProps> = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(username, password);
+        // console.log(username, password);
         try {
             const res = await newRequest.post("/auth/login", {
                 username,
@@ -33,12 +33,9 @@ const LoginMain: React.FC<LoginProps> = () => {
             });
             await toast.success("🦄 Login Successful");
             const token = res.data.token;
-            // localStorage.setItem("currentUser", JSON.stringify(res.data.info));
-            //localStorage.setItem("token", res.data.token);
 
             const currentUser = JSON.stringify(res.data.info);
-            //   console.log("current user>>>>", currentUser);
-            // console.log("user : ", user);
+
             dispatch(login({ currentUser, token }));
             window.location.href = "/landingpage";
             const user = {
@@ -49,15 +46,8 @@ const LoginMain: React.FC<LoginProps> = () => {
                 isSeller: res.data.isSeller,
                 phone: res.data.phone,
             };
-            // console.log("user : ", user);
-
-            //   dispatch(login(user));
-            // dispatch(login(user));
-            //  router.push("/add");
-            //  router.push("/add");
-            //    window.location.href = "/landingpage";
         } catch (err) {
-            //setError("err")
+            setError(err);
             console.log(err);
         }
     };
@@ -76,7 +66,6 @@ const LoginMain: React.FC<LoginProps> = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-
                 <label htmlFor="password">Password</label>
                 <input
                     id="password"
@@ -88,7 +77,7 @@ const LoginMain: React.FC<LoginProps> = () => {
                 />
                 <button type="submit">Login</button>
                 <ToastContainer />
-                {/* {error() && <p className={styles.error}>{error}</p>} */}
+                {/* <span> {error && <p className={styles.error}>{error}</p>}</span> */}
             </form>
         </div>
     );

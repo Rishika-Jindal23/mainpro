@@ -4,6 +4,8 @@ import Heroes from "@/components/layout/Hero";
 import HeroTwo from "@/components/layout/HeroTwo";
 import Link from "next/link";
 import React from "react";
+import Home from "./home/page";
+import FirstPage from "@/components/firstPage/FirstPage";
 // import {
 //     useQuery,
 //     useMutation,
@@ -12,12 +14,13 @@ import React from "react";
 //     QueryClientProvider,
 // } from "@tanstack/react-query";
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
     return (
         <>
             {/* <Header /> */}
-            <Hero />
-            <HeroTwo />
+            {/* <Hero />
+            <HeroTwo /> */}
+            <FirstPage />
         </>
     );
 };
@@ -39,4 +42,4 @@ const Home: React.FC = () => {
             </div> */
 }
 
-export default Home;
+export default HomePage;

@@ -1,56 +1,11 @@
-// // reviewsSlice.js
-// import newRequest from "@/app/utils/newRequest";
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
-// import { RootState } from "../store";
-
-// // Async thunk for fetching reviews by gigId
-// export const fetchReviewsByGigId = createAsyncThunk(
-//     "reviews/fetchReviewsByGigId",
-//     async (gigId, thunkAPI) => {
-//         try {
-//             const response = await newRequest.get(`/api/reviews/${gigId}`);
-//             return response.data;
-//         } catch (error) {
-//             return thunkAPI.rejectWithValue(error.response.data);
-//         }
-//     }
-// );
-
-// // Reviews slice
-// const reviewsSlice = createSlice({
-//     name: "reviews",
-//     initialState: {
-//         reviews: [],
-//         loading: false,
-//         error: null,
-//     },
-//     reducers: {},
-//     extraReducers: {
-//         [fetchReviewsByGigId.pending]: (state) => {
-//             state.loading = true;
-//             state.error = null;
-//         },
-//         [fetchReviewsByGigId.fulfilled]: (state, action) => {
-//             state.loading = false;
-//             state.currentreviews = action.payload;
-//         },
-//         [fetchReviewsByGigId.rejected]: (state, action) => {
-//             state.loading = false;
-//             state.error = action.payload;
-//         },
-//     },
-// });
-
-// export default reviewsSlice.reducer;
-// export const reviews = (state: RootState) => state.gigs.reviews;
-// reviewsSlice.ts
 import newRequest from "@/app/utils/newRequest";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { Key } from "react";
 
 interface Review {
+    _id: Key | null | undefined;
     id: number;
     star: number;
     desc: string;
@@ -103,4 +58,5 @@ const reviewsSlice = createSlice({
 });
 
 export default reviewsSlice.reducer;
-export const currentreviews = (state: RootState) => state.gigs.currentreviews;
+export const currentreviews = (state: RootState) =>
+    state.reviews.currentreviews;

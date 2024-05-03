@@ -6,8 +6,6 @@ import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
 import Carousel from "@itseasy21/react-elastic-carousel";
 import styles from "./Gig.module.scss";
-import Pay from "../../pay/pay";
-import { fetchUsers, fetchUserById, user } from "@/redux_store/slice/authslice";
 
 import {
     fetchGigByIdAsync,
@@ -21,18 +19,18 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
     const router = useRouter();
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
+
     const originaluser = JSON.parse(loggedInUser);
     const loginUserId = originaluser._id;
-    console.log("loginUserId");
-    const loginUserName = originaluser.username;
-    const loginUserIsSeller = originaluser.isSeller;
+
+    // const loginUserName = originaluser.username;
+    // const loginUserIsSeller = originaluser.isSeller;
 
     useEffect(() => {
         dispatch(fetchGigByIdAsync(id));
     }, [dispatch, id]);
     const currentGig = useSelector(selectCurrentGig);
-    console.log("current>>>>>>>>>>>>>>", currentGig);
+    // console.log("current>>>>>>>>>>>>>>", currentGig);
 
     if (!currentGig) {
         // If gig data is not available yet, you can render a loading state or handle it accordingly
@@ -44,12 +42,6 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
     return (
         <div className={styles.gig}>
-            {/* <div>
-                <div>
-                    <h1>Data from API</h1>
-                </div>
-            </div> */}
-
             <div className={styles.container}>
                 <div className={styles.left}>
                     <span className={styles.breadcrumbs}>
@@ -60,7 +52,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         {/* userprofilepic */}
                         <img
                             className={styles.pp}
-                            src={currentGig.userId.img || "/img/noavatar.jpg"}
+                            src={currentGig.userId.img}
                             alt=""
                         />
                         <span>{currentGig.username}</span>
@@ -80,12 +72,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
                             {/* userProfilePic */}
-                            <img
-                                src={
-                                    currentGig.userId.img || "/img/noavatar.jpg"
-                                }
-                                alt=""
-                            />
+                            <img src={currentGig.userId.img} alt="profilepic" />
                             <div className={styles.info}>
                                 <span>{currentGig.username}</span>
                                 <div className={styles.stars}>
@@ -150,7 +137,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     <div className={styles.price}>
                         <p>short Title</p>
                         {/* <h3>{currentGig.title}</h3> */}
-                        <h2>{currentGig.price}</h2>
+                        <h2>${currentGig.price}</h2>
                     </div>
                     <p>{currentGig.shortDesc}</p>
                     <div className={styles.details}>
@@ -188,6 +175,3 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 };
 
 export default Gig;
-function async(arg0: {}): React.FC<{}> {
-    throw new Error("Function not implemented.");
-}

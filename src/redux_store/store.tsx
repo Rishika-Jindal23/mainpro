@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slice/authslice";
 import gigsReducer from "./slice/gigsSlice";
 import ordersReducer from "./slice/ordersSlice";
-import reviewsreducer from "./slice/reviewsSlice";
+import reviewsReducer from "./slice/reviewsSlice";
 
 import {
     persistStore,
@@ -28,7 +28,7 @@ export const store = configureStore({
         auth: persistedReducer,
         gigs: gigsReducer,
         orders: ordersReducer,
-        reviews: reviewsreducer,
+        reviews: reviewsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

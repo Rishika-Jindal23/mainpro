@@ -101,7 +101,7 @@ const Add: React.FC = () => {
     // };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        console.log(formData);
+        console.log("form data =============", formData);
 
         e.preventDefault();
         const response = await fetch("http://localhost:8000/gigs", {
@@ -116,7 +116,7 @@ const Add: React.FC = () => {
         if (response.ok) {
             // If submission is successful, you can redirect or show a success message
             console.log("Data sent successfully!");
-            router.push("/myGigs");
+            // router.push("/myGigs");
         } else {
             console.error("Failed to send data");
         }

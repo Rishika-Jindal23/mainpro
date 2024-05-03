@@ -33,6 +33,7 @@ interface GigsState {
     error: string | null;
     currentGig: Gig | null; // Add currentGig property
     currentuserGig: Gig | [];
+    filterGig: Gig | [];
 }
 
 const initialState: GigsState = {
@@ -44,6 +45,7 @@ const initialState: GigsState = {
     id: undefined,
     userId: "",
     username: "",
+    filterGig: [],
 };
 
 export const fetchGigsAsync = createAsyncThunk("gigs/fetchGigs", async () => {
@@ -66,6 +68,36 @@ export const fetchGigsAsync = createAsyncThunk("gigs/fetchGigs", async () => {
         throw new Error("Error fetching gigs");
     }
 });
+
+export const fetchGigsByFiltersAsync = createAsyncThunk(
+    "gigs/fetchGigsByFilters",
+    async ({
+        minPrice,
+        maxPrice,
+        sort,
+    }: {
+        minPrice: number;
+        maxPrice: number;
+        sort: string;
+    }) => {
+        try {
+            const response = await newRequest.get(
+                `/gigs?min=${minPrice}&max=${maxPrice}&sort=${sort}`,
+                {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: true,
+                }
+            );
+
+            return response.data;
+        } catch (error) {
+            throw new Error("Error fetching gigs");
+        }
+    }
+);
 
 export const fetchGigByIdAsync = createAsyncThunk(
     "gigs/fetchGigById",
@@ -153,11 +185,11 @@ export const gigsSlice = createSlice({
 
             // })
 
-            // .addCase(fetchGigsByUserIdAsync.fulfilled, (state, action) => {
-            //     state.loading = false;
-            //     state.data = action.payload;
-            //     state.error = null;
-            // });
+            .addCase(fetchGigsByFiltersAsync.fulfilled, (state, action) => {
+                state.loading = false;
+                state.filterGig = action.payload;
+                state.error = null;
+            })
 
             // .addCase(fetchGigsByUserIdAsync.rejected, (state, action) => {
             //     state.loading = false;
@@ -167,7 +199,7 @@ export const gigsSlice = createSlice({
             //     state.loading = true;
             // })
             .addCase(fetchGigsByUserIdAsync.fulfilled, (state, action) => {
-                console.log("action.payload----", action.payload);
+                //console.log("action.payload----", action.payload);
 
                 state.loading = false;
                 state.currentuserGig = action.payload; // Store the fetched gig in currentGig
@@ -191,3 +223,4 @@ export const selectCurrentGig = (state: { gigs: GigsState }) =>
     state.gigs.currentGig;
 export const selectCurrentUserGig = (state: RootState) =>
     state.gigs.currentuserGig;
+export const selectFilterGig = (state: RootState) => state.gigs.filterGig;

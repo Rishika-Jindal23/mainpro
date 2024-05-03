@@ -3,32 +3,21 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./Gigs.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGigsAsync, selectGigs } from "@/redux_store/slice/gigsSlice";
+import {
+    fetchGigsAsync,
+    fetchGigsByFiltersAsync,
+    selectGigs,
+} from "@/redux_store/slice/gigsSlice";
 
 import GigCard from "../../../components/gigCard/GigCard";
-
-// interface Gig {
-//     username: string;
-//     _id: string;
-//     userId: string;
-//     title: string;
-//     desc: string;
-//     price: number;
-//     sales: number;
-//     cover: string;
-//     createdAt: string;
-//     images: [string];
-// }
 
 const Gigs: React.FC = () => {
     const dispatch = useDispatch();
     const { data: gigs, loading, error } = useSelector(selectGigs);
 
-    //     // const token = localStorage.getItem("token");
-
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);
-    //     const [gigs, setGigs] = useState<Gig[]>([]);
+
     const minRef = useRef<HTMLInputElement>(null);
     const maxRef = useRef<HTMLInputElement>(null);
 
@@ -47,8 +36,12 @@ const Gigs: React.FC = () => {
 
     const apply = () => {
         if (minRef.current && maxRef.current) {
-            console.log(minRef.current.value);
-            console.log(maxRef.current.value);
+            const minPrice = minRef.current?.value;
+            const maxPrice = maxRef.current?.value;
+            dispatch(fetchGigsByFiltersAsync({ minPrice, maxPrice, sort }));
+
+            // console.log(minRef.current.value);
+            // console.log(maxRef.current.value);
         }
     };
 
