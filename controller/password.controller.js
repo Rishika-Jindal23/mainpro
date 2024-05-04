@@ -8,8 +8,11 @@ const crypto = require("crypto");
 
 exports.forgotPassword = async (request, response) => {
     const { email } = request.body;
+    console.log(email)
     console.log("hello");
     const user = await User.findOne({ email })
+    console.log(User.findOne({ email }))
+
     console.log(user);
     if (!user) {
         return response.status(404).json({ err: "user does not exist" });
