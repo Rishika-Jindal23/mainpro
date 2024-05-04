@@ -32,13 +32,23 @@
             color: white;
             font-weight: 500;
             font-size: 18px;
-            background-color: #1dbf73;
+            background-color: #347deb;
             cursor: pointer;
         }
 
         span {
             color: red;
             font-size: 12px;
+        }
+        .signup {
+            font-size: large;
+            font-weight: 300;
+            margin-left: 2px;
+        }
+        .forgetpassword {
+            font-size: large;
+            font-weight: 300;
+            margin-left: 106px;
         }
     }
 }

@@ -10,7 +10,7 @@ interface CatCardProps {
 
 const CatCard: React.FC<CatCardProps> = ({ card }) => {
     return (
-        <Link href="/gigs?cat=design">
+        <Link href="/gigs">
             <div className={styles.catCard}>
                 <img src={card.img} alt="" />
                 <span className={styles.desc}>{card.desc}</span>

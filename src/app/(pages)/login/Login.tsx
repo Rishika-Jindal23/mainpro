@@ -13,6 +13,8 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { login } from "@/redux_store/slice/authslice";
 // import { login } from "../../actions/authActions";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 
 interface LoginProps {}
 
@@ -55,7 +57,6 @@ const LoginMain: React.FC<LoginProps> = () => {
     return (
         <div className={styles.login}>
             <form onSubmit={handleSubmit}>
-                <h1>Sign in</h1>
                 <label htmlFor="username">Username</label>
                 <input
                     id="username"
@@ -77,6 +78,16 @@ const LoginMain: React.FC<LoginProps> = () => {
                 />
                 <button type="submit">Login</button>
                 <ToastContainer />
+                <span>
+                    {" "}
+                    <Link className={styles.signup} href="/register">
+                        {" "}
+                        Register
+                    </Link>
+                    <span className={styles.forgetpassword}>
+                        <Link href=""> Forget Password</Link>
+                    </span>
+                </span>
                 {/* <span> {error && <p className={styles.error}>{error}</p>}</span> */}
             </form>
         </div>

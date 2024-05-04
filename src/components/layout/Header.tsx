@@ -1,7 +1,10 @@
 "use client";
 
+import newRequest from "@/app/utils/newRequest";
 import { logout } from "@/redux_store/slice/authslice";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,10 +13,11 @@ export default function Header() {
     const dispatch = useDispatch();
     const [isSeller, setIsSeller] = useState<boolean>(false);
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
+    const router = useRouter();
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    // console.log("loggedin>>>>>>>>>>>", loggedInUser);
+    //console.log("loggedin>>>>>>>>>>>", loggedInUser);
 
     const token = useSelector((state) => state.auth.token);
     console.log("state-----", token);
@@ -37,20 +41,29 @@ export default function Header() {
         //  localStorage.removeItem("currentUser");
 
         setUser(null);
-        window.location.href = "/";
+        // window.location.href = "/";
 
-        // const response = await fetch("http://localhost:8000/auth/logout");
-        // const data = await response.json();
-        // if (response.ok) {
-
-        //     } else {
-        //         alert(data.message);
-        //     }
+        const response = await newRequest.post("auth/logout");
+        const data = await response;
+        if (response) {
+            alert("successfuly loggedout");
+            window.location.href = "/";
+        } else {
+            alert("error occurred");
+        }
     };
 
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
+
+    // function handleClick(): void {
+    //     if (loggedInUser) {
+    //         router.push("/landingpage");
+    //     } else {
+    //         router.push("/");
+    //     }
+    // }
 
     return (
         <>
@@ -62,10 +75,10 @@ export default function Header() {
                     SkillSphere
                 </Link>
                 <nav className="flex gap-8 items-aligned text-gray-600 font-semibold relative">
-                    <Link href={""} className="p-4">
+                    <Link href={"/"} className="p-4">
                         Home
                     </Link>
-                    <Link href={""} className="p-4">
+                    <Link href="/about" className="p-4">
                         About
                     </Link>
                     <Link href={""} className="p-4">

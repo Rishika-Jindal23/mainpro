@@ -1,7 +1,28 @@
+"use client";
 import Image from "next/image";
 import img1 from "../../../public/img/img1.jpg";
 import Right from "../icons/Right";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { FormEvent } from "react";
 function Hero() {
+    const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+    console.log("islogg in ---------", isLoggedIn);
+
+    const router = useRouter();
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+        console.log("handke submit called");
+        if (isLoggedIn) {
+            console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            window.location.href = "/gigs";
+            // router.push("/gigs");
+        } else {
+            console.log("eeeeeeeeeeeeee");
+            router.push("/login");
+        }
+    }
+
     return (
         <>
             <section className="grid grid-cols-2">
@@ -14,7 +35,10 @@ function Hero() {
                         Connect, Create, Thrive: Freelance Simplified.
                     </p>
                     <div>
-                        <form className="max-w-md mx-auto mr-9 mt-7">
+                        <form
+                            className="max-w-md mx-auto mr-9 mt-7"
+                            onSubmit={handleSubmit}
+                        >
                             <label
                                 htmlFor="default-search"
                                 className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -55,8 +79,6 @@ function Hero() {
                             </div>
                         </form>
                     </div>
-
-                  
                 </div>
                 <div className="w-45 h-70  relative mt-5 ">
                     <Image
