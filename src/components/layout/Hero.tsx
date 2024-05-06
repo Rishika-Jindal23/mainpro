@@ -14,7 +14,7 @@ function Hero() {
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         console.log("handke submit called");
         if (isLoggedIn) {
-            console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            //    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             window.location.href = "/gigs";
             // router.push("/gigs");
         } else {
@@ -31,7 +31,7 @@ function Hero() {
                         Connecting <span className="italic">Skills</span> to
                         Projects
                     </h1>
-                    <p className="my-4   text-gray-600  text-sm">
+                    <p className="my-4   ml-9 text-gray-600  text-sm">
                         Connect, Create, Thrive: Freelance Simplified.
                     </p>
                     <div>
@@ -45,7 +45,7 @@ function Hero() {
                             >
                                 Search
                             </label>
-                            <div className="relative">
+                            <div className="relative ml- -6">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <svg
                                         className="w-4 h-4 text-gray-500 dark:text-gray-400"

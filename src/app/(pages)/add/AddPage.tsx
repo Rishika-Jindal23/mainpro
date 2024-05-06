@@ -15,8 +15,8 @@ const Add: React.FC = () => {
     // const originalUser = JSON.parse(currentUserData);
     const originalUser = useSelector((state) => state.auth.user.currentUser);
     const allData = JSON.parse(originalUser);
+
     const sellerName = allData.username;
-    // console.log("uuuuuuu----", allData);
 
     console.log(
         "current user ---------",

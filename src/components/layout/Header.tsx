@@ -2,11 +2,13 @@
 
 import newRequest from "@/app/utils/newRequest";
 import { logout } from "@/redux_store/slice/authslice";
-
+import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 export default function Header() {
     const [user, setUser] = useState<string | null>(null);
@@ -17,7 +19,11 @@ export default function Header() {
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    //console.log("loggedin>>>>>>>>>>>", loggedInUser);
+    console.log("loggedin>>>>>>>>>>>", loggedInUser);
+    const userinfo = useSelector((state) => state);
+    const profilepic = loggedInUser ? JSON.parse(loggedInUser).img : null;
+    console.log("pp>>>>>>>>", profilepic);
+    // {JSON.parse(user).username}
 
     const token = useSelector((state) => state.auth.token);
     console.log("state-----", token);
@@ -67,7 +73,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="flex items-center justify-between">
+            <header className="flex items-center justify-between mt-3">
                 <Link
                     className="text-blue-700 font-semibold text-3xl p-4"
                     href="/"
@@ -87,15 +93,18 @@ export default function Header() {
 
                     {user ? (
                         <a
+                            // onClick={handleSignOut}
+                            // className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer"
                             onClick={handleSignOut}
-                            className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer"
+                            className="bg-blue-700 rounded-full text-white px-4 py-4 w-300 cursor-pointer hover:scale-105 transition-transform"
+                            // style={{ fontSize: "0.8rem" }}
                         >
-                            Log out {JSON.parse(user).username}
+                            Logout
                         </a>
                     ) : (
                         <Link
                             href="/login"
-                            className="bg-blue-700 rounded-full text-white px-7 py-4"
+                            className="bg-blue-700 rounded-full text-white px-7 py-4  cursor-pointer hover:scale-105 transition-transform"
                         >
                             Sign In
                         </Link>
@@ -105,7 +114,7 @@ export default function Header() {
                         <div className="relative inline-block text-left">
                             <button
                                 onClick={handleDropdown}
-                                className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer"
+                                className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer hover:scale-105 transition-transform"
                             >
                                 {JSON.parse(user).username}
                             </button>
@@ -168,6 +177,11 @@ export default function Header() {
                             Sign up
                         </Link>
                     )}
+                    {user ? (
+                        <Link href={""} className="p-4">
+                            <Avatar alt="Cindy Baker" src={profilepic} />
+                        </Link>
+                    ) : null}
                 </nav>
             </header>
         </>

@@ -62,6 +62,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import newRequest from "../utils/newRequest";
 
+import TrustedBy from "@/components/trustedBy/TrustedBy";
+
 interface Data {
     userId: number;
     title: string;
@@ -102,6 +104,7 @@ const About = () => {
     return (
         <div>
             <h1>Data from API</h1>
+
             <ul>
                 {data.map((item) => (
                     <li key={item.title}>

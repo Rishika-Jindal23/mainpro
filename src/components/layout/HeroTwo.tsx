@@ -1,6 +1,7 @@
 import Image from "next/image";
 import heroes from "../../../public/img/hero.png";
 import undraw from "../../../public/img/imageundraw.png";
+import styles from "./HeroTwo.module.scss";
 
 export default function HeroTwo() {
     return (
@@ -87,7 +88,7 @@ export default function HeroTwo() {
                 </a>
             </div>
 
-            <div className="mt-10">need to add something here</div>
+            <div></div>
 
             <section className="grid grid-cols-2 mt-10">
                 <div className="w-45 h-70  relative mt-5 ">
