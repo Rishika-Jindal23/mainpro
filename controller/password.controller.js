@@ -6,25 +6,31 @@ const crypto = require("crypto");
 
 
 
+
+
+
 exports.forgotPassword = async (request, response) => {
     const { email } = request.body;
     console.log(email)
-    console.log("hello");
+
     const user = await User.findOne({ email })
-    console.log(User.findOne({ email }))
+
+    //console.log(User.findOne({ email }))
 
     console.log(user);
     if (!user) {
         return response.status(404).json({ err: "user does not exist" });
     }
 
+
     const reset_token = await user.createPasswordResetToken();
     console.log(reset_token);
     await user.save({ validateBeforeSave: false });
+    console.log("USER???", user)
 
-    const resetURL = `${request.protocol}://${request.get('host')}/api/users/resetPassword/${reset_token}`;
+    const resetURL = `http://localhost:3000/resetPassword?token=${reset_token}`;
     console.log("reset URL: " + resetURL);
-    const message = `Forgot password? submit a patch request with new password to : ${resetURL}\nOtherwise ignore this mail`;
+    const message = `Forgot password ? submit a patch request with new password to: ${resetURL} \nOtherwise ignore this mail`;
 
     try {
         console.log("user email : " + user.email);
@@ -49,20 +55,24 @@ exports.forgotPassword = async (request, response) => {
 
 
 exports.resetPassword = async (request, response) => {
+    //  console.log("tryyy")
     try {
+        console.log(request.body);
 
         console.log(request.params.token);
         // 1. get user based on token
-        const hashedToken = crypto
+        const hashedToken = await crypto
             .createHash('sha256')
             .update(request.params.token)
             .digest('hex');
-        console.log(hashedToken);
+
+        console.log("HASHEDTOKEN", hashedToken);
         const user = await User.findOne({
             passwordResetToken: hashedToken,
             passwordResetExpires: { $gt: Date.now() }
         });
-        console.log(user);
+
+        console.log("USER>>>", user);
         // 2. if token has not expired & user is login, set new password
         if (!user) {
             return response.status(404).json({ err: "token is invalid or expired" });
@@ -75,18 +85,9 @@ exports.resetPassword = async (request, response) => {
         user.passwordResetToken = undefined;
         user.passwordResetExpires = undefined;
         await user.save();
-        // 3. update change password properly for user
 
 
-        // 4. log the user in send jwt
-        const reset_token = await user.generateAuthToken();
-        console.log("login token after reset : " + reset_token);
-        response.cookie("jwt", reset_token, {
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-            httpOnly: true
-        });
-        console.log("cookie after generating token : " + request.cookies.jwt);
-        response.status(200).json({ reset_token });
+        response.status(200).send("password reset successfully");
     }
     catch (err) {
         console.log(err);

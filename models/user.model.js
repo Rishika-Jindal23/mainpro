@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const crypto = require("crypto");
 const Validator = require("validator")
 const { isValidPassword } = require('mongoose-custom-validators')
 
@@ -60,10 +61,38 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
 
-    }
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date
 
 
 }, {
     timestamps: true
 });
-module.exports = mongoose.model("User", userSchema)
+//module.exports = mongoose.model("User", userSchema)
+userSchema.methods.createPasswordResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+    console.log("ResetToken>>>>>>>>", resetToken)
+    this.passwordResetExpires = Date.now() + 10 * 80 * 1000;
+    return resetToken;
+}
+
+userSchema.methods.generateAuthToken = async function () {
+    try {
+        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET);
+        return token;
+    }
+    catch (err) {
+        console.log("error in generating token : " + err);
+    }
+}
+
+const User = new mongoose.model('User', userSchema);
+module.exports = User;
+
+
