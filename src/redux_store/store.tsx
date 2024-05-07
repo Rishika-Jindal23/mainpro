@@ -3,7 +3,7 @@ import authReducer from "./slice/authslice";
 import gigsReducer from "./slice/gigsSlice";
 import ordersReducer from "./slice/ordersSlice";
 import reviewsReducer from "./slice/reviewsSlice";
-
+import conversationReducer from "./slice/conversationSlice";
 import {
     persistStore,
     persistReducer,
@@ -29,6 +29,7 @@ export const store = configureStore({
         gigs: gigsReducer,
         orders: ordersReducer,
         reviews: reviewsReducer,
+        conversation: conversationReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

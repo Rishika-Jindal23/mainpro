@@ -139,6 +139,7 @@ export const fetchGigsByUserIdAsync = createAsyncThunk(
                     withCredentials: true, // Ensure credentials are included
                 }
             );
+            console.log(response.data);
 
             return response.data;
         } catch (error) {
@@ -195,11 +196,12 @@ export const gigsSlice = createSlice({
             //     state.loading = false;
             //     state.error = action.error.message || "Failed to fetch gigs";
             // })
-            // .addCase(fetchGigsByUserIdAsync.pending, (state) => {
-            //     state.loading = true;
-            // })
+            .addCase(fetchGigsByUserIdAsync.pending, (state) => {
+                state.loading = true;
+            })
             .addCase(fetchGigsByUserIdAsync.fulfilled, (state, action) => {
                 //console.log("action.payload----", action.payload);
+                console.log(action.payload);
 
                 state.loading = false;
                 state.currentuserGig = action.payload; // Store the fetched gig in currentGig

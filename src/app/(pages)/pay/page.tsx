@@ -16,7 +16,6 @@ function PayPage() {
     return (
         <div>
             <Pay />
-            <p>hello from pay page </p>
         </div>
     );
 }

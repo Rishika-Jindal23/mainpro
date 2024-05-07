@@ -49,7 +49,7 @@ const Reviews = ({ gigId, userId }) => {
             // Assuming the API returns some data about the posted review, you can handle it here
             console.log("Review posted successfully:", response.data);
             <span>Review posted </span>;
-            // dispatch(fetchReviewsByGigId(gigId));
+            dispatch(fetchReviewsByGigId(gigId));
 
             // Reset the form after successful submission
             setStar(1);

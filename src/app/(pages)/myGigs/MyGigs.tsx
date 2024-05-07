@@ -84,28 +84,36 @@ function MyGigs() {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentuserGig.map((gig) => (
-                            <tr key={gig._id}>
-                                <td>
-                                    <img
-                                        className={styles.image}
-                                        src={gig.cover}
-                                        alt=""
-                                    />
-                                </td>
-                                <td>{gig.title}</td>
-                                <td>{gig.price}</td>
-                                <td>{gig.sales}</td>
-                                <td>
-                                    <img
-                                        className={styles.delete}
-                                        src="./img/delete.png"
-                                        alt=""
-                                        onClick={() => handleDelete(gig._id)}
-                                    />
-                                </td>
-                            </tr>
-                        ))}
+                        {currentuserGig.length > 0 ? (
+                            currentuserGig.map((gig) => (
+                                <tr key={gig._id}>
+                                    <td>
+                                        <img
+                                            className={styles.image}
+                                            src={gig.cover}
+                                            alt=""
+                                        />
+                                    </td>
+                                    <td>{gig.title}</td>
+                                    <td>{gig.price}</td>
+                                    <td>{gig.sales}</td>
+                                    <td>
+                                        <img
+                                            className={styles.delete}
+                                            src="./img/delete.png"
+                                            alt=""
+                                            onClick={() =>
+                                                handleDelete(gig._id)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <>
+                                <h1>No Data</h1>
+                            </>
+                        )}
                     </tbody>
                 </table>
             </div>

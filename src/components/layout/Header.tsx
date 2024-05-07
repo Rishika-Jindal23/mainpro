@@ -19,10 +19,10 @@ export default function Header() {
 
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    console.log("loggedin>>>>>>>>>>>", loggedInUser);
+
     const userinfo = useSelector((state) => state);
     const profilepic = loggedInUser ? JSON.parse(loggedInUser).img : null;
-    console.log("pp>>>>>>>>", profilepic);
+
     // {JSON.parse(user).username}
 
     const token = useSelector((state) => state.auth.token);

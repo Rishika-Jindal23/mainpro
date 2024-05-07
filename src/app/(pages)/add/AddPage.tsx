@@ -14,6 +14,7 @@ const Add: React.FC = () => {
     // const currentUserData = localStorage.getItem("currentUser");
     // const originalUser = JSON.parse(currentUserData);
     const originalUser = useSelector((state) => state.auth.user.currentUser);
+    console.log("originaluser>>>>>...", originalUser);
     const allData = JSON.parse(originalUser);
 
     const sellerName = allData.username;
@@ -116,7 +117,7 @@ const Add: React.FC = () => {
         if (response.ok) {
             // If submission is successful, you can redirect or show a success message
             console.log("Data sent successfully!");
-            // router.push("/myGigs");
+            router.push("/myGigs");
         } else {
             console.error("Failed to send data");
         }

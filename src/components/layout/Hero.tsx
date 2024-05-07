@@ -7,18 +7,14 @@ import { useSelector } from "react-redux";
 import { FormEvent } from "react";
 function Hero() {
     const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
-    console.log("islogg in ---------", isLoggedIn);
 
     const router = useRouter();
 
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         console.log("handke submit called");
         if (isLoggedIn) {
-            //    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             window.location.href = "/gigs";
-            // router.push("/gigs");
         } else {
-            console.log("eeeeeeeeeeeeee");
             router.push("/login");
         }
     }
