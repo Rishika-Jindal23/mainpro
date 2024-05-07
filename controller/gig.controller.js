@@ -45,7 +45,7 @@ exports.deleteGig = async (req, res, next) => {
         const gig = await Gig.findById(req.params.id);
 
         // Check if the gig exists
-        if (!gig) {
+        if (gig?.length === 0) {
             return res.status(404).send("Gig not found");
         }
 
@@ -64,7 +64,11 @@ exports.deleteGig = async (req, res, next) => {
 
         // Compare ObjectId values
         if (gig.userId.equals(reqUserId)) {
-            await Gig.findByIdAndDelete(req.params.id);
+            const myGig = await Gig.findByIdAndDelete(req.params.id);
+            if (myGig?.length === 0) {
+                return res.status(204).json({ message: "No Gig Found" })
+            }
+
             return res.status(200).send("Gig has been deleted");
         } else {
             return res.status(403).send("You can only delete your own gig");
@@ -104,8 +108,10 @@ exports.deleteGig = async (req, res, next) => {
 
 exports.getGig = async (req, res, next) => {
     try {
+        console.log("call id", req.params.id);
         const gig = await Gig.findById(req.params?.id).populate('userId')
-        if (!gig) return res.status(404).send("gig not found");
+        console.log("call", gig);
+        if (!gig) return res.status(404).json({ message: 0 });
         res.status(200).send(gig)
     } catch (error) { res.status(404).send("gig not found by this id") }
 };

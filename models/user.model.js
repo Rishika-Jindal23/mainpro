@@ -82,15 +82,15 @@ userSchema.methods.createPasswordResetToken = function () {
     return resetToken;
 }
 
-userSchema.methods.generateAuthToken = async function () {
-    try {
-        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET);
-        return token;
-    }
-    catch (err) {
-        console.log("error in generating token : " + err);
-    }
-}
+// userSchema.methods.generateAuthToken = async function () {
+//     try {
+//         const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET);
+//         return token;
+//     }
+//     catch (err) {
+//         console.log("error in generating token : " + err);
+//     }
+// }
 
 const User = new mongoose.model('User', userSchema);
 module.exports = User;

@@ -39,6 +39,12 @@ exports.deleteUser = async (req, res) => {
 }
 
 
+
+
+
+
+
+
 exports.updateUser = async (req, res) => {
     try {
         // Extract userId from the authentication token
@@ -55,6 +61,20 @@ exports.updateUser = async (req, res) => {
             return res.status(404).send("User not found");
         }
 
+        // Update session cookie with updated user information
+        const tokenPayload = {
+            id: updatedUser._id,
+            isSeller: updatedUser.isSeller,
+        };
+
+        const updatedToken = jwt.sign(tokenPayload, process.env.JWT_KEY);
+
+        res.cookie("accessToken", updatedToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        });
+
         // Send updated user details in the response
         res.status(200).send(updatedUser);
     } catch (error) {
@@ -64,23 +84,41 @@ exports.updateUser = async (req, res) => {
 
 
 
+
+
+
+
 // exports.updateUser = async (req, res) => {
 //     try {
-//         const userId = req.params.?.id;
+//         // Extract userId from the authentication token
+//         const userId = req.userId;
+
+//         // Extract updates from the request body
 //         const updates = req.body;
+
+//         // Find and update the user based on their ID
 //         const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
+
+//         // Check if user exists
 //         if (!updatedUser) {
 //             return res.status(404).send("User not found");
 //         }
+
+//         // Send updated user details in the response
 //         res.status(200).send(updatedUser);
 //     } catch (error) {
-//         res.status(404).send("user updation unsuccessful");
+//         res.status(500).send("User updation unsuccessful");
 //     }
-
-
-
-
 // };
+
+
+
+
+
+
+
+
+
 exports.getAllUsers = async (req, res) => {
     try {
         // Parse query parameters for pagination
