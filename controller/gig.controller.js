@@ -108,7 +108,7 @@ exports.deleteGig = async (req, res, next) => {
 
 exports.getGig = async (req, res, next) => {
     try {
-        console.log("call id", req.params.id);
+        //  console.log("call id", req.params.id);
         const gig = await Gig.findById(req.params?.id).populate('userId')
         console.log("call", gig);
         if (!gig) return res.status(404).json({ message: 0 });
