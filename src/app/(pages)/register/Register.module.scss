@@ -1,6 +1,7 @@
 .register {
     // background-image: url("https://images.pexels.com/photos/2382738/pexels-photo-2382738.jpeg?auto=compress&cs=tinysrgb&w=600");
     display: flex;
+    margin-top: -1;
     align-items: center;
     justify-content: center;
 
@@ -20,11 +21,12 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            //gap: 0.5rem;
             justify-content: space-between;
 
             label {
-                color: gray;
+                color: blue($color: #000000);
                 font-size: 18px;
             }
 

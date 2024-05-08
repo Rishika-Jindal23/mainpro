@@ -5,6 +5,7 @@ import Right from "../icons/Right";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { FormEvent } from "react";
+import Carousel from "@itseasy21/react-elastic-carousel";
 function Hero() {
     const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
 
@@ -13,7 +14,7 @@ function Hero() {
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         console.log("handke submit called");
         if (isLoggedIn) {
-            window.location.href = "/gigs";
+            router.push("/gigs");
         } else {
             router.push("/login");
         }
@@ -76,7 +77,7 @@ function Hero() {
                         </form>
                     </div>
                 </div>
-                <div className="w-45 h-70  relative mt-5 ">
+                <div className="w-170h-70  relative mt-5 ">
                     <Image
                         src={img1}
                         //   layout={"fill"}*

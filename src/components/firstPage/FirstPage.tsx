@@ -13,37 +13,11 @@ function FirstPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(true); // Declare loading state
 
-    useEffect(() => {
-        // Simulate loading delay
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-
     // console.log(isAuthenticated);
 
     return (
         <>
-            {loading ? ( // Render loader if loading is true
-                <Loader />
-            ) : (
-                <>
-                    {!isAuthenticated ? (
-                        <>
-                            <Hero />
-                            <HeroTwo />
-                        </>
-                    ) : (
-                        <>
-                            <Hero />
-                            <Dashboard />
-                            {/* Add any other components */}
-                        </>
-                    )}
-                </>
-            )}
-
-            {/* {!isAuthenticated ? (
+            {!isAuthenticated ? (
                 <>
                     {" "}
                     <Hero />
@@ -55,7 +29,7 @@ function FirstPage() {
                     <Dashboard />
                     <></>
                 </>
-            )} */}
+            )}
         </>
     );
 }

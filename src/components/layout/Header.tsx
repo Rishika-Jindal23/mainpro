@@ -22,6 +22,10 @@ export default function Header() {
 
     const userinfo = useSelector((state) => state);
     const profilepic = loggedInUser ? JSON.parse(loggedInUser).img : null;
+    const [userDropdownOpen, setUserDropdownOpen] = useState<boolean>(false);
+    const [avatarDropdownOpen, setAvatarDropdownOpen] = useState<boolean>(
+        false
+    );
 
     // {JSON.parse(user).username}
 
@@ -59,17 +63,19 @@ export default function Header() {
         }
     };
 
-    const handleDropdown = () => {
-        setShowDropdown(!showDropdown);
+    const handleUserDropdown = () => {
+        setUserDropdownOpen(!userDropdownOpen);
+        setAvatarDropdownOpen(false); // Close the avatar dropdown
     };
 
-    // function handleClick(): void {
-    //     if (loggedInUser) {
-    //         router.push("/landingpage");
-    //     } else {
-    //         router.push("/");
-    //     }
-    // }
+    const handleAvatarDropdown = () => {
+        setAvatarDropdownOpen(!avatarDropdownOpen);
+        setUserDropdownOpen(false); // Close the user dropdown
+    };
+
+    // const handleDropdown = () => {
+    //     setShowDropdown(!showDropdown);
+    // };
 
     return (
         <>
@@ -113,12 +119,12 @@ export default function Header() {
                     {user ? (
                         <div className="relative inline-block text-left">
                             <button
-                                onClick={handleDropdown}
+                                onClick={handleUserDropdown}
                                 className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer hover:scale-105 transition-transform"
                             >
                                 {JSON.parse(user).username}
                             </button>
-                            {showDropdown && (
+                            {userDropdownOpen && (
                                 <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                                     <div
                                         className="py-1"
@@ -158,13 +164,13 @@ export default function Header() {
                                         >
                                             Orders
                                         </Link>
-                                        <button
+                                        {/* <button
                                             // onClick={handleSignOut}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                                             role="menuitem"
                                         >
                                             My Profile
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             )}
@@ -173,15 +179,55 @@ export default function Header() {
                         <Link
                             href="/register"
                             className="bg-blue-700 rounded-full text-white px-7 py-4"
+                            // className="bg-blue-300 hover:bg-blue-400 rounded-full text-blue-800 px-2 py-1 w-24 cursor-pointer transition-colors text-center text-xs"
                         >
                             Sign up
                         </Link>
                     )}
+
                     {user ? (
+                        <div className="relative inline-block text-left">
+                            <button
+                                onClick={handleAvatarDropdown}
+                                // className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer hover:scale-105 transition-transform"
+                            >
+                                <Avatar alt="Cindy Baker" src={profilepic} />
+                            </button>
+                            {avatarDropdownOpen && (
+                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                                    <div
+                                        className="py-1"
+                                        role="menu"
+                                        aria-orientation="vertical"
+                                        aria-labelledby="options-menu"
+                                    >
+                                        <Link
+                                            href={"/myProfile"}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem"
+                                        >
+                                            My Profile
+                                        </Link>
+                                        <Link
+                                            href={"/updatepassword"}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem"
+                                        >
+                                            Update Password
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : null}
+
+                    {/* This code will only show "My Profile" and "Update Password" options when the user clicks on their avatar. Adjust the styles and positioning as needed to match your application's design. */}
+
+                    {/* {user ? (
                         <Link href={""} className="p-4">
                             <Avatar alt="Cindy Baker" src={profilepic} />
                         </Link>
-                    ) : null}
+                    ) : null} */}
                 </nav>
             </header>
         </>

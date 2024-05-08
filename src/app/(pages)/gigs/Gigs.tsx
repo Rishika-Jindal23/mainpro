@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchGigsAsync,
     fetchGigsByFiltersAsync,
+    selectFilterGig,
     selectGigs,
 } from "@/redux_store/slice/gigsSlice";
 
@@ -14,6 +15,8 @@ import GigCard from "../../../components/gigCard/GigCard";
 const Gigs: React.FC = () => {
     const dispatch = useDispatch();
     const { data: gigs, loading, error } = useSelector(selectGigs);
+    const filterData = useSelector(selectFilterGig);
+    console.log("filter data====", filterData);
 
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);
@@ -26,8 +29,8 @@ const Gigs: React.FC = () => {
     //     }, []);
 
     useEffect(() => {
-        dispatch(fetchGigsAsync());
-    }, [dispatch]);
+        dispatch(fetchGigsByFiltersAsync({}));
+    }, [dispatch, minRef, maxRef]);
 
     const reSort = (type: string) => {
         setSort(type);
@@ -38,7 +41,7 @@ const Gigs: React.FC = () => {
         if (minRef.current && maxRef.current) {
             const minPrice = minRef.current?.value;
             const maxPrice = maxRef.current?.value;
-            dispatch(fetchGigsByFiltersAsync({ minPrice, maxPrice, sort }));
+            dispatch(fetchGigsByFiltersAsync({ minPrice, maxPrice }));
 
             // console.log(minRef.current.value);
             // console.log(maxRef.current.value);
@@ -130,7 +133,7 @@ const Gigs: React.FC = () => {
                 </div>
 
                 <div className={styles.cards}>
-                    {gigs.map((gig) => (
+                    {filterData.map((gig) => (
                         <GigCard
                             key={gig._id}
                             item={gig}

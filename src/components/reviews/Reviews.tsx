@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Reviews.module.scss"; // You might remove this if not used
 import Review from "../review/Review";
+import { TextField, Button, MenuItem, Box } from "@mui/material";
 import { fetchReviewsByGigId } from "../../redux_store/slice/reviewsSlice";
 import { currentreviews } from "../../redux_store/slice/reviewsSlice";
 
@@ -56,7 +57,7 @@ const Reviews = ({ gigId, userId }) => {
             setDesc("");
         } catch (error) {
             console.error("Error posting review:", error);
-            // Handle error (dispatch error actions, show error message, etc.)
+            alert("not able to post review");
         }
     };
 
@@ -72,7 +73,42 @@ const Reviews = ({ gigId, userId }) => {
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto p-4 bg-white shadow-md rounded-md"
             >
-                <label className="block">
+                <Box mb={2}>
+                    <TextField
+                        select
+                        label="Rating"
+                        value={star}
+                        onChange={handleStarChange}
+                        variant="outlined"
+                        className="w-full mb-4"
+                    >
+                        {[1, 2, 3, 4, 5].map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box mb={2}>
+                    <TextField
+                        label="Your Review"
+                        multiline
+                        rows={4}
+                        value={desc}
+                        onChange={handleDescChange}
+                        variant="outlined"
+                        className="w-full mb-4"
+                    />
+                </Box>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className="w-full"
+                >
+                    Submit Review
+                </Button>
+                {/* <label className="block">
                     Rating:
                     <select
                         value={star}
@@ -101,7 +137,7 @@ const Reviews = ({ gigId, userId }) => {
                     className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 >
                     Submit Review
-                </button>
+                </button> */}
             </form>
         </>
     );

@@ -226,7 +226,7 @@ const Register1: React.FC = () => {
             console.log("res : ", res);
             window.location.href = "/login";
         } catch (err) {
-            setError(err.response.data.message); // Assuming backend sends error message in response
+            setError("signup failed"); // Assuming backend sends error message in response
         }
         console.log("submit call");
     };
@@ -283,7 +283,7 @@ const Register1: React.FC = () => {
                     {error && <p className={styles.error}>{error}</p>}
                 </div>
                 <div className={styles.right}>
-                    <h1>I want to become a seller</h1>
+                    {/* <h1>Register</h1> */}
                     <div className={styles.toggle}>
                         <label htmlFor="">Activate the seller account</label>
                         <Switch

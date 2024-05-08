@@ -18,7 +18,7 @@ export function useData({ url, initialData }: UseDataProps) {
             setError(null);
 
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, { credentials: "include" });
                 if (!response.ok) {
                     throw new Error(
                         "An error occurred while fetching the data."

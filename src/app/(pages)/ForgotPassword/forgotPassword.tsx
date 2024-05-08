@@ -16,8 +16,9 @@ const ForgotPassword: React.FC = () => {
             );
             console.log("response>>>>>>>>>>...", response.data);
             window.location.href = "https://mail.google.com";
-            alert("check your mail and reset your password");
+            // alert("check your mail and reset your password");
         } catch (error) {
+            alert("please enter correct email");
             console.error("Error submitting email:", error);
         }
     };

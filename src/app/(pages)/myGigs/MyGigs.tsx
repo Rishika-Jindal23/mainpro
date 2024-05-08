@@ -111,7 +111,7 @@ function MyGigs() {
                             ))
                         ) : (
                             <>
-                                <h1>No Data</h1>
+                                <h1>No Gig has been created by you</h1>
                             </>
                         )}
                     </tbody>

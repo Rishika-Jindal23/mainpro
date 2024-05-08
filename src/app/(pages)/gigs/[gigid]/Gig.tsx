@@ -50,6 +50,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     <h1>{currentGig.title}</h1>
                     <div className={styles.user}>
                         {/* userprofilepic */}
+
                         <img
                             className={styles.pp}
                             src={currentGig.userId.img}
@@ -63,7 +64,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                             <span>5</span>
                         </div>
                     </div>
-                    <Carousel itemsToShow={2} isRTL={false}>
+                    <Carousel itemsToShow={1} isRTL={false}>
                         <img src={currentGig.images} alt="GigImage" />
                     </Carousel>
                     <h2>About This Gig</h2>
@@ -129,14 +130,16 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     </div>
                     <div></div>
                     <div>
-                        <p>for reviews</p>
-                        // <Reviews gigId={id} userId={loginUserId} />
+                        <p className="text-sky-950  text-center   text-xl  font-bold">
+                            Reviews
+                        </p>
+                        <Reviews gigId={id} userId={loginUserId} />
                     </div>
                 </div>
                 <div className={styles.right}>
                     <div className={styles.price}>
-                        <p>short Title</p>
-                        {/* <h3>{currentGig.title}</h3> */}
+                        {/* <p>{currentGig.shortTitle}</p> */}
+                        <h3>{currentGig.shortTitle}</h3>
                         <h2>${currentGig.price}</h2>
                     </div>
                     <p>{currentGig.shortDesc}</p>

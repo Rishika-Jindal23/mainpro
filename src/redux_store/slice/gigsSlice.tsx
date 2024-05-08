@@ -4,6 +4,7 @@ import { Key } from "react";
 import newRequest from "@/app/utils/newRequest";
 
 interface Gig {
+    shortTitle: ReactNode;
     id: Key | null | undefined;
     deliveryTime: Number;
     revisionNumber: Number;
@@ -72,17 +73,15 @@ export const fetchGigsAsync = createAsyncThunk("gigs/fetchGigs", async () => {
 export const fetchGigsByFiltersAsync = createAsyncThunk(
     "gigs/fetchGigsByFilters",
     async ({
-        minPrice,
-        maxPrice,
-        sort,
+        minPrice = 1,
+        maxPrice = 200,
     }: {
         minPrice: number;
         maxPrice: number;
-        sort: string;
     }) => {
         try {
             const response = await newRequest.get(
-                `/gigs?min=${minPrice}&max=${maxPrice}&sort=${sort}`,
+                `/gigs?min=${minPrice}&max=${maxPrice}`,
                 {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
