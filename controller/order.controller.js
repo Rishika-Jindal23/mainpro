@@ -76,12 +76,12 @@ exports.getOrders = async (req, res, next) => {
         } else {
             query = { buyerId: req.userId, isCompleted: true };
         }
-        //console.log("quuuuuuuuuuuuuuuuuuuuuu-------------", query);
+
 
         const orders = await Order.find(query);
         console.log("orders>>>>>>>>>>>", orders)
         if (!orders) { res.status(404).send("not able to get orders") }
-        //console.log(orders);
+
         res.status(200).send(orders);
 
     } catch (error) {
@@ -177,3 +177,16 @@ exports.confirm = async (req, res, next) => {
 
     } catch (err) { res.status(404).send(err) }
 }
+
+
+
+
+exports.deleteAllOrders = async (req, res, next) => {
+    try {
+        const result = await Order.deleteMany({});
+        res.status(200).send(`${result.deletedCount} orders deleted successfully`);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("An error occurred while deleting orders");
+    }
+};

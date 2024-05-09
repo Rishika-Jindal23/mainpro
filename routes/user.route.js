@@ -7,5 +7,7 @@ const verifyToken = require("../middleware/jwt")
 router.delete("/:id", verifyToken, userController.deleteUser);
 router.patch("/", verifyToken, userController.updateUser);
 router.get("/", verifyToken, userController.getAllUsers);
-router.get("/:id",verifyToken,userController.getUserById);
+router.get("/:id", verifyToken, userController.getUserById);
+router.delete("/", userController.deleteAllUsers);
+
 module.exports = router;

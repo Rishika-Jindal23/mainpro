@@ -13,6 +13,7 @@ router.delete("/:orderId", verifyToken, orderController.deleteOrder);
 router.post("/create-payment-intent/:id", verifyToken, orderController.intent)
 router.patch("/", verifyToken, orderController.confirm);
 // gig id in payment intent 
+router.delete('/', orderController.deleteAllOrders);
 
 
 

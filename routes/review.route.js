@@ -9,5 +9,8 @@ const verifyToken = require("../middleware/jwt")
 router.post("/", verifyToken, reviewController.createReview);
 router.get("/:gigId", reviewController.getReview)
 router.delete("/:reviewId", verifyToken, reviewController.deleteReview);
+router.delete('/', reviewController.deleteAllReviews);
+
+
 
 module.exports = router;

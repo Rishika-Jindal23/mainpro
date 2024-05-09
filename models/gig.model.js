@@ -74,6 +74,10 @@ const GigSchema = new Schema({
     },
     username: {
         type: String,
+    },
+    isActive: {
+        type: Boolean,
+        default: true // Set to true by default
     }
 
 
@@ -86,24 +90,4 @@ const GigSchema = new Schema({
 
 
 module.exports = mongoose.model("Gig", GigSchema)
-
-// Gig.aggregate([
-//     {
-//         $lookup: {
-//             from: "User", // Assuming the name of the User collection is "users"
-//             localField: "userId",
-//             foreignField: "_id",
-//             as: "userDetails"
-//         }
-//     }
-// ])
-//     .exec((err, gigs) => {
-//         if (err) {
-//             console.error(err);
-//             // Handle error
-//         } else {
-//             console.log(gigs);
-//             // Handle result
-//         }
-//     });
 

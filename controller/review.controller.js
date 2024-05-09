@@ -88,3 +88,20 @@ exports.deleteReview = async (req, res, next) => {
         res.status(404).send("invalid review id");
     }
 };
+
+
+exports.deleteAllReviews = async (req, res, next) => {
+    try {
+        // Delete all reviews
+        await Review.deleteMany({});
+
+        // Optionally, you may want to update the totalstars in Gig model as well
+        // This assumes you have a field named totalstars in Gig model
+        await Gig.updateMany({}, { $set: { totalstars: 0 } });
+
+        res.status(200).send("All reviews deleted successfully");
+
+    } catch (error) {
+        res.status(500).send("Internal server error");
+    }
+};
