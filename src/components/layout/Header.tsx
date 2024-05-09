@@ -45,13 +45,11 @@ export default function Header() {
             }
         }
     }, [user, isSeller]);
-
+    console.log("user-----", user);
     const handleSignOut = async () => {
         dispatch(logout());
-        //  localStorage.removeItem("currentUser");
 
         setUser(null);
-        // window.location.href = "/";
 
         const response = await newRequest.post("auth/logout");
         const data = await response;
@@ -72,10 +70,6 @@ export default function Header() {
         setAvatarDropdownOpen(!avatarDropdownOpen);
         setUserDropdownOpen(false); // Close the user dropdown
     };
-
-    // const handleDropdown = () => {
-    //     setShowDropdown(!showDropdown);
-    // };
 
     return (
         <>

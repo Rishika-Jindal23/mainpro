@@ -13,7 +13,7 @@ const CheckOutForm = () => {
     const elements = useElements();
 
     const [email, setEmail] = useState("");
-    const [message, setMessage] = React.useState(null);
+    const [message, setMessage] = React.useState(null || "");
     const [isLoading, setIsLoading] = React.useState(false);
 
     useEffect(() => {

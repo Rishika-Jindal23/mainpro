@@ -31,7 +31,7 @@ export default function RootLayout({
                 {/* <Header /> */}
 
                 <Providers>
-                    <main className="max-w-6xl  mx-auto">
+                    <main className="max-w-4xl  mx-auto">
                         <Header />
                         {children}
                     </main>

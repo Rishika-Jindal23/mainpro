@@ -7,6 +7,8 @@ import { login } from "@/redux_store/slice/authslice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import newRequest from "@/app/utils/newRequest";
+import { useRouter } from "next/navigation";
+import { loginimage2 } from "../../../../public/img/loginimage2.jpeg";
 
 interface LoginProps {}
 
@@ -16,6 +18,7 @@ const LoginMain: React.FC<LoginProps> = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const router = useRouter();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -32,8 +35,13 @@ const LoginMain: React.FC<LoginProps> = () => {
             await toast.success("🦄 Login Successful");
             const token = res.data.token;
             const currentUser = JSON.stringify(res.data.info);
-
+            console.log(
+                "current user from login page>>>>>>>>>>>>>>>>>",
+                currentUser
+            );
+            //   dispatch(login({ token }));
             dispatch(login({ currentUser, token }));
+            //router.push("/landingpage");
             window.location.href = "/landingpage";
         } catch (err) {
             if (
@@ -59,7 +67,15 @@ const LoginMain: React.FC<LoginProps> = () => {
                         alignItems: "center",
                         minHeight: "70vh",
                     }}
-                ></div>
+                >
+                    {/* <Image
+                        src={loginimage2}
+                        //   layout={"fill"}*
+                        //    objectFit={"contain"}
+                        alt="freelance"
+                        // layout="responsive"
+                    ></Image> */}
+                </div>
                 <div
                     style={{
                         display: "flex",

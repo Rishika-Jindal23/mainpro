@@ -6,11 +6,13 @@ import styles from "./Orders.module.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "@/redux_store/slice/ordersSlice";
+import { useRouter } from "next/navigation";
 
 const Orders = () => {
     const dispatch = useDispatch();
     const orders = useSelector((state) => state.orders.orders);
     console.log("order--------", orders);
+    const router = useRouter();
 
     const error = useSelector((state) => state.error);
 
@@ -18,26 +20,14 @@ const Orders = () => {
         dispatch(fetchOrders());
     }, [dispatch]);
 
-    // interface User {
-    //     id: number;
-    //     username: string;
-    //     isSeller: boolean;
-    // }
-
-    // const currentUser: User = {
-    //     id: 1,
-    //     username: "Anna",
-    //     isSeller: true,
-    // };
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    // console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
-    const originaluser = JSON.parse(loggedInUser);
-    const loginUserId = originaluser._id;
-    const loginUserName = originaluser.username;
-    const loginUserIsSeller = originaluser.isSeller;
+
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null; // const loginUserId = originaluser._id;
+    // const loginUserName = originaluser.username;
+    // const loginUserIsSeller = originaluser.isSeller;
 
     function handleContact(order: any): void {
-        throw new Error("Function not implemented.");
+        router.push("/contact");
     }
 
     return (

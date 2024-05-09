@@ -14,7 +14,7 @@ import { RootState } from "@/redux_store/store";
 const Messages: React.FC = () => {
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
     console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
-    const originaluser = JSON.parse(loggedInUser);
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     const userId = originaluser._id;
     console.log("id>>>>>>>>>>>>>>>>>>", userId);
     const loginUserName = originaluser.username;

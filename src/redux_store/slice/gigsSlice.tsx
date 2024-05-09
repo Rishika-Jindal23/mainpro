@@ -74,14 +74,16 @@ export const fetchGigsByFiltersAsync = createAsyncThunk(
     "gigs/fetchGigsByFilters",
     async ({
         minPrice = 1,
-        maxPrice = 200,
+        maxPrice = 10000,
+        input = "",
     }: {
         minPrice: number;
         maxPrice: number;
+        input: string;
     }) => {
         try {
             const response = await newRequest.get(
-                `/gigs?min=${minPrice}&max=${maxPrice}`,
+                `/gigs?min=${minPrice}&max=${maxPrice}&search=${input}`,
                 {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
