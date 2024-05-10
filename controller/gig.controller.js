@@ -86,23 +86,6 @@ exports.deleteGig = async (req, res, next) => {
 
 
 
-// exports.deleteGig = async (req, res, next) => {
-//     try {
-//         const gig = await Gig.findById(req.params.id);
-//         console.log("req.params.id--------", req.params.id)
-//         console.log("gig.user.id--------", gig.userId)
-//         console.log("req.userid--------", req.userId)
-//         const reqUserId = new mongoose.Types.ObjectId(req.userId);
-//         console.log("new id", reqUserId)
-//         if (gig.userId !== reqUserId) return res.status(403).send("you can delete only your gig");
-//         await Gig.findByIdAndDelete(req.params.id);
-//         res.status(200).send("Gig has been deleted")
-//     } catch (error) {
-//         console.log(error)
-//         res.send(error)
-//     }
-// };
-
 
 
 exports.getGig = async (req, res, next) => {
@@ -117,50 +100,10 @@ exports.getGig = async (req, res, next) => {
 
 
 
-// exports.getGigs = async (req, res, next) => {
-//     try {
-//         //console.log("hhelloo");
-//         const q = req.query;
-//         const filters = {
-//             ...(q.userId && { userId: q.userId }),
-
-//             ...(q.cat && { cat: q.cat }),
-//             ...((q.min || q.max) && {
-//                 price: {
-//                     ...(q.min && { $gt: q.min }),
-//                     ...(q.max && { $lt: q.max }),
-//                 },
-//             }),
-//             ...(q.search && {
-//                 $or: [
-//                     { title: { $regex: q.search, $options: "i" } },
-//                     // { desc: { $regex: q.search, $options: "i" } },
-//                     { cat: { $regex: q.search, $options: "i" } },
-//                     // { shortDesc: { $regex: q.search, $options: "i" } },
-//                 ]
-//                 //   title: { $regex: q.search, $options: "i" },
-//             }),
-//             isActive: true // Filter for active gigs
-//         };
-//         // filters.isActive = true;
-//         console.log("Filters:", filters); // Log filters for debugging
-//         console.log(req.query)
-//         const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-//         // const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-//         console.log("gigs------", gigs);
-//         if (!gigs || gigs.length === 0) {
-//             return res.status(404).send("No gigs found matching the criteria.");
-//         }
-//         res.status(200).json(gigs);
-//     } catch (error) {
-//         res.status(404).send("An error occurred while fetching gigs.", error);
-//     }
-// };
-
 
 exports.getGigs = async (req, res, next) => {
     try {
-        //console.log("hhelloo");
+
         const q = req.query;
         const filters = {
             ...(q.userId && { userId: q.userId }),
@@ -184,8 +127,7 @@ exports.getGigs = async (req, res, next) => {
             //   isActive: true // Filter for active gigs
         };
         // filters.isActive = true;
-        console.log("Filters:", filters); // Log filters for debugging
-        console.log(req.query)
+
         const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
         // const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
         console.log("gigs------", gigs);
@@ -217,27 +159,6 @@ exports.updateGig = async (req, res, next) => {
 };
 
 
-// exports.getGigsById = async (req, res, next) => {
-//     try {
-//         let query = {};
-//         if (req.isSeller) {
-//             query = { sellerId: req.userId };
-//         } else {
-//             query = { buyerId: req.userId };
-//         }
-//         //console.log("quuuuuuuuuuuuuuuuuuuuuu-------------", query);
-
-//         const gigs = await Gig.find(query);
-//         console.log("gigs>>>>>>>>>>>", gigs)
-//         if (!gigs) { res.status(404).send("not able to get gigs") }
-//         //console.log(orders);
-//         res.status(200).send(gigs);
-
-//     } catch (error) {
-//         res.status(404).send("not able to fetch gigs ");
-//     }
-// }
-
 
 
 
@@ -247,7 +168,7 @@ exports.deleteAllGigs = async (req, res, next) => {
         const deletedGigs = await Gig.deleteMany({});
         res.status(200).json({ message: `${deletedGigs.deletedCount} gigs deleted successfully` });
     } catch (error) {
-        console.log("Error:", error);
+        //console.log("Error:", error);
         res.status(500).send("Internal Server Error");
     }
 };

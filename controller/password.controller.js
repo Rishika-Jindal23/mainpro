@@ -33,7 +33,7 @@ exports.forgotPassword = async (request, response) => {
     const message = `Forgot password ? submit a patch request with new password to: ${resetURL} \nOtherwise ignore this mail`;
 
     try {
-        console.log("user email : " + user.email);
+        // console.log("user email : " + user.email);
 
         await sendEmail({
             email: user.email,
@@ -47,7 +47,7 @@ exports.forgotPassword = async (request, response) => {
         user.passwordResetToken = undefined;
         user.passwordResetExpires = undefined;
         await user.save({ validateBeforeSave: false });
-        console.log(err.message);
+        // console.log(err.message);
     }
 }
 

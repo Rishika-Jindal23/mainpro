@@ -6,7 +6,7 @@ exports.register = async (req, res) => {
     try {
         // Check if the user already exists
         let user = req.body.user;
-        console.log(user);
+
         const existingUser = await User.findOne({ username: req.body.username });
         if (existingUser) {
             return res.status(400).send("User already exists");
@@ -27,17 +27,13 @@ exports.register = async (req, res) => {
                 desc: user.desc,
                 isSeller: user.isSeller
             });
-        //    console.log("data : --------------", req.body);
-        // console.log("user : ", newUser);
-        // Save the new user to the database
-        //console.log("new user : ", newUser);
-        // console.log("new user : ", newUser);
+
         await newUser.save();
         if (!newUser) { res.status(404).send("please enter correct details") }
 
         res.status(201).send("User has been created");
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(404).send("enter correct registration details");
 
     }

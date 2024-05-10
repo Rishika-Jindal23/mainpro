@@ -39,7 +39,7 @@ app.use("/passwords", passwordRoute);
 
 // error handler for unmatched routes
 app.use((req, res, next) => {
-    res.status(404).send("error>>>>>>>>>>");
+    res.status(404).send("error");
 });
 
 //global error handler
