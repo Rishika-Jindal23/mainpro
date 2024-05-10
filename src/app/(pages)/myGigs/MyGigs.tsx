@@ -25,11 +25,11 @@ function MyGigs() {
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
 
-    const originaluser = loggedInUser?JSON.parse(loggedInUser):null
-    const userId = originaluser._id;
-    console.log("id>>>>>>>>>>>>>>>>>>", userId);
-    const loginUserName = originaluser.username;
-    const loginUserIsSeller = originaluser.isSeller;
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    const userId = originaluser ? originaluser._id : null;
+
+    // const loginUserName = originaluser.username;
+    // const loginUserIsSeller = originaluser.isSeller;
 
     useEffect(() => {
         // Dispatch the fetchGigsByUserIdAsync action when the component mounts
@@ -37,7 +37,6 @@ function MyGigs() {
             dispatch(fetchGigsByUserIdAsync(userId));
         }
     }, [dispatch, userId]);
-    console.log("gigss>>>>>>>>>>>>>..", currentuserGig);
 
     async function handleDelete(_id: any): Promise<void> {
         console.log("id________", _id);
@@ -66,20 +65,19 @@ function MyGigs() {
         <div className={styles.myGigs}>
             <div className={styles.container}>
                 <div className={styles.title}>
-                    <h1>{originaluser.isSeller ? "Gigs" : "Orders"}</h1>
+                    <h1>Gigs created By you </h1>
                     {originaluser.isSeller && (
                         <Link href="/add">
                             <button>Add New Gig</button>
                         </Link>
                     )}
-                     </div>
-                     <div className={styles.title}>
-                     {originaluser.isSeller && (
+                </div>
+                <div className={styles.title}>
+                    {originaluser.isSeller && (
                         <Link href="/gigs">
                             <button>All Gigs</button>
                         </Link>
                     )}
-                    
                 </div>
                 <table>
                     <thead>

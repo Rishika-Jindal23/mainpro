@@ -12,7 +12,7 @@ function Hero() {
     const router = useRouter();
 
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-        console.log("handke submit called");
+        console.log("handle submit called");
         if (isLoggedIn) {
             router.push("/gigs");
         } else {

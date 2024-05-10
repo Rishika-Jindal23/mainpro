@@ -11,7 +11,7 @@ interface CardProps {
 
 function ProjectCard({ card }: { card: CardProps }) {
     return (
-        <Link href="/gigs">
+        <Link href="#">
             <div className={styles.projectCard}>
                 <img src={card.img} alt="" />
                 <div className={styles.info}>

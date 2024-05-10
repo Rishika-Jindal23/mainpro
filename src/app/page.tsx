@@ -4,42 +4,14 @@ import Heroes from "@/components/layout/Hero";
 import HeroTwo from "@/components/layout/HeroTwo";
 import Link from "next/link";
 import React from "react";
-import Home from "./home/page";
 import FirstPage from "@/components/firstPage/FirstPage";
-// import {
-//     useQuery,
-//     useMutation,
-//     useQueryClient,
-//     QueryClient,
-//     QueryClientProvider,
-// } from "@tanstack/react-query";
 
 const HomePage: React.FC = () => {
     return (
         <>
-            {/* <Header /> */}
-            {/* <Hero />
-            <HeroTwo /> */}
             <FirstPage />
         </>
     );
 };
-
-{
-    /* Hello word */
-}
-{
-    /* <div classnameNameName="container mx-auto px-4">
-             
-                <p>This is a content to make our page longer</p>
-                <div classnameNameName="w-full h-screen bg-blue-300">
-                    <h1>Welcome to SkillSphere</h1>
-                    {/* <CatCard /> */
-}
-{
-    /* </div>
-                <p>Lorem Ipsum is simply dummy text ...</p>
-            </div> */
-}
 
 export default HomePage;

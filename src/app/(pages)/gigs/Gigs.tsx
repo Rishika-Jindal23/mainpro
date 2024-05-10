@@ -24,10 +24,6 @@ const Gigs: React.FC = () => {
     const minRef = useRef<HTMLInputElement>(null);
     const maxRef = useRef<HTMLInputElement>(null);
 
-    //     useEffect(() => {
-    //         fetchGigs();
-    //     }, []);
-
     useEffect(() => {
         dispatch(fetchGigsByFiltersAsync({}));
     }, [dispatch]);
@@ -42,13 +38,8 @@ const Gigs: React.FC = () => {
             const minPrice = minRef.current?.value;
             const maxPrice = maxRef.current?.value;
             dispatch(fetchGigsByFiltersAsync({ minPrice, maxPrice }));
-
-            // console.log(minRef.current.value);
-            // console.log(maxRef.current.value);
         }
     };
-
-    const handleSearchInput = (e) => {};
 
     return (
         <div className={styles.gigs}>
@@ -64,33 +55,6 @@ const Gigs: React.FC = () => {
                         <input ref={maxRef} type="number" placeholder="max" />
                         <button onClick={apply}>Apply</button>
                     </div>
-                    {/* <div className={styles.right}>
-                        <span className={styles.sortBy}>Sort by</span>
-                        <span className={styles.sortType}>
-                            {sort === "sales" ? "Best Selling" : "Newest"}
-                        </span>
-                        <img
-                            src="./img/down.png"
-                            alt=""
-                            onClick={() => setOpen(!open)}
-                        />
-                        {open && (
-                            <div className={styles.rightMenu}>
-                                {sort === "sales" ? (
-                                    <span onClick={() => reSort("createdAt")}>
-                                        Newest
-                                    </span>
-                                ) : (
-                                    <span onClick={() => reSort("sales")}>
-                                        Best Selling
-                                    </span>
-                                )}
-                                <span onClick={() => reSort("sales")}>
-                                    Popular
-                                </span>
-                            </div>
-                        )}
-                    </div> */}
                 </div>
 
                 <div className={styles.cards}>

@@ -6,8 +6,8 @@ import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
 import Carousel from "@itseasy21/react-elastic-carousel";
 import styles from "./Gig.module.scss";
-import profilepic from "../../../../../public/img/profile4.png"
-import gigimage from "../../../../../public/img/cloudhosting.png"
+import profilepic from "../../../../../public/img/profile4.png";
+import gigimage from "../../../../../public/img/cloudhosting.png";
 
 import {
     fetchGigByIdAsync,
@@ -22,8 +22,8 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
 
-    const originaluser = loggedInUser? JSON.parse(loggedInUser):null
-    const loginUserId = originaluser? originaluser._id:null
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    const loginUserId = originaluser ? originaluser._id : null;
 
     // const loginUserName = originaluser.username;
     // const loginUserIsSeller = originaluser.isSeller;
@@ -32,14 +32,16 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
         dispatch(fetchGigByIdAsync(id));
     }, [dispatch, id]);
     const currentGig = useSelector(selectCurrentGig);
-    // console.log("current>>>>>>>>>>>>>>", currentGig);
 
     if (!currentGig) {
-        // If gig data is not available yet, you can render a loading state or handle it accordingly
         return <div>Loading...</div>;
     }
     const payment = (id: string, price: Number) => {
         router.push(`http://localhost:3000/pay?gigid=${id}?price=${price}`);
+    };
+
+    const handleClick = () => {
+        router.push("contact");
     };
 
     return (
@@ -55,20 +57,36 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
                         <img
                             className={styles.pp}
-                            src={currentGig.userId.img||profilepic}
+                            src={currentGig.userId.img || profilepic}
                             alt=""
                         />
                         <span>{currentGig.username}</span>
-                        {!isNaN(currentGig.totalStars / currentGig.starNumber) && (
-                  <div className="stars">
-                    {Array(Math.round(currentGig.totalStars / currentGig.starNumber))
-                      .fill()
-                      .map((item, i) => (
-                        <img src="/img/star.png" alt="" key={i} />
-                      ))}
-                    <span>{Math.round(currentGig.totalStars / currentGig.starNumber)}</span>
-                  </div>
-                )}
+                        {!isNaN(
+                            currentGig.totalStars / currentGig.starNumber
+                        ) && (
+                            <div className="stars">
+                                {Array(
+                                    Math.round(
+                                        currentGig.totalStars /
+                                            currentGig.starNumber
+                                    )
+                                )
+                                    .fill()
+                                    .map((item, i) => (
+                                        <img
+                                            src="/img/star.png"
+                                            alt=""
+                                            key={i}
+                                        />
+                                    ))}
+                                <span>
+                                    {Math.round(
+                                        currentGig.totalStars /
+                                            currentGig.starNumber
+                                    )}
+                                </span>
+                            </div>
+                        )}
                         {/* <div className={styles.stars}>
                             {[...Array(5)].map((_, index) => (
                                 <img key={index} src="/img/star.png" alt="" />
@@ -77,7 +95,10 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         </div> */}
                     </div>
                     <Carousel itemsToShow={1} isRTL={false}>
-                        <img src={currentGig.images||gigimage} alt="GigImage" />
+                        <img
+                            src={currentGig.images || gigimage}
+                            alt="GigImage"
+                        />
                     </Carousel>
                     <h2>About This Gig</h2>
                     <p>{currentGig.desc}</p>
@@ -85,7 +106,10 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
                             {/* userProfilePic */}
-                            <img src={currentGig.userId.img||gigimage} alt="profilepic" />
+                            <img
+                                src={currentGig.userId.img || gigimage}
+                                alt="profilepic"
+                            />
                             <div className={styles.info}>
                                 <span>{currentGig.username}</span>
                                 <div className={styles.stars}>
@@ -98,7 +122,9 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                                     ))}
                                     <span>5</span>
                                 </div>
-                                <button>Contact Me</button>
+                                <button onClick={handleClick}>
+                                    Contact Me
+                                </button>
                             </div>
                         </div>
                         <div className={styles.box}>
@@ -150,7 +176,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.price}>
-                        <p>Just at:-</p>
+                        <p>My Gig Features</p>
                         <h3>{currentGig.shortTitle}</h3>
                         <h2>${currentGig.price}</h2>
                     </div>

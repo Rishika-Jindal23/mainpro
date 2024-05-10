@@ -1,11 +1,10 @@
 import React from "react";
-import AboutPage from "./About";
-import AboutUsPage from "./About";
+import VideoHome from "./VideoHome";
 
 function page() {
     return (
         <div>
-            <AboutUsPage />
+            <VideoHome />
         </div>
     );
 }

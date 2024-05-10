@@ -1,5 +1,5 @@
 "use client";
-
+//import Button from "@mui/material/Button";
 import newRequest from "@/app/utils/newRequest";
 import { logout } from "@/redux_store/slice/authslice";
 import Button from "@mui/material/Button";
@@ -27,12 +27,8 @@ export default function Header() {
         false
     );
 
-    // {JSON.parse(user).username}
-
     const token = useSelector((state) => state.auth.token);
-    console.log("state-----", token);
-
-    console.log();
+    //   console.log("state-----", token);
 
     useEffect(() => {
         // const currentUser = localStorage.getItem("currentUser");
@@ -45,7 +41,7 @@ export default function Header() {
             }
         }
     }, [user, isSeller]);
-    console.log("user-----", user);
+
     const handleSignOut = async () => {
         dispatch(logout());
 
@@ -54,7 +50,7 @@ export default function Header() {
         const response = await newRequest.post("auth/logout");
         const data = await response;
         if (response) {
-            alert("successfuly loggedout");
+            alert("logout successfull");
             window.location.href = "/";
         } else {
             alert("error occurred");
@@ -71,6 +67,10 @@ export default function Header() {
         setUserDropdownOpen(false); // Close the user dropdown
     };
 
+    const handleService = () => {
+        router.push("/gigs");
+    };
+
     return (
         <>
             <header className="flex items-center justify-between mt-3">
@@ -81,23 +81,23 @@ export default function Header() {
                     SkillSphere
                 </Link>
                 <nav className="flex gap-8 items-aligned text-gray-600 font-semibold relative">
-                    <Link href={"/"} className="p-4">
+                    <Button variant="text" href="/">
                         Home
-                    </Link>
-                    <Link href="/about" className="p-4">
-                        About
-                    </Link>
-                    <Link href="/contact" className="p-4">
-                        Contact Us
-                    </Link>
+                    </Button>
+
+                    <Button variant="text" href="/about">
+                        AboutUs
+                    </Button>
+                    {user ? (
+                        <Button variant="text" onClick={handleService}>
+                            Services
+                        </Button>
+                    ) : null}
 
                     {user ? (
                         <a
-                            // onClick={handleSignOut}
-                            // className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer"
                             onClick={handleSignOut}
                             className="bg-blue-700 rounded-full text-white px-4 py-4 w-300 cursor-pointer hover:scale-105 transition-transform"
-                            // style={{ fontSize: "0.8rem" }}
                         >
                             Logout
                         </a>

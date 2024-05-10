@@ -7,6 +7,7 @@ import ClientProvider from "./ClientProvider";
 import { persistor, store } from "@/redux_store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import Providers from "@/redux_store/provider";
+import Footer from "@/components/footer/Footer";
 
 // import { PersistGate } from "redux-persist/integration/react";
 // import Provider from "@/redux_store/provider";
@@ -35,6 +36,7 @@ export default function RootLayout({
                         <Header />
                         {children}
                     </main>
+                    <Footer />
                 </Providers>
 
                 {/* </ClientProvider> */}

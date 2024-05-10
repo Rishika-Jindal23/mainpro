@@ -8,7 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import newRequest from "@/app/utils/newRequest";
 import { useRouter } from "next/navigation";
-import { loginimage2 } from "../../../../public/img/loginimage2.jpeg";
+import loginimage2 from "../../../../public/img/loginimage2.jpeg";
+import Image from "next/image";
 
 interface LoginProps {}
 
@@ -35,7 +36,7 @@ const LoginMain: React.FC<LoginProps> = () => {
             await toast.success("🦄 Login Successful");
             const token = res.data.token;
             const currentUser = JSON.stringify(res.data.info);
-            
+
             dispatch(login({ currentUser, token }));
             //router.push("/landingpage");
             window.location.href = "/landingpage";
@@ -54,7 +55,17 @@ const LoginMain: React.FC<LoginProps> = () => {
 
     return (
         <>
-           
+            <section className="grid grid-cols-2 mt-10">
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        minHeight: "70vh",
+                    }}
+                >
+                    <Image src={loginimage2} alt="test" />
+                </div>
                 <div
                     style={{
                         display: "flex",
@@ -140,7 +151,7 @@ const LoginMain: React.FC<LoginProps> = () => {
                         </form>
                     </div>
                 </div>
-            {/* </section> */}
+            </section>
         </>
     );
 };

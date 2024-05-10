@@ -7,6 +7,7 @@ import HeroTwo from "../layout/HeroTwo";
 import { useRouter } from "next/navigation";
 import Dashboard from "../layout/Dashboard";
 import Loader from "../Loader/loader";
+import LandingPageComponent from "../layout/LandingPageComponent";
 
 function FirstPage() {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -19,14 +20,14 @@ function FirstPage() {
         <>
             {!isAuthenticated ? (
                 <>
-                    {" "}
                     <Hero />
                     <HeroTwo />
                 </>
             ) : (
                 <>
                     <Hero />
-                    <Dashboard />
+                    <LandingPageComponent />
+                    {/* <Dashboard /> */}
                     <></>
                 </>
             )}

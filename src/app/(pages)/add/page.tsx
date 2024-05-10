@@ -8,9 +8,7 @@ import AddPage from "./AddPage";
 export default function Add() {
     return (
         <div>
-            <h1>hello from add page</h1>
             <AddPage />
-            {/* //<AddPage /> */}
         </div>
     );
 }
