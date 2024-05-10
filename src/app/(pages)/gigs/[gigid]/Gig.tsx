@@ -6,6 +6,8 @@ import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
 import Carousel from "@itseasy21/react-elastic-carousel";
 import styles from "./Gig.module.scss";
+import profilepic from "../../../../../public/img/profile4.png"
+import gigimage from "../../../../../public/img/cloudhosting.png"
 
 import {
     fetchGigByIdAsync,
@@ -20,8 +22,8 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
 
-    const originaluser = JSON.parse(loggedInUser);
-    const loginUserId = originaluser._id;
+    const originaluser = loggedInUser? JSON.parse(loggedInUser):null
+    const loginUserId = originaluser? originaluser._id:null
 
     // const loginUserName = originaluser.username;
     // const loginUserIsSeller = originaluser.isSeller;
@@ -45,7 +47,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
             <div className={styles.container}>
                 <div className={styles.left}>
                     <span className={styles.breadcrumbs}>
-                        SkillSphere{">"} Graphics & Design{">"}
+                        SkillSphere Services
                     </span>
                     <h1>{currentGig.title}</h1>
                     <div className={styles.user}>
@@ -53,19 +55,29 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
                         <img
                             className={styles.pp}
-                            src={currentGig.userId.img}
+                            src={currentGig.userId.img||profilepic}
                             alt=""
                         />
                         <span>{currentGig.username}</span>
-                        <div className={styles.stars}>
+                        {!isNaN(currentGig.totalStars / currentGig.starNumber) && (
+                  <div className="stars">
+                    {Array(Math.round(currentGig.totalStars / currentGig.starNumber))
+                      .fill()
+                      .map((item, i) => (
+                        <img src="/img/star.png" alt="" key={i} />
+                      ))}
+                    <span>{Math.round(currentGig.totalStars / currentGig.starNumber)}</span>
+                  </div>
+                )}
+                        {/* <div className={styles.stars}>
                             {[...Array(5)].map((_, index) => (
                                 <img key={index} src="/img/star.png" alt="" />
                             ))}
                             <span>5</span>
-                        </div>
+                        </div> */}
                     </div>
                     <Carousel itemsToShow={1} isRTL={false}>
-                        <img src={currentGig.images} alt="GigImage" />
+                        <img src={currentGig.images||gigimage} alt="GigImage" />
                     </Carousel>
                     <h2>About This Gig</h2>
                     <p>{currentGig.desc}</p>
@@ -73,7 +85,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
                             {/* userProfilePic */}
-                            <img src={currentGig.userId.img} alt="profilepic" />
+                            <img src={currentGig.userId.img||gigimage} alt="profilepic" />
                             <div className={styles.info}>
                                 <span>{currentGig.username}</span>
                                 <div className={styles.stars}>
@@ -138,7 +150,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.price}>
-                        {/* <p>{currentGig.shortTitle}</p> */}
+                        <p>Just at:-</p>
                         <h3>{currentGig.shortTitle}</h3>
                         <h2>${currentGig.price}</h2>
                     </div>

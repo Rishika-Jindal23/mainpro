@@ -64,7 +64,7 @@ const Gigs: React.FC = () => {
                         <input ref={maxRef} type="number" placeholder="max" />
                         <button onClick={apply}>Apply</button>
                     </div>
-                    <div className={styles.right}>
+                    {/* <div className={styles.right}>
                         <span className={styles.sortBy}>Sort by</span>
                         <span className={styles.sortType}>
                             {sort === "sales" ? "Best Selling" : "Newest"}
@@ -90,7 +90,7 @@ const Gigs: React.FC = () => {
                                 </span>
                             </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={styles.cards}>

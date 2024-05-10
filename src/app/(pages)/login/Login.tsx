@@ -35,11 +35,7 @@ const LoginMain: React.FC<LoginProps> = () => {
             await toast.success("🦄 Login Successful");
             const token = res.data.token;
             const currentUser = JSON.stringify(res.data.info);
-            console.log(
-                "current user from login page>>>>>>>>>>>>>>>>>",
-                currentUser
-            );
-            //   dispatch(login({ token }));
+            
             dispatch(login({ currentUser, token }));
             //router.push("/landingpage");
             window.location.href = "/landingpage";
@@ -58,24 +54,7 @@ const LoginMain: React.FC<LoginProps> = () => {
 
     return (
         <>
-            <h1 className="text-center">Login Form</h1>
-            <section className="grid grid-cols-2">
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        minHeight: "70vh",
-                    }}
-                >
-                    {/* <Image
-                        src={loginimage2}
-                        //   layout={"fill"}*
-                        //    objectFit={"contain"}
-                        alt="freelance"
-                        // layout="responsive"
-                    ></Image> */}
-                </div>
+           
                 <div
                     style={{
                         display: "flex",
@@ -161,7 +140,7 @@ const LoginMain: React.FC<LoginProps> = () => {
                         </form>
                     </div>
                 </div>
-            </section>
+            {/* </section> */}
         </>
     );
 };

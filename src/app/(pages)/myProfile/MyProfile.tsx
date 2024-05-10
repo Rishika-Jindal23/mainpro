@@ -71,7 +71,7 @@ function MyProfile() {
                     </div>
                 </div>
             )}
-            <button
+            {/* <button
                 onClick={handleUpdate}
                 style={{
                     padding: "10px 20px",
@@ -84,7 +84,7 @@ function MyProfile() {
                 }}
             >
                 Update
-            </button>
+            </button> */}
         </div>
     );
 }

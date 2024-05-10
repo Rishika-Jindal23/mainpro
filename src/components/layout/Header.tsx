@@ -87,7 +87,7 @@ export default function Header() {
                     <Link href="/about" className="p-4">
                         About
                     </Link>
-                    <Link href={""} className="p-4">
+                    <Link href="/contact" className="p-4">
                         Contact Us
                     </Link>
 
@@ -144,13 +144,13 @@ export default function Header() {
                                                 </Link>
                                             </>
                                         ) : null}
-                                        <Link
+                                        {/* <Link
                                             href={"/messages"}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                             role="menuitem"
                                         >
                                             Messages
-                                        </Link>
+                                        </Link> */}
                                         <Link
                                             href={"/orders"}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -202,13 +202,13 @@ export default function Header() {
                                         >
                                             My Profile
                                         </Link>
-                                        <Link
+                                        {/* <Link
                                             href={"/updatepassword"}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                             role="menuitem"
                                         >
                                             Update Password
-                                        </Link>
+                                        </Link> */}
                                     </div>
                                 </div>
                             )}

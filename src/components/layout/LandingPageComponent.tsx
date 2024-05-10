@@ -24,7 +24,7 @@ function LandingPageComponent() {
                 </p>
             </div>
 
-            <div className="flex text-blue-700 6xl  items-center mt-10">
+            <div className="flex text-blue-700 6xl  ml-7  text-center  text-3xl mt-10">
                 <h1>Explore the categories</h1>
             </div>
             <Carousel itemsToShow={3} isRTL={false}>

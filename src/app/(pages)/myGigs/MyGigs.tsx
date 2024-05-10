@@ -24,8 +24,8 @@ function MyGigs() {
     const currentuserGig = useSelector(selectCurrentUserGig);
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
-    const originaluser = JSON.parse(loggedInUser);
+
+    const originaluser = loggedInUser?JSON.parse(loggedInUser):null
     const userId = originaluser._id;
     console.log("id>>>>>>>>>>>>>>>>>>", userId);
     const loginUserName = originaluser.username;
@@ -72,6 +72,14 @@ function MyGigs() {
                             <button>Add New Gig</button>
                         </Link>
                     )}
+                     </div>
+                     <div className={styles.title}>
+                     {originaluser.isSeller && (
+                        <Link href="/gigs">
+                            <button>All Gigs</button>
+                        </Link>
+                    )}
+                    
                 </div>
                 <table>
                     <thead>
@@ -79,7 +87,7 @@ function MyGigs() {
                             <th>Image</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>Sales</th>
+                            {/* <th>Sales</th> */}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -96,7 +104,7 @@ function MyGigs() {
                                     </td>
                                     <td>{gig.title}</td>
                                     <td>{gig.price}</td>
-                                    <td>{gig.sales}</td>
+                                    {/* <td>{gig.sales}</td> */}
                                     <td>
                                         <img
                                             className={styles.delete}
