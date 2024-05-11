@@ -12,7 +12,7 @@ const authRoute = require("./routes/auth.route")
 const passwordRoute = require("./routes/password.route")
 const cookieParser = require("cookie-parser")
 const cors = require("cors");
-// const fileUpload = require('')
+
 
 
 const app = express();
