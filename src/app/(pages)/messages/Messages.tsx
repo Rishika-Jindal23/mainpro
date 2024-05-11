@@ -13,12 +13,12 @@ import { RootState } from "@/redux_store/store";
 
 const Messages: React.FC = () => {
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
+    // console.log("Loggedin>>>>>>>>>>>>>>>>>", loggedInUser);
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
-    const userId = originaluser._id;
-    console.log("id>>>>>>>>>>>>>>>>>>", userId);
-    const loginUserName = originaluser.username;
-    const loginUserIsSeller = originaluser.isSeller;
+    const userId = originaluser ? originaluser._id : null;
+    // console.log("id>>>>>>>>>>>>>>>>>>", userId);
+    //  const loginUserName = originaluser originaluser.username;
+    const loginUserIsSeller = originaluser ? originaluser.isSeller : null;
     //   console.log("seller>>>>>>>>",loginUserIsSeller)
     // useEffect(() => {
     //     dispatch(fetchGigsAsync());
@@ -51,7 +51,7 @@ const Messages: React.FC = () => {
                 </div>
                 <table>
                     <tr>
-                        <th>{originaluser.isSeller ? "Buyer" : "Seller"}</th>
+                        <th>{loginUserIsSeller ? "Buyer" : "Seller"}</th>
                         <th>Last Message</th>
                         <th>Date</th>
                         <th>Action</th>
@@ -59,15 +59,14 @@ const Messages: React.FC = () => {
                     {conversations.map((c) => (
                         <tr
                             className={
-                                ((originaluser.isSeller && !c.readBySeller) ||
-                                    (!originaluser.isSeller &&
-                                        !c.readByBuyer)) &&
+                                ((loginUserIsSeller && !c.readBySeller) ||
+                                    (!loginUserIsSeller && !c.readByBuyer)) &&
                                 "active"
                             }
                             key={c.id}
                         >
                             <td>
-                                {originaluser.isSeller ? c.buyerId : c.sellerId}
+                                {loginUserIsSeller ? c.buyerId : c.sellerId}
                             </td>
                             <td>
                                 <Link
@@ -79,9 +78,8 @@ const Messages: React.FC = () => {
                             </td>
                             <td>{moment(c.updatedAt).fromNow()}</td>
                             <td>
-                                {((originaluser.isSeller && !c.readBySeller) ||
-                                    (!originaluser.isSeller &&
-                                        !c.readByBuyer)) && (
+                                {((loginUserIsSeller && !c.readBySeller) ||
+                                    (!loginUserIsSeller && !c.readByBuyer)) && (
                                     <button onClick={() => handleRead(c.id)}>
                                         Mark as Read
                                     </button>

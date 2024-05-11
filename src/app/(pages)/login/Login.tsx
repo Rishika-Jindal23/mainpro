@@ -22,7 +22,7 @@ const LoginMain: React.FC<LoginProps> = () => {
     const router = useRouter();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        console.log("hello");
         if (!username || !password) {
             setError("Please fill in all fields.");
             return;
@@ -33,6 +33,7 @@ const LoginMain: React.FC<LoginProps> = () => {
                 username,
                 password,
             });
+            console.log("login successful");
             await toast.success("🦄 Login Successful");
             const token = res.data.token;
             const currentUser = JSON.stringify(res.data.info);

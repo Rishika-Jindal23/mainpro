@@ -1,10 +1,17 @@
 "use client";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Room: React.FC<{ id: string }> = ({ id }: { id: string }) => {
+    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    const userId = originaluser ? originaluser._id : null;
+    const userName = originaluser ? originaluser.username : null;
+    // console.log("username>>>>>>>", userName);
+    // console.log("userId>>>>>>>>", userId);
     const roomId = id;
-    console.log("id>>>>>>>>", id);
+    // console.log("id>>>>>>>>", id);
     const myMeeting = async (element) => {
         // generate Kit Token
         const appID = 1411158925;
@@ -13,8 +20,8 @@ const Room: React.FC<{ id: string }> = ({ id }: { id: string }) => {
             appID,
             serverSecret,
             roomId,
-            Date.now().toString(), //userid,
-            "Rishika Jindal"
+            userId, //userid,
+            userName
         );
         const zc = ZegoUIKitPrebuilt.create(kitToken);
         zc.joinRoom({
@@ -22,7 +29,7 @@ const Room: React.FC<{ id: string }> = ({ id }: { id: string }) => {
             sharedLinks: [
                 {
                     name: "Copy Link",
-                    url: `http://localhost:3000/room/${roomId}`,
+                    url: `http://localhost:3000/VideoHome/${roomId}`,
                 },
             ],
             scenario: { mode: ZegoUIKitPrebuilt.OneONoneCall },

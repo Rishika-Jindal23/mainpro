@@ -22,12 +22,20 @@ const Orders = () => {
 
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
 
-    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null; // const loginUserId = originaluser._id;
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    const joinId = originaluser ? originaluser._id : null;
+
     // const loginUserName = originaluser.username;
     // const loginUserIsSeller = originaluser.isSeller;
 
     function handleContact(order: any): void {
-        router.push("/contact");
+        const joinId = order.sellerId;
+        // console.log("sellerId>>>>>>>>>>", sellerId);
+        router.push(`/contact?joinId=${joinId}`);
+    }
+
+    function handleMessage(order: any): void {
+        router.push("/messages");
     }
 
     return (
@@ -36,16 +44,6 @@ const Orders = () => {
                 <div className={styles.title}>
                     <h1>Orders</h1>
                 </div>
-                {/* <p>orderid{orders.orders.id}</p> */}
-                {/* <div>
-                    <h1>Orders</h1>
-                    {error && <p>{error}</p>}
-                    <ul>
-                        {orders.map((order) => (
-                            <li key={order._id}>{order.title}</li>
-                        ))}
-                    </ul>
-                </div> */}
 
                 <table>
                     <thead>
@@ -55,6 +53,7 @@ const Orders = () => {
                             <th>Price</th>
 
                             <th>Contact</th>
+                            <th>message</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +74,15 @@ const Orders = () => {
                                         src="./img/message.png"
                                         alt=""
                                         onClick={() => handleContact(order)}
+                                    />
+                                </td>
+                                <td>
+                                    <img
+                                        className={styles.message}
+                                        src="./img/message.png"
+                                        alt=""
+                                        onClick={() => handleMessage(order)}
+                                        // onClick={() => handleContact(order)}
                                     />
                                 </td>
                             </tr>

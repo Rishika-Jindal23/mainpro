@@ -39,9 +39,10 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
     const payment = (id: string, price: Number) => {
         router.push(`http://localhost:3000/pay?gigid=${id}?price=${price}`);
     };
-
+    const joinId = currentGig.userId._id;
+    console.log(joinId);
     const handleClick = () => {
-        router.push("contact");
+        router.push(`/contact?joinId=${joinId}`);
     };
 
     return (
