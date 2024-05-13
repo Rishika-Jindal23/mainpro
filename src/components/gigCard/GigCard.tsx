@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import profilepic from "../../../public/img/pp2.png";
 import gigimage from "../../../public/img/cat1.jpg";
+import Image from "next/image";
 
 interface GigItem {
     userId: any;
     images: string;
     img: string;
     username: string;
+    title: string;
     desc: string;
     star: number;
     price: number;
@@ -44,10 +46,14 @@ const GigCard: React.FC<GigCardProps> = ({ item }) => {
                 <img src={item.images} alt="" />
                 <div className={styles.info}>
                     <div className={styles.user}>
-                        <img src={item.userId.img || profilepic} alt="" />
+                        <Image
+                            src={item.userId.img || profilepic}
+                            alt=""
+                        ></Image>
+                        {/* <img src={item.userId.img || profilepic} alt="" /> */}
                         <span>{item.username}</span>
                     </div>
-                    <p>{item.desc}</p>
+                    <p>{item.title}</p>
                     <div className={styles.star}>
                         <img src="./img/star.png" alt="" />
                         <span>{item.star}</span>

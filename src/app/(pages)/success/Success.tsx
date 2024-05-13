@@ -25,7 +25,7 @@ function Success() {
     }, []);
     return (
         <div>
-            <div className="w-45 h-70  relative mt-5 ">
+            <div className="w-45 h-70  relative mt-5 items-center ">
                 <Image
                     src={payment}
                     //   layout={"fill"}*

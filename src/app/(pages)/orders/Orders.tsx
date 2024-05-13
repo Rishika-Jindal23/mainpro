@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 const Orders = () => {
     const dispatch = useDispatch();
     const orders = useSelector((state) => state.orders.orders);
-    console.log("order--------", orders);
+    //console.log("order--------", orders);
     const router = useRouter();
 
     const error = useSelector((state) => state.error);

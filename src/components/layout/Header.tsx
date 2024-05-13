@@ -73,7 +73,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="flex items-center justify-between mt-3">
+            <header className="flex items-center justify-between mt-3 ">
                 <Link
                     className="text-blue-700 font-semibold text-3xl p-4"
                     href="/"

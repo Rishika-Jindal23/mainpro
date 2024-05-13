@@ -1,16 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import newRequest from "@/app/utils/newRequest";
+import { useRouter } from "next/navigation";
 
 function MyProfile() {
     const dispatch = useDispatch();
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    const originaluser = JSON.parse(loggedInUser);
-    const userId = originaluser._id;
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    const userId = originaluser ? originaluser._id : null;
+    const router = useRouter();
+    // const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState<{
+        img: string;
+        username: string;
+        email: string;
+        country: string;
+        phone: string;
+        desc: string;
+        isSeller: boolean;
+    } | null>(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await newRequest.get(`users/${userId}`); // Replace '/api/users/${userId}' with your API endpoint
+                setUserData(response.data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    console.log("user", userData);
 
     const handleUpdate = () => {
-        console.log("Update button clicked");
+        router.push("/myGigs");
+        // console.log("Update button clicked");
     };
 
     return (
@@ -20,127 +49,136 @@ function MyProfile() {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
+                minHeight: "100vh", // Ensure the entire viewport height is covered
             }}
         >
-            {originaluser && (
+            {userData && (
                 <div
                     style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "20px",
-                        marginTop: "20px",
+                        border: "1px solid #ccc",
+                        borderRadius: "10px",
+                        padding: "20px",
+                        width: "400px",
+                        backgroundColor: "#ffffff", // White background color for the card
                     }}
                 >
-                    <img
-                        src={originaluser.img}
-                        alt={originaluser.username}
-                        style={{
-                            width: "200px",
-                            height: "200px",
-                            borderRadius: "50%",
-                            marginRight: "20px",
-                        }}
-                    />
                     <div
                         style={{
+                            backgroundColor: "#4e8fb2", // Medium blue background color inside the card
+                            borderRadius: "10px",
                             display: "flex",
                             flexDirection: "column",
-                            textAlign: "left",
+                            alignItems: "center",
+                            padding: "20px",
                         }}
                     >
-                        <p style={{ fontSize: "1.2rem" }}>
-                            <strong>Username:</strong> {originaluser.username}
-                        </p>
-                        <p style={{ fontSize: "1.2rem" }}>
-                            <strong>Email:</strong> {originaluser.email}
-                        </p>
-                        <p style={{ fontSize: "1.2rem" }}>
-                            <strong>Country:</strong> {originaluser.country}
-                        </p>
-                        <p style={{ fontSize: "1.2rem" }}>
-                            <strong>Phone:</strong> {originaluser.phone}
-                        </p>
-                        <p style={{ fontSize: "1.2rem" }}>
-                            <strong>Description:</strong> {originaluser.desc}
-                        </p>
-                        {originaluser.isSeller && (
-                            <p style={{ fontSize: "1.2rem" }}>
-                                <strong>I am a Seller</strong>
+                        <div
+                            style={{
+                                backgroundColor: "#b0e0e6", // Light blue background color behind profile pic
+                                borderRadius: "50%",
+                                width: "200px",
+                                height: "200px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                overflow: "hidden",
+                            }}
+                        >
+                            <img
+                                src={userData.img}
+                                alt={userData.username}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                }}
+                            />
+                        </div>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                textAlign: "center",
+                                marginTop: "20px",
+                            }}
+                        >
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: "5px 0",
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {userData.username}
                             </p>
-                        )}
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: "5px 0",
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {userData.email}
+                            </p>
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: "5px 0",
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {userData.country}
+                            </p>
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: "5px 0",
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {userData.phone}
+                            </p>
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: "5px 0",
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {userData.desc}
+                            </p>
+                            {userData.isSeller && (
+                                <p
+                                    style={{
+                                        fontSize: "1.2rem",
+                                        margin: "5px 0",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    I create Gigs
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
 
-
-
-<section className="vh-100" style="background-color: #f4f5f7;">
-  <div className="container py-5 h-100">
-    <div className="row d-flex justify-content-center align-items-center h-100">
-      <div className="col col-lg-6 mb-4 mb-lg-0">
-        <div className="card mb-3" style="border-radius: .5rem;">
-          <div className="row g-0">
-            <div className="col-md-4 gradient-custom text-center text-white"
-              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="Avatar" className="img-fluid my-5" style="width: 80px;" />
-              <h5>Marie Horwitz</h5>
-              <p>Web Designer</p>
-              <i className="far fa-edit mb-5"></i>
-            </div>
-            <div className="col-md-8">
-              <div className="card-body p-4">
-                <h6>Information</h6>
-                <hr className="mt-0 mb-4">
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Email</h6>
-                    <p className="text-muted">info@example.com</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Phone</h6>
-                    <p className="text-muted">123 456 789</p>
-                  </div>
-                </div>
-                <h6>Projects</h6>
-                <hr className="mt-0 mb-4">
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Recent</h6>
-                    <p className="text-muted">Lorem ipsum</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Most Viewed</h6>
-                    <p className="text-muted">Dolor sit amet</p>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-start">
-                  <a href="#!"><i className="fab fa-facebook-f fa-lg me-3"></i></a>
-                  <a href="#!"><i className="fab fa-twitter fa-lg me-3"></i></a>
-                  <a href="#!"><i className="fab fa-instagram fa-lg"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-            {/* <button
+            <button
                 onClick={handleUpdate}
                 style={{
+                    marginTop: "20px",
                     padding: "10px 20px",
-                    backgroundColor: "#007bff",
-                    color: "white",
+                    backgroundColor: "#ffffff", // White button background color
+                    color: "#4e8fb2", // Medium blue button text color
                     border: "none",
                     borderRadius: "5px",
                     cursor: "pointer",
                     fontSize: "1.2rem",
+                    fontWeight: "bold",
                 }}
             >
-                Update
-            </button> */}
+                View My Gigs
+            </button>
         </div>
     );
 }
