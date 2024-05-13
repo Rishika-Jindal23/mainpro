@@ -10,6 +10,7 @@ const messageRoute = require('./routes/message.route')
 const reviewRoute = require("./routes/review.route")
 const authRoute = require("./routes/auth.route")
 const passwordRoute = require("./routes/password.route")
+const sendEmailRoute = require("./routes/sendEmail.route")
 const cookieParser = require("cookie-parser")
 const cors = require("cors");
 
@@ -36,6 +37,8 @@ app.use("/conversations", conversationRoute);
 app.use("/messages", messageRoute);
 app.use("/reviews", reviewRoute);
 app.use("/passwords", passwordRoute);
+app.use("/sendEmails", sendEmailRoute);
+
 
 // error handler for unmatched routes
 app.use((req, res, next) => {

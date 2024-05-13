@@ -15,7 +15,7 @@ exports.createGig = async (req, res, next) => {
             ...req.body,
 
         });
-        console.log("newGig >>>", newGig);
+        // console.log("newGig >>>", newGig);
         const savedGig = await newGig.save();
         if (!savedGig) {
             return res.status(404).send("Gig not created successfully");
@@ -92,7 +92,7 @@ exports.getGig = async (req, res, next) => {
     try {
         //  console.log("call id", req.params.id);
         const gig = await Gig.findById(req.params?.id).populate('userId')
-        console.log("call", gig);
+        // console.log("call", gig);
         if (!gig) return res.status(404).json({ message: 0 });
         res.status(200).send(gig)
     } catch (error) { res.status(404).send("gig not found by this id") }
@@ -130,7 +130,7 @@ exports.getGigs = async (req, res, next) => {
 
         const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
         // const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-        console.log("gigs------", gigs);
+        // console.log("gigs------", gigs);
         if (!gigs || gigs.length === 0) {
             return res.status(404).send("No gigs found matching the criteria.");
         }
