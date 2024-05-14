@@ -17,7 +17,8 @@ export default function middleware(request: NextRequest) {
     // }
     const loggedInUserNotAccessPaths =
         request.nextUrl.pathname === "/login" ||
-        request.nextUrl.pathname === "/register";
+        request.nextUrl.pathname === "/register" ||
+        request.nextUrl.password === "/";
 
     if (loggedInUserNotAccessPaths) {
         //  console.log("hhhhhhhhhhhhhhhh");
@@ -25,12 +26,28 @@ export default function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL("/", request.url));
         }
     } else {
-        if (!cookies) {
-            if (request.nextUrl.pathname === "/add") {
-                return NextResponse.redirect(new URL("/login", request.url));
-            }
+        if (!cookies && !loggedInUserNotAccessPaths) {
+            // if (request.nextUrl.pathname === "/add") {
+            return NextResponse.redirect(new URL("/login", request.url));
         }
     }
+
     return NextResponse.next(); // Continue to the next Middleware or route handler
 }
-// export const config = { matcher: ["/add"  ,  "/gigs" ,"/gigs/:path*", "/myProfile", "/myGigs","/Orders","/pay","/success","/VideoHome","/contactform"."sendEmail" ]};
+
+export const config = {
+    matcher: [
+        "/add",
+        "/gigs",
+        "/gigs/:path*",
+        "/myProfile",
+        "/myGigs",
+        "/Orders",
+        "/pay",
+        "/success",
+        "/VideoHome/:path",
+        "/contact",
+        "/contactform",
+        "/sendEmail",
+    ],
+};

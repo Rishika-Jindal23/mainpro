@@ -23,19 +23,21 @@ const Orders = () => {
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
 
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
-    const joinId = originaluser ? originaluser._id : null;
-
-    // const loginUserName = originaluser.username;
-    // const loginUserIsSeller = originaluser.isSeller;
+    console.log("originaluse>>>>>>>>>.", originaluser);
+    console.log("isSeller", originaluser.isSeller);
+    const sellerdetails = "  Connect with Seller";
+    const buyerdetails = "  Connect with Buyer";
 
     function handleContact(order: any): void {
         const joinId = order.sellerId;
-        // console.log("sellerId>>>>>>>>>>", sellerId);
-        router.push(`/contact?joinId=${joinId}`);
     }
 
-    function handleMessage(order: any): void {
-        router.push("/messages");
+    function personDetails(order: any): void {
+        // console.log("order", order);
+        const sellerId = order.sellerId;
+        const buyerId = order.buyerId;
+
+        router.push(`/userDetails?sellerId=${sellerId}&buyerId=${buyerId}`);
     }
 
     return (
@@ -52,8 +54,13 @@ const Orders = () => {
                             <th>Title</th>
                             <th>Price</th>
 
-                            <th>Contact</th>
-                            <th>message</th>
+                            {/* <th>Contact</th> */}
+                            {/* <th>message</th> */}
+                            <th>
+                                {originaluser.isSeller
+                                    ? buyerdetails
+                                    : sellerdetails}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,15 +75,25 @@ const Orders = () => {
                                 </td>
                                 <td>{order.title}</td>
                                 <td>{order.price}</td>
-                                <td>
+                                {/* <td>
                                     <img
                                         className={styles.message}
                                         src="./img/message.png"
                                         alt=""
-                                        onClick={() => handleContact(order)}
+                                        onClick={() => personDetails(order)}
+                                        // onClick={() => handleContact(order)}
+                                    />
+                                </td> */}
+                                <td>
+                                    {/* <PersonIcon */}
+                                    <img
+                                        className={styles.message}
+                                        src="./img/message.png"
+                                        alt=""
+                                        onClick={() => personDetails(order)}
                                     />
                                 </td>
-                                <td>
+                                {/* <td>
                                     <img
                                         className={styles.message}
                                         src="./img/message.png"
@@ -84,7 +101,7 @@ const Orders = () => {
                                         onClick={() => handleMessage(order)}
                                         // onClick={() => handleContact(order)}
                                     />
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>

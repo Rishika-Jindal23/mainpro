@@ -46,14 +46,18 @@ export default function Header() {
         dispatch(logout());
 
         setUser(null);
-
-        const response = await newRequest.post("auth/logout");
-        const data = await response;
-        if (response) {
-            alert("logout successfull");
-            window.location.href = "/";
-        } else {
-            alert("error occurred");
+        try {
+            const response = await newRequest.post("auth/logout");
+            const data = await response;
+            if (response) {
+                alert("logout successfull");
+                window.location.href = "/";
+            } else {
+                alert("error occurred");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+            alert("Logout failed");
         }
     };
 
@@ -144,13 +148,7 @@ export default function Header() {
                                                 </Link>
                                             </>
                                         ) : null}
-                                        {/* <Link
-                                            href={"/messages"}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                            role="menuitem"
-                                        >
-                                            Messages
-                                        </Link> */}
+
                                         <Link
                                             href={"/orders"}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -158,13 +156,6 @@ export default function Header() {
                                         >
                                             Orders
                                         </Link>
-                                        {/* <button
-                                            // onClick={handleSignOut}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-                                            role="menuitem"
-                                        >
-                                            My Profile
-                                        </button> */}
                                     </div>
                                 </div>
                             )}
@@ -172,8 +163,7 @@ export default function Header() {
                     ) : (
                         <Link
                             href="/register"
-                            className="bg-blue-700 rounded-full text-white px-7 py-4"
-                            // className="bg-blue-300 hover:bg-blue-400 rounded-full text-blue-800 px-2 py-1 w-24 cursor-pointer transition-colors text-center text-xs"
+                            className="bg-blue-700 rounded-full text-white px-7 py-4  cursor-pointer hover:scale-105 transition-transform"
                         >
                             Sign up
                         </Link>
@@ -181,10 +171,7 @@ export default function Header() {
 
                     {user ? (
                         <div className="relative inline-block text-left">
-                            <button
-                                onClick={handleAvatarDropdown}
-                                // className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer hover:scale-105 transition-transform"
-                            >
+                            <button onClick={handleAvatarDropdown}>
                                 <Avatar alt="Cindy Baker" src={profilepic} />
                             </button>
                             {avatarDropdownOpen && (
@@ -202,26 +189,11 @@ export default function Header() {
                                         >
                                             My Profile
                                         </Link>
-                                        {/* <Link
-                                            href={"/updatepassword"}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                            role="menuitem"
-                                        >
-                                            Update Password
-                                        </Link> */}
                                     </div>
                                 </div>
                             )}
                         </div>
                     ) : null}
-
-                    {/* This code will only show "My Profile" and "Update Password" options when the user clicks on their avatar. Adjust the styles and positioning as needed to match your application's design. */}
-
-                    {/* {user ? (
-                        <Link href={""} className="p-4">
-                            <Avatar alt="Cindy Baker" src={profilepic} />
-                        </Link>
-                    ) : null} */}
                 </nav>
             </header>
         </>

@@ -14,21 +14,21 @@ const Contact: React.FC = () => {
     // const [name, setName] = useState("");
     // const [email, setEmail] = useState("");
     const router = useRouter();
-    const handleVideoCall = () => {
-        router.push(`/VideoHome/${joinId}`);
-    };
 
     const handleEmailClick = () => {
         router.push("/sendEmail");
     };
 
     const handleBack = () => {
-        router.push("/gigs");
+        router.push("/");
     };
 
     const search = useSearchParams();
 
     const joinId = search.get("joinId")?.split("?")[0];
+    const handleVideoCall = () => {
+        router.push(`/VideoHome/${joinId}`);
+    };
 
     return (
         <>
@@ -63,7 +63,7 @@ const Contact: React.FC = () => {
                                 fullWidth
                                 onClick={handleVideoCall}
                             >
-                                Join Video Meet at 12 noon! <VideoCallIcon />
+                                Join Video Meet <VideoCallIcon />
                             </Button>
                         </Grid>
                     </Grid>

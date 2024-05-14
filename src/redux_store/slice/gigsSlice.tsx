@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { Key } from "react";
+import { Key, ReactNode } from "react";
 import newRequest from "@/app/utils/newRequest";
 
 interface Gig {

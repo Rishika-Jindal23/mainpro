@@ -95,7 +95,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                             <span>5</span>
                         </div> */}
                     </div>
-                    <Carousel itemsToShow={1} isRTL={false}>
+                    <Carousel itemsToShow={1} isRTL={false} showArrows={false}>
                         <img
                             src={currentGig.images || gigimage}
                             alt="GigImage"

@@ -76,6 +76,7 @@ function SendEmail() {
                             onChange={(e) => {
                                 setEmail(e.target.value);
                             }}
+                            disabled
                             name="email"
                             className={styles.inputField}
                             placeholder="your email"

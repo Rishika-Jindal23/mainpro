@@ -1,17 +1,10 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import newRequest from "@/app/utils/newRequest";
-import { useRouter } from "next/navigation";
 
-function MyProfile() {
-    const dispatch = useDispatch();
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
-    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
-    const userId = originaluser ? originaluser._id : null;
-    const router = useRouter();
-    // const [userData, setUserData] = useState(null);
+function UserDetails() {
     const [userData, setUserData] = useState<{
         img: string;
         username: string;
@@ -22,10 +15,28 @@ function MyProfile() {
         isSeller: boolean;
     } | null>(null);
 
+    const router = useRouter();
+    const search = useSearchParams();
+    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+
+    const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
+    console.log("originaluse>>>>>>>>>.", originaluser);
+    console.log("isSeller", originaluser.isSeller);
+    const sellerdetails = "Seller Details";
+    const buyerdetails = "Buyer Details";
+
+    const sellerId = search.get("sellerId")?.split("?")[0];
+    const buyerId = search.get("buyerId");
+    // console.log("seller>>>>>.", sellerId);
+    // console.log("buyer>>>>>.", buyerId);
+
+    const id = originaluser.isSeller ? buyerId : sellerId;
+    // console.log(id);
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await newRequest.get(`users/${userId}`);
+                const response = await newRequest.get(`users/${id}`);
                 setUserData(response.data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -34,13 +45,16 @@ function MyProfile() {
 
         fetchUserData();
     }, []);
-
     console.log("user", userData);
 
-    const handleUpdate = () => {
-        router.push("/myGigs");
-        // console.log("Update button clicked");
-    };
+    function handleContact(order: any): void {
+        const joinId = sellerId;
+
+        router.push(`/contact?joinId=${joinId}`);
+    }
+    function handleGoBack(order: any): void {
+        router.push("/orders");
+    }
 
     return (
         <div
@@ -164,7 +178,7 @@ function MyProfile() {
             )}
 
             <button
-                onClick={handleUpdate}
+                onClick={handleContact}
                 style={{
                     marginTop: "20px",
                     padding: "10px 20px",
@@ -177,10 +191,27 @@ function MyProfile() {
                     fontWeight: "bold",
                 }}
             >
-                View My Gigs
+                Contact
+            </button>
+
+            <button
+                onClick={handleGoBack}
+                style={{
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    backgroundColor: "#ffffff", // White button background color
+                    color: "#4e8fb2", // Medium blue button text color
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize: "1.2rem",
+                    fontWeight: "bold",
+                }}
+            >
+                Go Back
             </button>
         </div>
     );
 }
 
-export default MyProfile;
+export default UserDetails;

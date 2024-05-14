@@ -226,6 +226,7 @@ const Register1: React.FC = () => {
             console.log("res : ", res);
             window.location.href = "/login";
         } catch (err) {
+            console.log("error", err);
             setError("signup failed"); // Assuming backend sends error message in response
         }
         console.log("submit call");

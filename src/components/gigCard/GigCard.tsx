@@ -9,6 +9,7 @@ import gigimage from "../../../public/img/cat1.jpg";
 import Image from "next/image";
 
 interface GigItem {
+    cover: string;
     userId: any;
     images: string;
     img: string;
@@ -43,7 +44,7 @@ const GigCard: React.FC<GigCardProps> = ({ item }) => {
             {/* <Link href="/gig/123" className={styles.link}> */}
 
             <div className={styles.gigCard}>
-                <img src={item.images} alt="" />
+                <img src={item.cover} alt="" />
                 <div className={styles.info}>
                     <div className={styles.user}>
                         <Image
