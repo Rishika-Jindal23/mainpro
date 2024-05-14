@@ -45,28 +45,7 @@ app.use((req, res, next) => {
     res.status(404).send("error");
 });
 
-//global error handler
 
-// app.use((err, req, res, next) => {
-//     res.status(err.status || 500);
-//     res.json({
-//         error: {
-//             message: err.message
-//         }
-//     });
-// });
-
-
-// app.use("/", (req, res) => {
-//     res.send("hello from server")
-// })
-
-// app.use((err, req, res, next) => {
-//     //  const errorStatus = err.Status || 500
-//     //const errorMessage = err.Message;
-//     console.log(err);
-//     return res.status(errorStatus).send(errorMessage);
-// })
 
 app.listen(PORT, (req, res) => {
     console.log(`listening to the PORT ${PORT}`)

@@ -20,21 +20,13 @@ exports.createGig = async (req, res, next) => {
         if (!savedGig) {
             return res.status(404).send("Gig not created successfully");
         }
-        console.log("Gig created successfully: ", savedGig);
+        // console.log("Gig created successfully: ", savedGig);
         res.status(201).json(savedGig);
     } catch (err) {
         console.error("Error creating gig:", err);
         res.status(500).send("Internal Server Error");
     }
 };
-
-
-
-
-
-
-
-
 
 exports.deleteGig = async (req, res, next) => {
     try {
@@ -78,16 +70,6 @@ exports.deleteGig = async (req, res, next) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
 exports.getGig = async (req, res, next) => {
     try {
         //  console.log("call id", req.params.id);
@@ -97,9 +79,6 @@ exports.getGig = async (req, res, next) => {
         res.status(200).send(gig)
     } catch (error) { res.status(404).send("gig not found by this id") }
 };
-
-
-
 
 exports.getGigs = async (req, res, next) => {
     try {
@@ -129,8 +108,7 @@ exports.getGigs = async (req, res, next) => {
         // filters.isActive = true;
 
         const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-        // const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-        // console.log("gigs------", gigs);
+
         if (!gigs || gigs.length === 0) {
             return res.status(404).send("No gigs found matching the criteria.");
         }
@@ -157,10 +135,6 @@ exports.updateGig = async (req, res, next) => {
         res.status(404).send("gig id is invalid");
     }
 };
-
-
-
-
 
 
 exports.deleteAllGigs = async (req, res, next) => {

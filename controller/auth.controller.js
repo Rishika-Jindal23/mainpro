@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
 
         res.status(201).send("User has been created");
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         res.status(404).send("enter correct registration details");
 
     }
