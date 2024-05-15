@@ -26,7 +26,7 @@ exports.createEmail = async (req, res, next) => {
       html: `<div>${req.body.message}</div><p>Sent from:
             ${req.body.email}</p>`
     }
-    console.log("mail options>>>>>", mailData);
+    // console.log("mail options>>>>>", mailData);
 
     transporter.sendMail(mailData, function (err, info) {
       if (err)

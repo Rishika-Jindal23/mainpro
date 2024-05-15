@@ -9,5 +9,7 @@ router.patch("/", verifyToken, userController.updateUser);
 router.get("/", verifyToken, userController.getAllUsers);
 router.get("/:id", verifyToken, userController.getUserById);
 router.delete("/", userController.deleteAllUsers);
+router.get("/seller/single", verifyToken, userController.getAllSellers);
+
 
 module.exports = router;

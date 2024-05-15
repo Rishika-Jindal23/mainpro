@@ -79,7 +79,7 @@ exports.getOrders = async (req, res, next) => {
 
 
         const orders = await Order.find(query);
-        console.log("orders>>>>>>>>>>>", orders)
+
         if (!orders) { res.status(404).send("not able to get orders") }
 
         res.status(200).send(orders);
@@ -164,7 +164,7 @@ exports.confirm = async (req, res, next) => {
     try {
         console.log(" req.body.payment_intent ------", req.body.payment_intent);
         const orders = await Order.findOneAndUpdate({ payment_intent: req.body.payment_intent },
-            // console.log("orders>>>>>>>>>>>>>>>>>>>>>>>>>>>", orders),
+
             {
                 $set: {
                     isCompleted: true

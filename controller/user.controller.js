@@ -9,12 +9,11 @@ const jwt = require("jsonwebtoken")
 exports.getUserById = async (req, res, next) => {
 
     try {
-        const user = await User.findById(req.params?.id);
+        console.log("idddddddddddddddddd---------", req.params?.id);
+        const user = await User.findById(req.params?.id);  // yeh nahi chiye mujhe
         if (!user) return res.status(404).send("user not found ")
         res.status(200).send(user)
-    } catch (error) { res.status(404).send("user not found by this id") }
-
-
+    } catch (error) { res.status(404).send("  hello >>>>>>>>>>>>>>>>>>>>user not found by this id") }
 }
 
 
@@ -23,6 +22,7 @@ exports.getUserById = async (req, res, next) => {
 
 exports.deleteUser = async (req, res) => {
     try {
+        // console.log("hello>>>>>>>>>>")
         const user = await User.findById(req.params?.id)
         console.log(user);
 
@@ -154,6 +154,35 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+//tu api kosni call kar rahi hai and dikha konsi rahi hai muze kuchh samaj nai aa raha
+//call get all sellers krna h but uper vali call hori h esa bolri hu
 
+exports.getAllSellers = async (req, res) => {
+    try {
+
+
+        console.log("called.>>>>>>>>>>>>>.")
+        // Parse query parameters for pagination
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10; // Default limit to 10 users per page
+
+        // Calculate skip value for pagination
+        const skip = (page - 1) * limit;
+
+        // Fetch users with pagination where isSeller is true
+        const users = await User.find({ isSeller: true })
+            .skip(skip)
+            .limit(limit);
+
+        if (!users || users.length === 0) {
+            return res.status(404).send("Users not found");
+        }
+
+        res.status(200).send(users);
+
+    } catch (error) {
+        res.status(500).send("Unable to fetch users");
+    }
+};
 
 
