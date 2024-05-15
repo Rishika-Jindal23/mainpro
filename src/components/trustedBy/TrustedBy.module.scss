@@ -1,6 +1,7 @@
 .trustedBy {
-    background-color: #e5ebee;
+    background-color: #ecf1f3;
     height: 100px;
+    // width: 1000px;
     display: flex;
     justify-content: center;
 
@@ -9,7 +10,7 @@
         display: flex;
         align-items: center;
         gap: 20px;
-        color: rgb(146, 141, 141);
+        color: rgb(32, 30, 30);
         font-weight: 500;
 
         img {

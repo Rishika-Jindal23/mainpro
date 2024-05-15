@@ -17,8 +17,12 @@ export default function Header() {
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
     const router = useRouter();
 
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const isAuthenticated = useSelector(
+        (state: any) => state.auth.isAuthenticated
+    );
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
 
     const userinfo = useSelector((state) => state);
     const profilepic = loggedInUser ? JSON.parse(loggedInUser).img : null;
@@ -27,7 +31,7 @@ export default function Header() {
         false
     );
 
-    const token = useSelector((state) => state.auth.token);
+    const token = useSelector((state: any) => state.auth.token);
     //   console.log("state-----", token);
 
     useEffect(() => {
@@ -61,10 +65,10 @@ export default function Header() {
         }
     };
 
-    const handleUserDropdown = () => {
-        setUserDropdownOpen(!userDropdownOpen);
-        setAvatarDropdownOpen(false); // Close the avatar dropdown
-    };
+    // const handleUserDropdown = () => {
+    //     setUserDropdownOpen(!userDropdownOpen);
+    //     setAvatarDropdownOpen(false); // Close the avatar dropdown
+    // };
 
     const handleAvatarDropdown = () => {
         setAvatarDropdownOpen(!avatarDropdownOpen);
@@ -114,22 +118,35 @@ export default function Header() {
                         </Link>
                     )}
 
+                    {!user ? (
+                        <Link
+                            href="/register"
+                            className="bg-blue-700 rounded-full text-white px-7 py-4  cursor-pointer hover:scale-105 transition-transform"
+                        >
+                            Sign up
+                        </Link>
+                    ) : null}
+
                     {user ? (
                         <div className="relative inline-block text-left">
-                            <button
-                                onClick={handleUserDropdown}
-                                className="bg-blue-700 rounded-full text-white px-7 py-4 cursor-pointer hover:scale-105 transition-transform"
-                            >
-                                {JSON.parse(user).username}
+                            <button onClick={handleAvatarDropdown}>
+                                <Avatar alt="Cindy Baker" src={profilepic} />
                             </button>
-                            {userDropdownOpen && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                            {avatarDropdownOpen && (
+                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
                                     <div
                                         className="py-1"
                                         role="menu"
                                         aria-orientation="vertical"
                                         aria-labelledby="options-menu"
                                     >
+                                        <Link
+                                            href={"/myProfile"}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem"
+                                        >
+                                            My Profile
+                                        </Link>
                                         {isSeller ? (
                                             <>
                                                 <Link
@@ -148,46 +165,12 @@ export default function Header() {
                                                 </Link>
                                             </>
                                         ) : null}
-
                                         <Link
                                             href={"/orders"}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                             role="menuitem"
                                         >
                                             Orders
-                                        </Link>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <Link
-                            href="/register"
-                            className="bg-blue-700 rounded-full text-white px-7 py-4  cursor-pointer hover:scale-105 transition-transform"
-                        >
-                            Sign up
-                        </Link>
-                    )}
-
-                    {user ? (
-                        <div className="relative inline-block text-left">
-                            <button onClick={handleAvatarDropdown}>
-                                <Avatar alt="Cindy Baker" src={profilepic} />
-                            </button>
-                            {avatarDropdownOpen && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
-                                    <div
-                                        className="py-1"
-                                        role="menu"
-                                        aria-orientation="vertical"
-                                        aria-labelledby="options-menu"
-                                    >
-                                        <Link
-                                            href={"/myProfile"}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                            role="menuitem"
-                                        >
-                                            My Profile
                                         </Link>
                                     </div>
                                 </div>

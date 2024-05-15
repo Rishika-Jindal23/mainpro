@@ -180,6 +180,7 @@ interface User {
 }
 
 const Register1: React.FC = () => {
+    const [message, setMessage] = useState("");
     const [user, setUser] = useState<User>({
         username: "",
         email: "",
@@ -266,6 +267,7 @@ const Register1: React.FC = () => {
                                 handleFileChange(res[0].url);
                             }
                             console.log("Files: ", res);
+
                             alert("Upload Completed");
                         }}
                         onUploadError={(error: Error) => {

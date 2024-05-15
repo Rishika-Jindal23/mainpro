@@ -10,6 +10,7 @@ function MyProfile() {
     const loggedInUser = useSelector((state) => state.auth.user.currentUser);
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     const userId = originaluser ? originaluser._id : null;
+
     const router = useRouter();
     // const [userData, setUserData] = useState(null);
     const [userData, setUserData] = useState<{
@@ -37,8 +38,8 @@ function MyProfile() {
 
     console.log("user", userData);
 
-    const handleUpdate = () => {
-        router.push("/myGigs");
+    const handleGoBack = () => {
+        router.push("/");
         // console.log("Update button clicked");
     };
 
@@ -164,7 +165,7 @@ function MyProfile() {
             )}
 
             <button
-                onClick={handleUpdate}
+                onClick={handleGoBack}
                 style={{
                     marginTop: "20px",
                     padding: "10px 20px",
@@ -177,7 +178,7 @@ function MyProfile() {
                     fontWeight: "bold",
                 }}
             >
-                View My Gigs
+                GoBack
             </button>
         </div>
     );

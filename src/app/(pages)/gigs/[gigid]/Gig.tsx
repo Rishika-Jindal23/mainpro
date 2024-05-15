@@ -20,7 +20,9 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
 
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     const loginUserId = originaluser ? originaluser._id : null;
@@ -52,7 +54,9 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     <span className={styles.breadcrumbs}>
                         SkillSphere Services
                     </span>
-                    <h1>{currentGig.title}</h1>
+                    <h1 className="text-xl font-semibold text-blue-500">
+                        {currentGig.title}
+                    </h1>
                     <div className={styles.user}>
                         {/* userprofilepic */}
 
@@ -95,14 +99,17 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                             <span>5</span>
                         </div> */}
                     </div>
-                    <Carousel itemsToShow={1} isRTL={false} showArrows={false}>
-                        <img
-                            src={currentGig.images || gigimage}
-                            alt="GigImage"
-                        />
-                    </Carousel>
-                    <h2>About This Gig</h2>
-                    <p>{currentGig.desc}</p>
+                    {/* <Carousel itemsToShow={1} isRTL={false} showArrows={false}> */}
+                    {/* <div className="box-shadow: 10px 10px lightblue;"> */}
+                    <img src={currentGig.images || gigimage} alt="GigImage" />
+                    {/* </div> */}
+                    {/* </Carousel> */}
+                    <h2 className="text-lg font-semibold text-blue-500 leading-6 tracking-wide">
+                        About This Gig
+                    </h2>
+                    <p className="text-base font-medium text-green-500 leading-7 tracking-tight">
+                        {currentGig.desc}
+                    </p>
                     <div className={styles.seller}>
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
@@ -130,44 +137,54 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         </div>
                         <div className={styles.box}>
                             <div className={styles.items}>
-                                <div className={styles.item}>
-                                    <span className={styles.title}>From</span>
-                                    <span className={styles.desc}>
-                                        {currentGig.userId.country}
-                                    </span>
-                                </div>
-                                <div className={styles.item}>
-                                    <span className={styles.title}>
-                                        Member since
-                                    </span>
-                                    <span className={styles.desc}>
-                                        Aug 2022
-                                    </span>
-                                </div>
-                                <div className={styles.item}>
-                                    <span className={styles.title}>
-                                        Avg. response time
-                                    </span>
-                                    <span className={styles.desc}>4 hours</span>
-                                </div>
-                                <div className={styles.item}>
-                                    <span className={styles.title}>
-                                        Last delivery
-                                    </span>
-                                    <span className={styles.desc}>1 day</span>
-                                </div>
-                                <div className={styles.item}>
-                                    <span className={styles.title}>
-                                        Languages
-                                    </span>
-                                    <span className={styles.desc}>English</span>
-                                </div>
+                                <>
+                                    <div className={styles.item}>
+                                        <span className={styles.title}>
+                                            From
+                                        </span>
+                                        <span className={styles.desc}>
+                                            {currentGig.userId.country}
+                                        </span>
+                                    </div>
+                                    <div className={styles.item}>
+                                        <span className={styles.title}>
+                                            Member since
+                                        </span>
+                                        <span className={styles.desc}>
+                                            Aug 2022
+                                        </span>
+                                    </div>
+                                    <div className={styles.item}>
+                                        <span className={styles.title}>
+                                            Avg. response time
+                                        </span>
+                                        <span className={styles.desc}>
+                                            4 hours
+                                        </span>
+                                    </div>
+                                    <div className={styles.item}>
+                                        <span className={styles.title}>
+                                            Last delivery
+                                        </span>
+                                        <span className={styles.desc}>
+                                            1 day
+                                        </span>
+                                    </div>
+                                    <div className={styles.item}>
+                                        <span className={styles.title}>
+                                            Languages
+                                        </span>
+                                        <span className={styles.desc}>
+                                            English
+                                        </span>
+                                    </div>
+                                </>
                             </div>
-                            <hr />
+
                             <p>{currentGig.userId.desc}</p>
                         </div>
                     </div>
-                    <div></div>
+
                     <div>
                         <p className="text-sky-950  text-center   text-xl  font-bold">
                             Reviews

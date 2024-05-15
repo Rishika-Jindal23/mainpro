@@ -3,25 +3,27 @@
 import React from "react";
 import CatCard from "../catCard/CatCard";
 import ProjectCard from "../projectCard/ProjectCard";
-//import { projects } from "@/data";
+
 //import CatCard from "@/components/catCard/CatCard";
 import { cards, projects } from "@/data";
 import Carousel from "@itseasy21/react-elastic-carousel";
 //import ProjectCard from "@/components/projectCard/ProjectCard";
 import Footer from "@/components/footer/Footer";
 import TrustedBy from "../trustedBy/TrustedBy";
-import ExploreMarket from "./ExploreMarket";
 import heroes from "../../../public/img/hero.png";
 import Image from "next/image";
 import pc from "../../../public/img/pc.jpg";
+import Marquee from "react-fast-marquee";
 
 function LandingPageComponent() {
     return (
         <div>
             <div className="mt-10 bg-blue-200 rounded-lg p-6 shadow-md">
-                <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                    Welcome to SkillSphere{" "}
-                </h2>
+                <Marquee>
+                    <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                        Welcome to SkillSphere{" "}
+                    </h2>
+                </Marquee>
                 <p className="text-blue-700">
                     Are you a freelancer looking to unleash your skills and
                     expertise? Or perhaps you're a business/individual in search

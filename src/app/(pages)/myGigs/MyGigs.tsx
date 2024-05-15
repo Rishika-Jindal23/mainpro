@@ -23,7 +23,9 @@ function MyGigs() {
     const dispatch = useDispatch();
     const currentuserGig = useSelector(selectCurrentUserGig);
 
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
 
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     const userId = originaluser ? originaluser._id : null;
@@ -39,7 +41,7 @@ function MyGigs() {
     }, [dispatch, userId]);
 
     async function handleDelete(_id: any): Promise<void> {
-        console.log("id________", _id);
+        // console.log("id________", _id);
         try {
             // Make an API call to delete the gig
             const response = await newRequest.delete(`/gigs/${_id}`, {

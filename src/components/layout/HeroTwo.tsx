@@ -8,14 +8,18 @@ import Carousel from "@itseasy21/react-elastic-carousel";
 import ProjectCard from "../projectCard/ProjectCard";
 import TrustedBy from "../trustedBy/TrustedBy";
 import Footer from "../footer/Footer";
+import Marquee from "react-fast-marquee";
 
 export default function HeroTwo() {
     return (
         <>
             <div className="mt-10 bg-blue-200 rounded-lg p-6 shadow-md">
-                <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                    Welcome to SkillSphere{" "}
-                </h2>
+                <Marquee>
+                    <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                        Welcome to SkillSphere{" "}
+                    </h2>
+                </Marquee>
+
                 <p className="text-blue-700">
                     Are you a freelancer looking to unleash your skills and
                     expertise? Or perhaps you're a business/individual in search
@@ -29,6 +33,7 @@ export default function HeroTwo() {
                     Learn More
                 </a>
             </div>
+
             <div className="mt-6   font-semibold text-3xl p-4  ">
                 our services
                 <Carousel itemsToShow={3} isRTL={false}>

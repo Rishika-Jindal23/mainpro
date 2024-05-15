@@ -4,12 +4,9 @@ import { NextRequest } from "next/server";
 
 export default function middleware(request: NextRequest) {
     const cookies = request.cookies.get("accessToken")?.value;
-    console.log("cookie>>>>>>>>..", cookies);
+
     const isNotAuthenticate = !cookies;
     const authenticate = !isNotAuthenticate;
-    console.log("not allowed", isNotAuthenticate);
-    console.log("yes allwed", authenticate);
-    console.log("not applicable", !authenticate);
 
     // const homepage = request.nextUrl.pathname === "/";
     // if (request.nextUrl.pathname === "/") {
@@ -49,5 +46,6 @@ export const config = {
         "/contact",
         "/contactform",
         "/sendEmail",
+        "/userDetails",
     ],
 };

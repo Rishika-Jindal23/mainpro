@@ -100,7 +100,10 @@ const Footer: React.FC<FooterProps> = () => {
                             <img src="/img/coin.png" alt="" />
                             <span>USD</span>
                         </div>
-                        <img src="/img/accessibility.png" alt="" />
+                        <Link href="    ">
+                            {" "}
+                            <img src="/img/accessibility.png" alt="" />
+                        </Link>
                     </div>
                 </div>
             </div>

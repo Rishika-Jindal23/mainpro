@@ -1,16 +1,19 @@
 "use client";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Room: React.FC<{ id: string }> = ({ id }: { id: string }) => {
     const router = useRouter();
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     const userId = originaluser ? originaluser._id : null;
     const userName = originaluser ? originaluser.username : null;
+    // const [loading, setLoading] = useState(true);
     // console.log("username>>>>>>>", userName);
     // console.log("userId>>>>>>>>", userId);
     const roomId = id;
@@ -42,12 +45,14 @@ const Room: React.FC<{ id: string }> = ({ id }: { id: string }) => {
         });
     };
     return (
-        <div>
-            <div ref={myMeeting} />
-            <Button variant="outlined" onClick={handleBack}>
-                Go Back
-            </Button>
-        </div>
+        <>
+            <div>
+                <div ref={myMeeting} />
+                <Button variant="outlined" onClick={handleBack}>
+                    Go Back
+                </Button>
+            </div>
+        </>
     );
 };
 export default Room;

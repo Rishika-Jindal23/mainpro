@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import newRequest from "@/app/utils/newRequest";
 import { useRouter } from "next/navigation";
-import loginimage2 from "../../../../public/img/loginimage2.jpeg";
+import loginimage2 from "../../../../public/img/login1.png";
 import Image from "next/image";
 
 interface LoginProps {}
@@ -62,10 +62,15 @@ const LoginMain: React.FC<LoginProps> = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        minHeight: "70vh",
+                        // minHeight: "70vh",
                     }}
                 >
-                    <Image src={loginimage2} alt="test" />
+                    <Image
+                        src={loginimage2}
+                        alt="test"
+                        width={500}
+                        height={500}
+                    />
                 </div>
                 <div
                     style={{
