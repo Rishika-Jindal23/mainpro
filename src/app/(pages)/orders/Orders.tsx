@@ -10,21 +10,23 @@ import { useRouter } from "next/navigation";
 
 const Orders = () => {
     const dispatch = useDispatch();
-    const orders = useSelector((state) => state.orders.orders);
+    const orders = useSelector((state: any) => state.orders.orders);
     //console.log("order--------", orders);
     const router = useRouter();
 
-    const error = useSelector((state) => state.error);
+    const error = useSelector((state: any) => state.error);
 
     useEffect(() => {
         dispatch(fetchOrders());
     }, [dispatch]);
 
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
 
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
-    console.log("originaluse>>>>>>>>>.", originaluser);
-    console.log("isSeller", originaluser.isSeller);
+    // console.log("originaluse>>>>>>>>>.", originaluser);
+    // console.log("isSeller", originaluser.isSeller);
     const sellerdetails = "  Connect with Seller";
     const buyerdetails = "  Connect with Buyer";
 
@@ -75,17 +77,8 @@ const Orders = () => {
                                 </td>
                                 <td>{order.title}</td>
                                 <td>{order.price}</td>
-                                {/* <td>
-                                    <img
-                                        className={styles.message}
-                                        src="./img/message.png"
-                                        alt=""
-                                        onClick={() => personDetails(order)}
-                                        // onClick={() => handleContact(order)}
-                                    />
-                                </td> */}
+
                                 <td>
-                                    {/* <PersonIcon */}
                                     <img
                                         className={styles.message}
                                         src="./img/message.png"
@@ -93,15 +86,6 @@ const Orders = () => {
                                         onClick={() => personDetails(order)}
                                     />
                                 </td>
-                                {/* <td>
-                                    <img
-                                        className={styles.message}
-                                        src="./img/message.png"
-                                        alt=""
-                                        onClick={() => handleMessage(order)}
-                                        // onClick={() => handleContact(order)}
-                                    />
-                                </td> */}
                             </tr>
                         ))}
                     </tbody>

@@ -1,10 +1,24 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Key, ReactNode } from "react";
 import newRequest from "@/app/utils/newRequest";
+interface User {
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    img: string;
+    country: string;
+    phone: string;
+    desc: string;
+    isSeller: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
 
 interface Gig {
-    shortTitle: ReactNode;
+    shortTitle: string;
     id: Key | null | undefined;
     deliveryTime: Number;
     revisionNumber: Number;
@@ -13,7 +27,8 @@ interface Gig {
     totalstars: Number;
     username: string;
     _id: string;
-    userId: string;
+    img: string;
+    userId: User;
     title: string;
     desc: string;
     price: number;
@@ -34,7 +49,7 @@ interface GigsState {
     error: string | null;
     currentGig: Gig | null; // Add currentGig property
     currentuserGig: Gig | [];
-    filterGig: Gig | [];
+    filterGig: Gig[] | [];
 }
 
 const initialState: GigsState = {
@@ -172,20 +187,19 @@ export const gigsSlice = createSlice({
             .addCase(fetchGigByIdAsync.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(fetchGigByIdAsync.fulfilled, (state, action) => {
-                state.loading = false;
-                state.currentGig = action.payload; // Store the fetched gig in currentGig
-                state.error = null;
-            })
+            .addCase(
+                fetchGigByIdAsync.fulfilled,
+                (state, action: PayloadAction<Gig>) => {
+                    state.loading = false;
+                    state.currentGig = action.payload; // Store the fetched gig in currentGig
+                    state.error = null;
+                }
+            )
             .addCase(fetchGigByIdAsync.rejected, (state, action) => {
                 state.loading = false;
                 state.error =
                     action.error.message || "Failed to fetch gig by ID";
             })
-            // .addCase(fetchGigsByUserIdAsync.pending, (state) => {
-            //     state.loading = true;
-
-            // })
 
             .addCase(fetchGigsByFiltersAsync.fulfilled, (state, action) => {
                 state.loading = false;
@@ -193,26 +207,16 @@ export const gigsSlice = createSlice({
                 state.error = null;
             })
 
-            // .addCase(fetchGigsByUserIdAsync.rejected, (state, action) => {
-            //     state.loading = false;
-            //     state.error = action.error.message || "Failed to fetch gigs";
-            // })
             .addCase(fetchGigsByUserIdAsync.pending, (state) => {
                 state.loading = true;
             })
             .addCase(fetchGigsByUserIdAsync.fulfilled, (state, action) => {
-                //console.log("action.payload----", action.payload);
                 console.log(action.payload);
 
                 state.loading = false;
                 state.currentuserGig = action.payload; // Store the fetched gig in currentGig
                 state.error = null;
             });
-        // .addCase(fetchGigsByUserIdAsync.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error =
-        //         action.error.message || "Failed to fetch gig by ID";
-        // });
     },
 });
 

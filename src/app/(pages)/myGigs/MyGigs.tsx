@@ -104,7 +104,7 @@ function MyGigs() {
                                     </td>
                                     <td>{gig.title}</td>
                                     <td>{gig.price}</td>
-                                    {/* <td>{gig.sales}</td> */}
+
                                     <td>
                                         <img
                                             className={styles.delete}

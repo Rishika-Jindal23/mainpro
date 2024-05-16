@@ -4,10 +4,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux_store/store";
 import { NextPage } from "next";
-import Carousel from "@itseasy21/react-elastic-carousel";
+
 import styles from "./Gig.module.scss";
-import profilepic from "../../../../../public/img/profile4.png";
-import gigimage from "../../../../../public/img/cloudhosting.png";
 
 import {
     fetchGigByIdAsync,
@@ -62,48 +60,14 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
 
                         <img
                             className={styles.pp}
-                            src={currentGig.userId.img || profilepic}
+                            src={currentGig.userId.img}
                             alt=""
                         />
                         <span>{currentGig.username}</span>
-                        {!isNaN(
-                            currentGig.totalStars / currentGig.starNumber
-                        ) && (
-                            <div className="stars">
-                                {Array(
-                                    Math.round(
-                                        currentGig.totalStars /
-                                            currentGig.starNumber
-                                    )
-                                )
-                                    .fill()
-                                    .map((item, i) => (
-                                        <img
-                                            src="/img/star.png"
-                                            alt=""
-                                            key={i}
-                                        />
-                                    ))}
-                                <span>
-                                    {Math.round(
-                                        currentGig.totalStars /
-                                            currentGig.starNumber
-                                    )}
-                                </span>
-                            </div>
-                        )}
-                        {/* <div className={styles.stars}>
-                            {[...Array(5)].map((_, index) => (
-                                <img key={index} src="/img/star.png" alt="" />
-                            ))}
-                            <span>5</span>
-                        </div> */}
                     </div>
-                    {/* <Carousel itemsToShow={1} isRTL={false} showArrows={false}> */}
-                    {/* <div className="box-shadow: 10px 10px lightblue;"> */}
-                    <img src={currentGig.images || gigimage} alt="GigImage" />
-                    {/* </div> */}
-                    {/* </Carousel> */}
+
+                    <img src={currentGig.images} alt="GigImage" />
+
                     <h2 className="text-lg font-semibold text-blue-500 leading-6 tracking-wide">
                         About This Gig
                     </h2>
@@ -114,10 +78,7 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                         <h2>About The Seller</h2>
                         <div className={styles.user}>
                             {/* userProfilePic */}
-                            <img
-                                src={currentGig.userId.img || gigimage}
-                                alt="profilepic"
-                            />
+                            <img src={currentGig.userId.img} alt="profilepic" />
                             <div className={styles.info}>
                                 <span>{currentGig.username}</span>
                                 <div className={styles.stars}>
@@ -202,22 +163,15 @@ const Gig: React.FC<{ id: string }> = ({ id }: { id: string }) => {
                     <div className={styles.details}>
                         <div className={styles.item}>
                             <img src="/img/clock.png" alt="" />
-                            <span>{currentGig.deliveryTime} Days Delivery</span>
+
+                            <span>{`${currentGig.deliveryTime} Days Delivery`}</span>
                         </div>
                         <div className={styles.item}>
                             <img src="/img/recycle.png" alt="" />
-                            <span>{currentGig.revisionNumber} Revisions</span>
+
+                            <span>{`${currentGig.revisionNumber}Revisions`}</span>
                         </div>
                         {/* Details content here */}
-                    </div>
-                    <div className={styles.features}>
-                        {/* Features content here */}
-
-                        {/* {data.features.map((feature) => (
-                <div className="item" key={feature}>
-                  <img src="/img/greencheck.png" alt="" />
-                  <span>{feature}</span>
-                */}
                     </div>
 
                     <button

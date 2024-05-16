@@ -17,7 +17,9 @@ function UserDetails() {
 
     const router = useRouter();
     const search = useSearchParams();
-    const loggedInUser = useSelector((state) => state.auth.user.currentUser);
+    const loggedInUser = useSelector(
+        (state: any) => state.auth.user.currentUser
+    );
 
     const originaluser = loggedInUser ? JSON.parse(loggedInUser) : null;
     console.log("originaluse>>>>>>>>>.", originaluser);

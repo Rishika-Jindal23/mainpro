@@ -54,7 +54,7 @@ export default function Header() {
             const response = await newRequest.post("auth/logout");
             const data = await response;
             if (response) {
-                alert("logout successfull");
+                alert("logout successful");
                 window.location.href = "/";
             } else {
                 alert("error occurred");
