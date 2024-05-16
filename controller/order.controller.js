@@ -79,7 +79,7 @@ exports.getOrders = async (req, res, next) => {
 
 
         const orders = await Order.find(query);
-
+        // console.log("orders>>>>>>>>>>>", orders)
         if (!orders) { res.status(404).send("not able to get orders") }
 
         res.status(200).send(orders);

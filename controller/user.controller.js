@@ -9,11 +9,11 @@ const jwt = require("jsonwebtoken")
 exports.getUserById = async (req, res, next) => {
 
     try {
-        console.log("idddddddddddddddddd---------", req.params?.id);
-        const user = await User.findById(req.params?.id);  // yeh nahi chiye mujhe
+        // console.log("idddddddddddddddddd---------", req.params?.id);
+        const user = await User.findById(req.params?.id);
         if (!user) return res.status(404).send("user not found ")
         res.status(200).send(user)
-    } catch (error) { res.status(404).send("  hello >>>>>>>>>>>>>>>>>>>>user not found by this id") }
+    } catch (error) { res.status(404).send("user not found by this id") }
 }
 
 
@@ -26,7 +26,6 @@ exports.deleteUser = async (req, res) => {
         const user = await User.findById(req.params?.id)
         console.log(user);
 
-        //console.log("hello");  
         //console.log(user._id);
         if (req.userId !== user._id.toString()) { return res.status(403).send("you can delete only your account") }
         await User.findByIdAndDelete(req.params?.id);
@@ -154,14 +153,12 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-//tu api kosni call kar rahi hai and dikha konsi rahi hai muze kuchh samaj nai aa raha
-//call get all sellers krna h but uper vali call hori h esa bolri hu
 
 exports.getAllSellers = async (req, res) => {
     try {
 
 
-        console.log("called.>>>>>>>>>>>>>.")
+
         // Parse query parameters for pagination
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10; // Default limit to 10 users per page
