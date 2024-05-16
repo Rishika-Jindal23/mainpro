@@ -21,8 +21,8 @@ exports.createEmail = async (req, res, next) => {
     const mailData = {
       from: `Rishika Jindal < ${process.env.EMAIL_USERNAME}> `,
       to: 'jindalrishika971@gmail.com',
-      subject: `Message From ${req.body.name}`,
-      text: req.body.message + " | Sent from: " + req.body.email,
+      subject: `Message FROM ${req.body.name}`,
+      text: req.body.message + " | Sent To: " + req.body.email,
       html: `<div>${req.body.message}</div><p>Sent from:
             ${req.body.email}</p>`
     }

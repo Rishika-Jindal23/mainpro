@@ -46,13 +46,13 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        console.log(req.body.username);
+        // console.log(req.body.username);
 
         const user = await User.findOne({ username: req.body.username })
 
         if (!user) return res.status(404).send("user not found")
         const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-        console.log("is corerct : ", isCorrect);
+        // console.log("is corerct : ", isCorrect);
         if (!isCorrect) return res.status(404).send("wrong username or password");
 
         const token = jwt.sign({
