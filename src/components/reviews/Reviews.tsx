@@ -68,13 +68,20 @@ const Reviews = ({ gigId, userId }) => {
                     <Review key={review._id} review={review} />
                 ))}
             </div>
-            <div className="text-lg font-semibold text-blue-500 leading-6 tracking-wide items-center">
-                Add Review
+            <div className="mt-20 text-center  text-sky-950  text-center   text-xl  font-bold  hover:text-center decoration-1 underline-offset-1">
+            {/* <Button variant="text">Add Review</Button> */}
+            <p className="text-sky-950  text-center   text-xl  font-bold">
+                             Add Reviews
+                        </p>
             </div>
+            {/* <div className="mt-59">
+                Add Review
+            </div> */}
             <div>
+            
                 <form
                     onSubmit={handleSubmit}
-                    className="max-w-md mx-auto p-4 bg-white shadow-md rounded-md"
+                    className=" mt-10 max-w-md mx-auto p-4 bg-gray shadow-md rounded-md w"
                 >
                     <Box mb={2}>
                         <TextField
