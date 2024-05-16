@@ -18,13 +18,11 @@ export default function middleware(request: NextRequest) {
         request.nextUrl.password === "/";
 
     if (loggedInUserNotAccessPaths) {
-        //  console.log("hhhhhhhhhhhhhhhh");
         if (cookies) {
             return NextResponse.redirect(new URL("/", request.url));
         }
     } else {
         if (!cookies && !loggedInUserNotAccessPaths) {
-            // if (request.nextUrl.pathname === "/add") {
             return NextResponse.redirect(new URL("/login", request.url));
         }
     }

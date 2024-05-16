@@ -75,7 +75,7 @@ function SendEmail() {
 
             if (res.status === 200) {
                 // Successful response
-                alert("Mail sent successfully");
+                alert("Mail sent successfuly");
                 setSubmitted(true);
                 setName("");
                 setEmail("");

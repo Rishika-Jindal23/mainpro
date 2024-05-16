@@ -16,7 +16,7 @@ const Gigs: React.FC = () => {
     const dispatch = useDispatch();
     const { data: gigs, loading, error } = useSelector(selectGigs);
     const filterData = useSelector(selectFilterGig);
-    console.log("filter data====", filterData);
+    // console.log("filter data====", filterData);
 
     const [sort, setSort] = useState<string>("sales");
     const [open, setOpen] = useState<boolean>(false);
@@ -45,8 +45,6 @@ const Gigs: React.FC = () => {
         <div className={styles.gigs}>
             <div className={styles.container}>
                 <span className={styles.breadcrumbs}>SkillSphere Services</span>
-                {/* <h1>AI Artists</h1> */}
-                {/* <p>Explore the boundaries of all </p> */}
 
                 <div className={styles.menu}>
                     <div className={styles.left}>
