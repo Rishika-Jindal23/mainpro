@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
@@ -33,4 +33,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details. -->
+
+<h1>SkillSphere</h1><br/>
+SkillSphere is convenient way for independent professionals to find work.
+ It is a online platforms where individuals can offer their services to clients on a project basis. 
+ These platforms serve as intermediaries, connecting freelancers with businesses or individuals seeking specific tasks or projects to be completed<br/>
+
+ <h2>Technologies Used</h2>
+<h4> Nextjs,Typescript , SCSS,Mui  for front-end development<br/>
+Express.js (node.js framework) for back-end development<br/>
+Mongodb for database management</br></h4>
